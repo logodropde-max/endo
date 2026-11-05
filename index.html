@@ -184,7 +184,8 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .zeichen-fix .fest{display:none;position:absolute;inset:14%}
 .zeichen-fix.ohne-shader .fest{display:block}
 .zeichen-fix.ohne-shader>div{display:none}
-.zeichen-fix::after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
+/* kein Leuchten hinter dem Zeichen */
+.zeichen-fix::after{display:none;content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
 #marke-platz{display:inline-block;width:44px;height:44px;flex:none;transition:width .45s var(--kurve)}
 .gerollt #marke-platz{width:0}
 .zeichen-fix.im-menue{transition:opacity .45s var(--kurve)}
@@ -234,7 +235,7 @@ td:first-child{color:var(--grau)}
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
-<div class="tech" aria-hidden="true"><div class="tech__licht"></div><div class="tech__punkte"></div><div class="tech__streif"></div></div>
+<div class="tech" aria-hidden="true"><div class="tech__punkte"></div><div class="tech__streif"></div></div>
 
 <div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
 <a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
