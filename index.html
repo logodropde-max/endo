@@ -282,6 +282,8 @@ html:not(.vor) .held::before{opacity:1}
 .intro.laeuft .intro__weg{opacity:1}
 .zeichen-fix{--g:min(340px,80vw);position:fixed;z-index:110;left:50%;top:27%;width:var(--g);height:var(--g);margin:calc(var(--g) / -2) 0 0 calc(var(--g) / -2);display:block;will-change:transform,opacity,filter;transform-origin:50% 50%;transition:transform 1.9s cubic-bezier(.45,0,.12,1)}
 .zeichen-fix.sofort{transition:none}
+.zeichen-fix.voll{left:0;top:0;width:100vw;height:100vh;margin:0}
+.zeichen-fix.liegt{position:absolute;z-index:0}
 .zeichen-fix>div{position:absolute;inset:0}
 .zeichen-fix .fest{display:none;position:absolute;inset:14%}
 .zeichen-fix.ohne-shader .fest{display:block}
@@ -678,7 +680,7 @@ function klein() { Z.classList.add('sofort'); Z.style.transform = menueZiel(); v
 function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.dataset.ort = 'menue'; if (sofort) klein(); }
 function oben() { if (!Z.classList.contains('im-menue')) return; Z.classList.remove('versteckt'); }
 addEventListener('scroll', oben, { passive: true });
-addEventListener('resize', () => { if (Z.dataset.ort === 'menue') { Z.style.removeProperty('--g'); insMenue(true); } });
+addEventListener('resize', () => { if ((Z.dataset.ort === 'hg' || Z.dataset.ort === 'mitte') && zeichen && Z.classList.contains('voll')) setz(zeichen, vollMass()); });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
 
 const FORM_GLSL = `
@@ -750,21 +752,21 @@ function basis() {
 const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
 const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? v : 0)), { rootMargin: '100px' }).observe(el); };
 let zeichen = null, lauf = 0;
+/* Maße für das bildschirmweite Intro: das Dreieck landet genau in Größe und Lage des Titelbild-Zeichens. */
+const vollMass = () => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), klein = Math.min(340, W * .8);
+  return { u_scale: .372 * klein / m, u_offsetX: 0, u_offsetY: -.23 * (H / m) }; };
 function introSpielen() {
   const id = ++lauf; let aus = false;
-  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = '';
+  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll');
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
   if (ruhe) ruhe(true);
-  setz(zeichen, { u_morph: 0 });
+  setz(zeichen, { ...vollMass(), u_morph: 0, u_scale: vollMass().u_scale * 1.7, u_offsetY: vollMass().u_offsetY * .55 });
   const fertig = () => { if (aus) return; aus = true;
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
-    const hz = document.getElementById('held-sh'), r = hz.getBoundingClientRect();
-    const dy = (r.top + r.height / 2) - innerHeight * .27;
-    hz.style.transition = 'none'; hz.style.marginTop = (-dy) + 'px'; hz.classList.add('da'); hz.appendChild(zsh);
-    Z.style.transition = 'none'; Z.style.display = 'none'; Z.dataset.ort = 'weg'; intro.style.display = 'none';
+    Z.classList.add('liegt'); Z.dataset.ort = 'hg'; intro.style.display = 'none';
     const wort = document.getElementById('intro-wort'); wort.classList.remove('da'); setTimeout(() => { wort.style.display = 'none'; }, 1200);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
@@ -775,19 +777,21 @@ function introSpielen() {
   const tick = () => {
     if (id !== lauf) return;
     const e = (performance.now() - t0) / 1000;
-    var km = Math.max(0, Math.min(1, (e - 1.0) / 3.0)); setz(zeichen, { u_morph: .5 - .5 * Math.cos(Math.PI * km) });
-    Z.style.opacity = Math.max(0, Math.min(1, .5 - .5 * Math.cos(Math.PI * Math.min(1, e / 1.5))));
+    var km = Math.max(0, Math.min(1, (e - 2.0) / 2.6)), kg = Math.max(0, Math.min(1, e / 4.4));
+    const vm = vollMass(), zg = .5 - .5 * Math.cos(Math.PI * kg);
+    setz(zeichen, { u_morph: .5 - .5 * Math.cos(Math.PI * km), u_scale: vm.u_scale * (1 + .7 * (1 - zg)), u_offsetY: vm.u_offsetY * (.55 + .45 * zg) });
+    Z.style.opacity = Math.max(0, Math.min(1, e / .9));
     
-    if (e > 3.9 && !wort.classList.contains('da') && !aus) wort.classList.add('da');
-    if (e > 5.5 && !aus) fertig();
-    if (e < 5.6) requestAnimationFrame(tick); else setz(zeichen, { u_morph: 1 });
+    if (e > 4.7 && !wort.classList.contains('da') && !aus) wort.classList.add('da');
+    if (e > 6.2 && !aus) fertig();
+    if (e < 6.3) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
   };
   requestAnimationFrame(tick);
 }
 try {
   P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
   FS = shaderMitForm(P.liquidMetalFragmentShader);
-  zeichen = new P.ShaderMount(zsh, FS, { ...basis(), u_scale: .372 }, undefined, .7);
+  zeichen = new P.ShaderMount(zsh, FS, { ...basis(), u_scale: .372 }, undefined, .7, 0, 1.5, 1600 * 1600);
   mitPause(document.getElementById('held-sh'), zeichen, .7);
   let restDa = false;
   /* Alle übrigen Chrom-Flächen erst nach dem Intro starten: während des Intros rechnet nur das Zeichen – nichts stockt oder verschwindet. */
