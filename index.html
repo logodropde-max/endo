@@ -201,8 +201,8 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .fb-rand #fb{max-width:none;background:#06080f;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 .fb-tropfen{position:absolute;z-index:0;pointer-events:none;opacity:0;transform:scale(.6);transition:opacity 1.2s var(--kurve),transform 1.6s var(--kurve)}
 .fb-tropfen.da{opacity:1;transform:none}
-.fb-tropfen.o{width:96px;height:96px;left:-52px;top:-52px}
-.fb-tropfen.u{width:68px;height:68px;right:-36px;bottom:-36px;transition-delay:.25s}
+.fb-tropfen.o{width:120px;height:120px;left:-64px;top:-64px}
+.fb-tropfen.u{width:92px;height:92px;right:-48px;bottom:-48px;transition-delay:.25s}
 @media (max-width:900px){.fb-tropfen.o{width:64px;height:64px;left:-22px;top:-36px}.fb-tropfen.u{width:48px;height:48px;right:-16px;bottom:-26px}}
 .erst::before,.erst::after{content:"";position:absolute;left:0;right:0;height:200px;z-index:1;pointer-events:none}
 .erst::before{top:0;background:linear-gradient(var(--grund),transparent)}
@@ -298,7 +298,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .klein{font-size:12.5px;color:var(--grau);margin-top:18px}
 .klein a{color:#DCE4F7}
 /* Kontakt */
-.wege{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.wege{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:40px}
 .wege a{text-decoration:none}
 .wege small{display:block;color:var(--grau);font-size:14px;margin-top:4px}
 /* Fuss */
@@ -467,7 +467,6 @@ td:first-child{color:var(--grau)}
     <div class="wege">
       <a class="kante reihe" href="https://wa.me/4915906344961"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2.5 4 5 5l1.2-1.4 2 .8"/></svg></span><h3>WhatsApp</h3><small>+49 1590 6344961</small></div></a>
       <a class="kante reihe" href="mailto:ergun.eu@gmail.com" style="transition-delay:.12s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><h3>E-Mail</h3><small>ergun.eu@gmail.com</small></div></a>
-      <a class="kante reihe" href="tel:+4915906344961" style="transition-delay:.24s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><h3>Telefon</h3><small>+49 1590 6344961</small></div></a>
     </div>
   </div>
 </section>
@@ -944,7 +943,7 @@ try {
   const ks = document.getElementById('kontakt-sh'); if (ks) { const d = document.createElement('div'); ks.appendChild(d); nahe(ks, () => new P.ShaderMount(d, FS, basis(), undefined, .5)); }
   document.querySelectorAll('[data-tropfen]').forEach(el => nahe(el, () => new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: mb, u_scale: 1.2 }, undefined, .35)));
   document.querySelectorAll('[data-fbt]').forEach(el => {
-    nahe(el, () => new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .5));
+    nahe(el, () => new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: mb, u_scale: el.classList.contains('o') ? .95 : 1.1, u_rotation: el.classList.contains('o') ? 25 : -40 }, undefined, .4));
     new IntersectionObserver((l, o) => l.forEach(x => { if (x.isIntersecting) { el.classList.add('da'); o.disconnect(); } }), { threshold: .3 }).observe(el.parentNode);
   });
   /* Chrom für gewählte Antworten im Fragebogen: eine Quelle, nur solange der Fragebogen in der Nähe ist */
