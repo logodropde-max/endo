@@ -788,10 +788,10 @@ const massBei = (gr, cx, cy) => { const W = innerWidth, H = innerHeight, m = Mat
 let logoK = 0, logoZiel = 0, logoLauf = false, logoH = 0, logoHZiel = 0, letztY = 0;
 function logoMalen() {
   const W = innerWidth, H = innerHeight, k = logoK * logoK * (3 - 2 * logoK), sy = logoK * H * .5;
-  const gr0 = Math.min(340, W * .8), gr1 = 72, x1 = 26, y1 = 26 - logoH * 90;
+  const gr0 = Math.min(340, W * .8), gr1 = 120, x1 = 30, y1 = -90;
   const xa = W / 2, ya = H * .27 - sy;
   const sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-  const fl = sm(0, .14, logoK) * (1 - sm(.72, .98, logoK));
+  const fl = sm(0, .14, logoK);
   setz(zeichen, { ...massBei(gr0 + (gr1 - gr0) * k, xa + (x1 - xa) * k, ya + (y1 - ya) * k), u_morph: 1 - .75 * fl });
 }
 function logoSchritt() {
@@ -801,15 +801,14 @@ function logoSchritt() {
   logoMalen();
   if (logoK !== logoZiel || logoH !== logoHZiel) requestAnimationFrame(logoSchritt); else logoLauf = false;
 }
-/* Folgt dem Scrollen: das Zeichen wandert ganz nach oben links; beim Weiterscrollen nach unten gleiten Leiste und
-   Zeichen nach oben weg, beim kleinsten Hochscrollen kommen beide wieder herunter. */
+/* Folgt dem Scrollen: das Zeichen wird flüssig und fließt oben links aus dem Bild – danach ist es weg.
+   Erst ganz oben kommt es zurück. Die Leiste gleitet beim Runterscrollen weg und kommt beim Hochscrollen wieder. */
 function logoLage() {
   const y = scrollY, runter = y > letztY + 3, hoch = y < letztY - 3; if (runter || hoch) letztY = y;
   if (y > innerHeight * .55 && runter) html.classList.add('kopf-weg');
   if (hoch || y < innerHeight * .55) html.classList.remove('kopf-weg');
   if (Z.dataset.ort !== 'hg' || !zeichen) return;
   logoZiel = Math.min(1, Math.max(0, y / (innerHeight * .5)));
-  logoHZiel = html.classList.contains('kopf-weg') ? 1 : 0;
   if (!logoLauf) { logoLauf = true; requestAnimationFrame(logoSchritt); }
 }
 addEventListener('scroll', logoLage, { passive: true });
