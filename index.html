@@ -145,7 +145,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .erst{position:relative;padding:150px 0 130px;overflow:hidden}
 .fb-buehne{position:relative;max-width:620px;margin:0 auto}
 .fb-metall{position:absolute;inset:-46px;pointer-events:none}
-.fb-buehne #fb{position:relative;background:#06080f;transition:opacity .2s linear}
+.fb-buehne #fb{position:relative;background:rgba(6,8,15,.86);-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);transition:opacity .2s linear}
 html.mit-metall .fb-buehne #fb{opacity:var(--fbz,0)}
 .erst::before,.erst::after{content:"";position:absolute;left:0;right:0;height:200px;z-index:1;pointer-events:none}
 .erst::before{top:0;background:linear-gradient(var(--grund),transparent)}
@@ -656,8 +656,8 @@ try {
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: .9 }, undefined, .5); mitPause(el, tr, .5); } catch (e) { console.warn(e); } });
   try {
     const fm = document.getElementById('fb-metall');
-    const mass = () => ({ u_rahmen: 40 / Math.max(fm.offsetWidth, 1), u_rund: 30 / Math.max(fm.offsetWidth, 1) });
-    const metall = new P.ShaderMount(fm, FS, { ...basis(), u_scale: 1.25, u_morph: 0, u_ziel: 1, ...mass() }, undefined, .6);
+    const mass = () => ({ u_rahmen: 37 / Math.max(fm.offsetWidth, 1), u_rund: 30 / Math.max(fm.offsetWidth, 1) });
+    const metall = new P.ShaderMount(fm, FS, { ...basis(), u_scale: .55, u_morph: 0, u_ziel: 1, ...mass() }, undefined, .6);
     mitPause(fm, metall, .6);
     html.classList.add('mit-metall');
     const fbEl = document.getElementById('fb'); let alt = -1;
