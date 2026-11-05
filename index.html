@@ -83,7 +83,8 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .kante>*{position:relative}
 .fuss-z{position:relative;display:inline-block;width:38px;height:38px;vertical-align:-13px;margin-right:4px}
 .fuss-z.an>svg{display:none}
-.held-zeichen{position:absolute;left:50%;top:50%;width:min(900px,140vw);aspect-ratio:1;transform:translate(-50%,-52%);opacity:.13;pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
+.held-zeichen{position:absolute;left:50%;top:50%;width:min(900px,140vw);aspect-ratio:1;transform:translate(-50%,-52%);opacity:0;transition:opacity 1.4s cubic-bezier(.4,0,.2,1);pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
+.held-zeichen.da{opacity:.13}
 .held>.wrap{position:relative;z-index:1}
 .hg-chrom{position:absolute;top:-60px;width:min(980px,150vw);height:560px;pointer-events:none;z-index:0;opacity:.17;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%)}
 .hg-chrom>div{position:absolute;inset:0}
@@ -658,12 +659,25 @@ const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh
 let zeichen = null, lauf = 0;
 function introSpielen() {
   const id = ++lauf; let aus = false;
+  document.getElementById('held-sh').classList.remove('da'); Z.style.transition = '';
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
   if (ruhe) ruhe(true);
   setz(zeichen, { u_morph: 0 });
-  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) { intro.style.display = 'none'; klein(); } }, 2000); };
+  const fertig = () => { if (aus) return; aus = true;
+    /* Das Intro-Zeichen wächst sanft zum leisen Hintergrund-Zeichen des Titelbilds, dann übernimmt das Hintergrund-Zeichen,
+       und oben in der Ecke blendet das kleine Logo ein. */
+    const hz = document.getElementById('held-sh'), r = hz.getBoundingClientRect();
+    const zg = r.width / Z.offsetWidth, dy = (r.top + r.height / 2) - innerHeight * .47;
+    Z.classList.remove('sofort'); Z.dataset.ort = 'hg';
+    Z.style.transition = 'transform 2.4s cubic-bezier(.45,0,.12,1), opacity 2.4s cubic-bezier(.4,0,.2,1)';
+    Z.style.transform = `translate(0px, ${dy}px) scale(${zg})`; Z.style.opacity = .13;
+    intro.classList.add('raus'); seiteZeigen();
+    setTimeout(() => { if (id === lauf) hz.classList.add('da'); }, 1500);
+    setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; Z.style.transition = 'none'; Z.style.opacity = 0; klein(); Z.dataset.ort = 'menue';
+      requestAnimationFrame(() => requestAnimationFrame(() => { Z.style.transition = 'opacity 1.1s cubic-bezier(.4,0,.2,1)'; Z.style.opacity = 1; })); }, 2700);
+  };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
   const t0 = performance.now();
@@ -695,7 +709,7 @@ try {
   } catch (e) { console.warn(e); } });
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { insMenue(true); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); insMenue(true); seiteZeigen(); } else introSpielen();
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); insMenue(true); intro.style.display = 'none'; seiteZeigen();
 }
