@@ -749,6 +749,7 @@ function introSpielen() {
     Z.style.transition = 'none'; Z.style.display = 'none'; Z.dataset.ort = 'weg'; intro.style.display = 'none';
     const wort = document.getElementById('intro-wort'); wort.classList.remove('da'); setTimeout(() => { wort.style.display = 'none'; }, 1200);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
+    setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
@@ -770,6 +771,9 @@ try {
   FS = shaderMitForm(P.liquidMetalFragmentShader);
   zeichen = new P.ShaderMount(zsh, FS, { ...basis(), u_scale: .372 }, undefined, .7);
   mitPause(document.getElementById('held-sh'), zeichen, .7);
+  let restDa = false;
+  /* Alle übrigen Chrom-Flächen erst nach dem Intro starten: während des Intros rechnet nur das Zeichen – nichts stockt oder verschwindet. */
+  const restStarten = () => { if (restDa) return; restDa = true;
   const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   try { const fz = document.getElementById('fuss-sh'), fuss = new P.ShaderMount(fz, FS, basis(), undefined, .7); fz.classList.add('an'); mitPause(fz, fuss, .7); } catch (e) { console.warn(e); }
@@ -795,11 +799,13 @@ try {
     const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .5); mitPause(el, t, .5);
     new IntersectionObserver((l, o) => l.forEach(x => { if (x.isIntersecting) { el.classList.add('da'); o.disconnect(); } }), { threshold: .3 }).observe(el.parentNode);
   } catch (e) { console.warn(e); } });
+  };
+  window.ENDO_REST = restStarten;
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); Z.style.display = 'none'; seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); Z.style.display = 'none'; restStarten(); seiteZeigen(); } else introSpielen();
 } catch (e) {
-  console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; intro.style.display = 'none'; seiteZeigen();
+  console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
 document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
 </script>
