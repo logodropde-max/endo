@@ -144,9 +144,13 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 /* Erstgespraech */
 .erst{position:relative;padding:150px 0 130px;overflow:hidden}
 .fb-buehne{position:relative;max-width:620px;margin:0 auto}
-.fb-metall{position:absolute;inset:-46px;pointer-events:none}
-.fb-buehne #fb{position:relative;background:rgba(6,8,15,.86);-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);transition:opacity .2s linear}
-html.mit-metall .fb-buehne #fb{opacity:var(--fbz,0)}
+.fb-rand{position:relative;z-index:1;border-radius:29px;padding:1.2px;background:linear-gradient(140deg,#F4F7FF,#6F7C99 26%,#2a3040 48%,#9FB3E8 70%,#DCE4F7)}
+.fb-rand #fb{max-width:none;background:#06080f;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.fb-tropfen{position:absolute;z-index:0;pointer-events:none;opacity:0;transform:scale(.6);transition:opacity 1.2s var(--kurve),transform 1.6s var(--kurve)}
+.fb-tropfen.da{opacity:1;transform:none}
+.fb-tropfen.o{width:96px;height:96px;left:-52px;top:-52px}
+.fb-tropfen.u{width:68px;height:68px;right:-36px;bottom:-36px;transition-delay:.25s}
+@media (max-width:900px){.fb-tropfen.o{width:64px;height:64px;left:-22px;top:-36px}.fb-tropfen.u{width:48px;height:48px;right:-16px;bottom:-26px}}
 .erst::before,.erst::after{content:"";position:absolute;left:0;right:0;height:200px;z-index:1;pointer-events:none}
 .erst::before{top:0;background:linear-gradient(var(--grund),transparent)}
 .erst::after{bottom:0;background:linear-gradient(transparent,var(--grund))}
@@ -307,7 +311,7 @@ td:first-child{color:var(--grau)}
 <section class="erst" id="fragebogen">
   <div class="wrap">
     <div class="erst__kopf beob"><span class="label">Erstgespräch</span><h2><span class="zeile"><span>Erstgespräch <span class="chrom">vereinbaren</span></span></span></h2><p class="hebt">endo richtet Odoo für Sie ein und verbindet es mit Ihrem virtuellen Büro – dort sehen Sie live, was in Ihrem Betrieb passiert.<br>5 kurze Fragen, etwa 1 Minute. Kostenlos und unverbindlich.</p></div>
-    <div class="fb-buehne"><div class="fb-metall" id="fb-metall" aria-hidden="true"></div><div class="glas" id="fb"></div></div>
+    <div class="fb-buehne"><div class="fb-tropfen o" data-fbt aria-hidden="true"></div><div class="fb-rand"><div class="glas" id="fb"></div></div><div class="fb-tropfen u" data-fbt aria-hidden="true"></div></div>
   </div>
 </section>
 
@@ -655,20 +659,11 @@ try {
   const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: .9 }, undefined, .5); mitPause(el, tr, .5); } catch (e) { console.warn(e); } });
-  try {
-    const fm = document.getElementById('fb-metall');
-    const mass = () => ({ u_rahmen: 37 / Math.max(fm.offsetWidth, 1), u_rund: 30 / Math.max(fm.offsetWidth, 1) });
-    const metall = new P.ShaderMount(fm, FS, { ...basis(), u_scale: .55, u_skal: .55, u_morph: 0, u_ziel: 1, ...mass() }, undefined, .6);
-    mitPause(fm, metall, .6);
-    html.classList.add('mit-metall');
-    const fbEl = document.getElementById('fb'); let alt = -1;
-    const form = () => {
-      const r = fm.getBoundingClientRect(), h = innerHeight;
-      let k = (h * .92 - r.top) / (h * .55); k = Math.max(0, Math.min(1, k)); k = .5 - .5 * Math.cos(Math.PI * k);
-      if (Math.abs(k - alt) > .002) { alt = k; setz(metall, { u_morph: k, ...mass() }); fbEl.style.setProperty('--fbz', Math.max(0, Math.min(1, (k - .6) / .4))); }
-    };
-    addEventListener('scroll', form, { passive: true }); addEventListener('resize', form); new ResizeObserver(form).observe(fm); form();
-  } catch (e) { console.warn('Fragebogen-Metall:', e); html.classList.remove('mit-metall'); }
+  document.querySelectorAll('[data-fbt]').forEach(el => { try {
+    const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
+    const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .5); mitPause(el, t, .5);
+    new IntersectionObserver((l, o) => l.forEach(x => { if (x.isIntersecting) { el.classList.add('da'); o.disconnect(); } }), { threshold: .3 }).observe(el.parentNode);
+  } catch (e) { console.warn(e); } });
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
   if (html.classList.contains('ohne-intro')) { insMenue(true); seiteZeigen(); } else introSpielen();
