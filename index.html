@@ -217,6 +217,9 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
 .haken input{margin-top:3px;accent-color:#DCE4F7}
 .fb__schritt{animation:rein .55s var(--kurve)}
+.fb__schritt.geht{transition:opacity .22s,transform .22s;opacity:0;transform:translateY(-6px)}
+.fb__mini{margin:8px 0 8px;font-size:14px;color:var(--grau)}
+.kontaktweg{grid-template-columns:1fr!important}
 @keyframes rein{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
 .paket{font-size:48px;font-weight:500;letter-spacing:-.05em;line-height:1;margin:6px 0 10px}
 .preis{display:flex;gap:26px;margin:18px 0;padding:18px 0;border-top:1px solid rgba(200,215,255,.14);border-bottom:1px solid rgba(200,215,255,.14)}
@@ -533,6 +536,8 @@ var S = [
   { q: 'Wann soll es losgehen?', u: 'Damit wir den Termin passend planen.', o: [['blitz','So bald wie möglich'],['kal','In 1 bis 3 Monaten'],['info','Erstmal informieren']] },
   { q: 'Wie erreichen wir Sie?', u: 'Wir melden uns innerhalb von 24 Stunden mit einem Terminvorschlag.', form: true }
 ];
+I.chat = '<path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/>';
+var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['tel', 'Rückruf', 'Wir rufen Sie an'], ['chat', 'WhatsApp', 'Kurz per Nachricht']];
 var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
 function empfehlung(){
   var p = A[1][0], z = A[0];
@@ -542,12 +547,14 @@ function empfehlung(){
 }
 function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, 5) + ' von 5</span><span>' + (schritt < 5 ? 'etwa ' + (5 - schritt) * 12 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + S.map(function(_, j){ return '<i class="' + (j < schritt || schritt === 5 ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
 function sichern(){ ['n','b','e','t'].forEach(function(k){ var el = document.getElementById('f-' + k); if (el) A[4][k] = el.value.trim(); }); var d = document.getElementById('f-d'); if (d) A[4].d = d.checked; }
+function weiterSanft(d){ var st = fb.querySelector('.fb__schritt'); if (!st || ruhig) { schritt += d; zeichne(); return; } st.classList.add('geht'); setTimeout(function(){ schritt += d; zeichne(); var n = fb.getBoundingClientRect(); if (n.top < 0) scrollTo({ top: scrollY + n.top - 90, behavior: 'smooth' }); }, 230); }
 function zeichne(){
+  if (A[4].g == null) A[4].g = 0;
   if (schritt === 5){ return ergebnis(); }
   var x = S[schritt], inhalt;
   if (x.form){
-    inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '"><input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"><input class="feld" id="f-t" type="tel" placeholder="Telefon" autocomplete="tel" value="' + (A[4].t || '') + '">' +
-      '<div class="fb__wahl" style="margin:6px 0 12px">' + [['video','Video-Anruf'],['tel','Telefon']].map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>' +
+    inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '"><input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"><input class="feld" id="f-t" type="tel" placeholder="Telefon (für Rückruf oder WhatsApp)" autocomplete="tel" value="' + (A[4].t || '') + '">' +
+      '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg" style="margin:0 0 12px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
       '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
     inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
@@ -556,34 +563,34 @@ function zeichne(){
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
   fb.querySelectorAll('[data-j]').forEach(function(b){ b.onclick = function(){ var j = +b.dataset.j;
     if (x.mehr){ var i = A[schritt].indexOf(j); i > -1 ? A[schritt].splice(i, 1) : A[schritt].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
-    else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); setTimeout(function(){ schritt++; zeichne(); }, 320); } }; });
+    else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; } }; });
   fb.querySelectorAll('[data-g]').forEach(function(b){ b.onclick = function(){ A[4].g = +b.dataset.g; fb.querySelectorAll('[data-g]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; }; });
   fb.querySelectorAll('.feld').forEach(function(f){ f.oninput = function(){ document.getElementById('fehler').textContent = ''; }; });
-  document.getElementById('zurueck').onclick = function(){ if (x.form) sichern(); schritt--; zeichne(); };
+  document.getElementById('zurueck').onclick = function(){ if (x.form) sichern(); weiterSanft(-1); };
   document.getElementById('weiter').onclick = function(){
     var fe = document.getElementById('fehler');
     if (x.form){ sichern();
       if (!A[4].n) return fe.textContent = 'Bitte geben Sie Ihren Namen ein.';
       if (!A[4].b) return fe.textContent = 'Bitte geben Sie Ihre Firma ein.';
       if (!/^\S+@\S+\.\S+$/.test(A[4].e || '')) return fe.textContent = 'Bitte prüfen Sie die E-Mail-Adresse.';
-      if ((A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Bitte prüfen Sie die Telefonnummer.';
-      if (A[4].g == null) return fe.textContent = 'Bitte wählen Sie Video-Anruf oder Telefon.';
+      if (A[4].g == null) return fe.textContent = 'Bitte wählen Sie, wie wir uns melden sollen.';
+      if (A[4].g > 0 && (A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Für ' + KONTAKT[A[4].g][1] + ' brauchen wir Ihre Telefonnummer.';
       if (!A[4].d) return fe.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
     } else if (!A[schritt].length) return fe.textContent = x.mehr ? 'Bitte wählen Sie mindestens eine Antwort.' : 'Bitte wählen Sie eine Antwort.';
     if (x.form) return senden(fe);
-    schritt++; zeichne();
+    weiterSanft(1);
   };
 }
 function senden(fe){
   if (!/endo-ergun\.vercel\.app$/.test(location.host)) {
     var w2 = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); }, e2 = empfehlung();
-    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBereiche: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nHeute: ' + w2(2, A[2]) + '\nStart: ' + w2(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + e2;
+    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBereiche: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nHeute: ' + w2(2, A[2]) + '\nStart: ' + w2(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + e2;
     location.href = 'mailto:ergun.eu@gmail.com?subject=' + encodeURIComponent('Erstgespräch endo – ' + A[4].b) + '&body=' + encodeURIComponent(t2);
     schritt = 5; zeichne(); var h = document.createElement('p'); h.className = 'klein'; h.textContent = 'Ihr E-Mail-Programm öffnet sich mit Ihren Angaben – bitte dort noch auf Senden tippen.'; fb.appendChild(h); return; }
   var knopf = document.getElementById('weiter'); knopf.disabled = true; knopf.firstChild.textContent = 'Wird gesendet … ';
   var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
   var emp = empfehlung();
-  var text = 'Erstgespräch über den Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
+  var text = 'Erstgespräch über den Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
   var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
   fetch('/api/support', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
@@ -600,7 +607,7 @@ function ergebnis(name){
     '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
     (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
     '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Einweisung: ' + P.einweisung + '</li></ul>' +
-    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Terminvorschlag innerhalb von 24 Stunden</li></ol>' +
+    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Wir melden uns innerhalb von 24 Stunden ' + (A[4].g === 1 ? 'telefonisch' : A[4].g === 2 ? 'per WhatsApp' : 'per E-Mail') + ' mit einem Terminvorschlag</li></ol>' +
     '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a> · <a href="#" id="neu">Neu starten</a></p></div>';
   fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
   document.getElementById('was-drin').onclick = function(e){ e.preventDefault(); dialogAuf(); };
