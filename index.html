@@ -107,7 +107,7 @@ html:not(.vor) .held::before{opacity:1;transform:translateX(-50%) scaleX(1)}
 .held-zeichen.da{opacity:1}
 .held-zeichen>div{position:absolute;inset:0}
 .held>.wrap{position:relative;z-index:1}
-.held-licht{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(320px 260px at 50% 27svh,rgba(255,255,255,.07),transparent 70%)}
+.held-licht{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(calc(320px * var(--ls,1)) calc(260px * var(--ls,1)) at var(--lx,50%) var(--ly,27svh),rgba(255,255,255,var(--la,.07)),transparent 70%)}
 .hg-chrom{position:absolute;top:30px;width:min(980px,150vw);height:560px;pointer-events:none;z-index:0;opacity:.17;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%)}
 .hg-chrom>div{position:absolute;inset:0}
 @media (max-width:900px){.hg-chrom{height:440px;top:20px;opacity:.2}}
@@ -852,12 +852,13 @@ function introSpielen() {
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
     Z.dataset.ort = 'hg'; intro.style.display = 'none'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
-    const wort = document.getElementById('intro-wort'); wortBleibt(wort);
+    const wort = document.getElementById('intro-wort'); wortBleibt(wort); ['--lx', '--ly', '--ls', '--la'].forEach(v => document.querySelector('.held-licht').style.removeProperty(v));
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
+  const licht = document.querySelector('.held-licht');
   const t0 = performance.now() + 150, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da', 'bleibt'); wort.style.top = ''; if (wort.parentNode !== document.body) document.body.insertBefore(wort, intro.nextSibling);
   const tick = () => {
     if (id !== lauf) return;
@@ -865,6 +866,10 @@ function introSpielen() {
     var km = Math.max(0, Math.min(1, (e - .9) / 1.9)), kg = Math.max(0, Math.min(1, e / 2.7));
     const vm = vollMass(), zg = .5 - .5 * Math.cos(Math.PI * kg);
     setz(zeichen, { u_morph: .5 - .5 * Math.cos(Math.PI * km), u_scale: vm.u_scale * (1 + .7 * (1 - zg)), u_offsetY: vm.u_offsetY * (.55 + .45 * zg) });
+    /* Lichthof folgt der Metallmasse wie ein Verfolger-Spot und kommt mit ihr zur Ruhe */
+    { const m = Math.min(innerWidth, innerHeight), sp = 1 + .7 * (1 - zg), tt = performance.now() / 1000, frei = 1 - km;
+      const lx = innerWidth / 2 + Math.sin(tt * 1.6) * .07 * m * sp * frei, ly = innerHeight / 2 - vm.u_offsetY * -1 * m * (.55 + .45 * zg) + Math.cos(tt * 1.2) * .06 * m * sp * frei;
+      licht.style.setProperty('--lx', lx + 'px'); licht.style.setProperty('--ly', ly + 'px'); licht.style.setProperty('--ls', sp.toFixed(3)); licht.style.setProperty('--la', (.07 + .05 * frei).toFixed(3)); }
     Z.style.opacity = Math.max(0, Math.min(1, e / .45));
     
     if (e > 2.8 && !wort.classList.contains('da') && !aus) wort.classList.add('da');
