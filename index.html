@@ -224,13 +224,13 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .wahl__sym::after{content:"";position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9);opacity:0;transition:opacity .35s;z-index:1}
 .wahl__txt b{display:block;font-weight:500;font-size:15px;letter-spacing:-.01em}
 .wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
-.wahl__ck{margin-left:auto;width:18px;height:18px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
+.wahl__ck{box-sizing:border-box;margin-left:auto;width:20px;height:20px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
 .wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),rgba(255,255,255,.012) 60%);box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.6),0 14px 34px -18px rgba(255,255,255,.25)}
 .wahl.an .wahl__sym{background:#111318;box-shadow:none}
 .wahl.an .wahl__chrom{opacity:1;transform:none}
 
 .wahl.an .wahl__sym svg{color:#F1F2F5}
-.wahl.an .wahl__ck{background:#F1F2F5;box-shadow:inset 0 0 0 4px #0c0e14,0 0 0 1px rgba(255,255,255,.75)}
+.wahl.an .wahl__ck{border:1.2px solid transparent;box-shadow:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.45' stop-color='%23B9BEC8'/%3E%3Cstop offset='.7' stop-color='%236F7480'/%3E%3Cstop offset='1' stop-color='%23F1F2F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='m5.6 10.3 2.9 2.9L14.6 7' fill='none' stroke='url(%23g)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
 .fb__wahl.zwei .wahl{padding:12px}
 .fb__wahl.zwei .wahl__ck{position:absolute;top:10px;right:10px}
@@ -241,7 +241,9 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .feld:focus{box-shadow:inset 0 0 0 1.5px rgba(235,242,255,.85)}
 .feld::placeholder{color:rgba(232,236,245,.45)}
 .haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
-.haken input{margin-top:3px;accent-color:#DCE4F7}
+.haken input{-webkit-appearance:none;appearance:none;flex:none;width:20px;height:20px;margin:0;border-radius:6px;cursor:pointer;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:background .25s}
+.haken input:checked{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.45' stop-color='%23B9BEC8'/%3E%3Cstop offset='.7' stop-color='%236F7480'/%3E%3Cstop offset='1' stop-color='%23F1F2F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='m5.6 10.3 2.9 2.9L14.6 7' fill='none' stroke='url(%23g)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.haken input:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
 .fb__schritt{animation:rein .55s var(--kurve)}
 .fb__schritt.geht{transition:opacity .2s;opacity:0}
 .fb__mini{margin:8px 0 8px;font-size:14px;color:var(--grau)}
@@ -272,7 +274,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erg__titel{margin:22px 0 10px;font-size:13px;color:var(--grau);letter-spacing:.02em}
 .erg__liste{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .erg__liste li{position:relative;padding-left:34px;font-size:15px;line-height:1.4}
-.erg__liste li::before{content:"";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;border:1.2px solid transparent;box-sizing:border-box;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m6 10.2 2.6 2.6L14 7.4' fill='none' stroke='%23F1F2F5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.erg__liste li::before{content:"";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;border:1.2px solid transparent;box-sizing:border-box;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.45' stop-color='%23B9BEC8'/%3E%3Cstop offset='.7' stop-color='%236F7480'/%3E%3Cstop offset='1' stop-color='%23F1F2F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='m5.6 10.3 2.9 2.9L14.6 7' fill='none' stroke='url(%23g)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
 .erg__weiter{list-style:none;margin:0;padding:0;display:grid;gap:9px;counter-reset:w}
 .erg__weiter li{position:relative;padding-left:34px;font-size:15px;color:#C9CDD6;counter-increment:w}
 .erg__weiter li::before{content:counter(w);position:absolute;left:0;top:-1px;width:22px;height:22px;box-sizing:border-box;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
@@ -677,7 +679,7 @@ function zeichne(nurMessen){
 var API = /endo-ergun\.vercel\.app$/.test(location.host) ? '/api/support' : 'https://endo-ergun.vercel.app/api/support';
 function gesendetZeigen(){
   fb.style.minHeight = fb.offsetHeight + 'px';
-  fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="#F1F2F5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
+  fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9BEC8"/><stop offset=".7" stop-color="#6F7480"/><stop offset="1" stop-color="#F1F2F5"/></linearGradient><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="url(#okh)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
     '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns innerhalb von 24 Stunden.</p></div>';
   setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = 5; zeichne(); }, 450); }, 2600);
 }
