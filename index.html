@@ -99,6 +99,9 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .kante{position:relative;overflow:hidden;border-radius:22px;padding:1.2px;background:linear-gradient(140deg,#FFFFFF,#7E8491 26%,#24272E 48%,#C8CCD4 70%,#E6E8EC)}
 .kante::before{content:"";position:absolute;inset:-40% -60%;background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%);transform:translateX(-70%);transition:transform 1.1s var(--kurve);pointer-events:none}
 .kante:hover::before{transform:translateX(70%)}
+.kante.schritt::before{transition:none;animation:glanzLauf 6s cubic-bezier(.45,0,.2,1) infinite}
+.kante.schritt:nth-child(2)::before{animation-delay:2s}.kante.schritt:nth-child(3)::before{animation-delay:4s}
+@keyframes glanzLauf{0%,30%{transform:translateX(-70%)}70%,100%{transform:translateX(70%)}}
 .kante>*{position:relative}
 .fuss-z{position:relative;display:inline-block;width:38px;height:38px;vertical-align:-13px;margin-right:4px}
 .fuss-z.an>svg{display:none}
