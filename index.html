@@ -271,11 +271,11 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erg__punkt{width:10px;height:10px;flex:none;border-radius:50%;background:#7CE0A6;box-shadow:0 0 0 4px rgba(124,224,166,.15);animation:puls 2s ease-in-out infinite}
 .erg__titel{margin:22px 0 10px;font-size:13px;color:var(--grau);letter-spacing:.02em}
 .erg__liste{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.erg__liste li{position:relative;padding-left:30px;font-size:15px;line-height:1.4}
-.erg__liste li::before{content:"";position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;background:#111318 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m6 10.2 2.6 2.6L14 7.4' fill='none' stroke='%23F1F2F5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.erg__liste li{position:relative;padding-left:34px;font-size:15px;line-height:1.4}
+.erg__liste li::before{content:"";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;border:1.2px solid transparent;box-sizing:border-box;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m6 10.2 2.6 2.6L14 7.4' fill='none' stroke='%23F1F2F5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
 .erg__weiter{list-style:none;margin:0;padding:0;display:grid;gap:9px;counter-reset:w}
-.erg__weiter li{position:relative;padding-left:30px;font-size:15px;color:#C9CDD6;counter-increment:w}
-.erg__weiter li::before{content:counter(w);position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.erg__weiter li{position:relative;padding-left:34px;font-size:15px;color:#C9CDD6;counter-increment:w}
+.erg__weiter li::before{content:counter(w);position:absolute;left:0;top:-1px;width:22px;height:22px;box-sizing:border-box;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
 .andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .andere button{text-align:left;padding:14px;border-radius:14px;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,230,255,.18);color:var(--text);font:400 14px Geist,sans-serif;cursor:pointer}
 .andere button b{display:block;font-weight:500;font-size:16px}
@@ -336,6 +336,23 @@ main,.fuss{position:relative;z-index:1}
 .marke b,.kopf__in>*{transition:opacity 1s var(--kurve)}
 .vorschau{position:fixed;left:14px;bottom:14px;z-index:60;font-size:12px;color:var(--grau);background:rgba(8,12,23,.7);backdrop-filter:blur(10px);padding:6px 12px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(200,215,255,.14)}
 /* Dialog */
+.ring{display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;font-size:13px;font-weight:500;color:#E8EAEE;letter-spacing:-.01em}
+.ring--zahl{width:44px;height:44px;font-size:14px}
+.dlg{max-width:1040px!important;padding:30px!important}
+.dlg__kopf{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}.dlg__kopf h2{font-size:clamp(26px,3.4vw,36px);margin-top:8px}
+.dlg__zu{width:40px;height:40px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:var(--text);font-size:20px;cursor:pointer}
+.pk-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pk{border-radius:22px;padding:22px;background:radial-gradient(120% 80% at 0% 0%,#15171d,#090a0e 60%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+.pk__kopf{display:flex;gap:14px;align-items:center}.pk__name{margin:0;font-size:20px;font-weight:500;letter-spacing:-.02em}.pk__satz{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.4}
+.pk__preis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 18px;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.pk__preis b{display:block;font-size:26px;font-weight:500;letter-spacing:-.04em}.pk__preis span{font-size:12px;color:var(--grau)}
+.pk__liste{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pk__liste li{position:relative;padding-left:24px;font-size:14px;line-height:1.4;color:#D4D7DE}
+.pk__liste li::before{content:"";position:absolute;left:0;top:9px;width:13px;height:1px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.25))}
+.pk__fakten{margin:18px 0 0;display:grid;gap:8px}.pk__fakten div{display:flex;justify-content:space-between;gap:10px;font-size:13px}.pk__fakten dt{color:var(--grau)}.pk__fakten dd{margin:0;text-align:right}
+.pk-hinweise{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.pk-hinweis{display:flex;gap:14px;padding:18px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.pk-hinweis b{font-weight:500;font-size:14px}.pk-hinweis p{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.5}
+@media (max-width:900px){.pk-raster,.pk-hinweise{grid-template-columns:1fr}.dlg{padding:20px!important}}
 .dialog{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(2,3,8,.7);backdrop-filter:blur(6px);padding:20px}
 .dialog.auf{display:grid}
 .dialog .glas{max-width:860px;max-height:86vh;overflow:auto}
@@ -446,12 +463,14 @@ td:first-child{color:var(--grau)}
 </div></div></footer>
 
 
-<div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Leistungen"><div class="glas">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h2 style="font-size:30px">Was genau <span class="chrom in">enthalten</span> ist</h2><button class="zurueck" id="dialog-zu" type="button" style="font-size:22px">×</button></div>
-  <div id="tabelle"></div>
-  <p class="klein"><b style="color:var(--text);font-weight:500">In allen Paketen nicht enthalten:</b> eigene Programmierung, Anbindung fremder Programme, Buchhaltung und Steuer (bleibt bei Ihrem Steuerberater, den Export richten wir auf Wunsch ein) und die Odoo-Lizenz, die Sie direkt beim Hersteller zahlen.</p>
-  <p class="klein"><b style="color:var(--text);font-weight:500">Betreuung:</b> Fragen per E-Mail und kleine Änderungen, ohne Stundenzusage. Antwort innerhalb von 2 Werktagen.</p>
-  <p class="klein">Alle Preise netto zzgl. MwSt.</p>
+<div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Leistungen"><div class="glas dlg">
+  <div class="dlg__kopf"><div><span class="label">Pakete</span><h2>Was genau <span class="chrom">enthalten</span> ist</h2></div><button class="dlg__zu" id="dialog-zu" type="button" aria-label="Schließen">×</button></div>
+  <div id="tabelle" class="pk-raster"></div>
+  <div class="pk-hinweise">
+    <div class="pk-hinweis"><span class="ring">i</span><div><b>In keinem Paket enthalten</b><p>Eigene Programmierung, Anbindung fremder Programme, Buchhaltung und Steuer (bleibt bei Ihrem Steuerberater, den Export richten wir auf Wunsch ein) und die Odoo-Lizenz, die Sie direkt beim Hersteller zahlen.</p></div></div>
+    <div class="pk-hinweis"><span class="ring">✓</span><div><b>Betreuung</b><p>Fragen per E-Mail und kleine Änderungen, ohne Stundenzusage. Antwort innerhalb von 2 Werktagen.</p></div></div>
+  </div>
+  <p class="klein" style="text-align:center;margin-top:18px">Alle Preise netto zzgl. MwSt.</p>
 </div></div>
 
 <script>
@@ -542,9 +561,11 @@ var PAKETE = {
   Business: { e: '3.000 €', m: '149 €', satz: 'Die wichtigsten Abläufe verbunden, vom Angebot bis zum Auftrag.', apps: ['Alles aus Start', 'Angebote mit Online-Unterschrift', 'Aufträge und Aufgaben'], nutzer: 'bis 10', umzug: 'Kontakte und Produkte', einweisung: '2 Termine online' },
   Komplett: { e: '5.000 €', m: '249 €', satz: 'Der ganze Betrieb in einem System, mit Kundenservice und Newsletter.', apps: ['Alles aus Business', 'Kundenservice', 'E-Mail-Marketing'], nutzer: 'bis 25', umzug: 'Kontakte, Produkte, offene Aufträge', einweisung: '3 Termine online' }
 };
-document.getElementById('tabelle').innerHTML = '<table><tr><th></th><th>Start</th><th>Business</th><th>Komplett</th></tr>' +
-  [['Einrichtung einmalig','e'],['Betreuung monatlich','m'],['Eingerichtete Nutzer','nutzer'],['Datenumzug','umzug'],['Persönlicher Start','einweisung']].map(function(r){ return '<tr><td>' + r[0] + '</td>' + ['Start','Business','Komplett'].map(function(p){ return '<td>' + PAKETE[p][r[1]] + '</td>'; }).join('') + '</tr>'; }).join('') +
-  '<tr><td>Virtuelles Büro</td><td colspan="3">In jedem Paket – live sehen, was im Betrieb passiert</td></tr><tr><td>Odoo-Apps</td><td>Anfragen (CRM), Formular und Live-Chat, Termine, Rechnungen</td><td>+ Angebote mit Online-Unterschrift, Aufträge und Aufgaben</td><td>+ Kundenservice, E-Mail-Marketing</td></tr><tr><td>Virtuelles Büro</td><td>ja</td><td>ja</td><td>ja</td></tr></table>';
+document.getElementById('tabelle').innerHTML = ['Start', 'Business', 'Komplett'].map(function(k, i){ var P = PAKETE[k];
+  return '<div class="pk"><div class="pk__kopf"><span class="ring ring--zahl">0' + (i + 1) + '</span><div><p class="pk__name">endo <span class="chrom">' + k + '</span></p><p class="pk__satz">' + P.satz + '</p></div></div>' +
+    '<div class="pk__preis"><div><b>' + P.m + '</b><span>im Monat</span></div><div><b>' + P.e + '</b><span>einmalig</span></div></div>' +
+    '<ul class="pk__liste"><li>Virtuelles Büro – live sehen, was passiert</li>' + alleApps(k).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '</ul>' +
+    '<dl class="pk__fakten"><div><dt>Nutzer</dt><dd>' + P.nutzer + '</dd></div><div><dt>Datenumzug</dt><dd>' + P.umzug + '</dd></div><div><dt>Persönlicher Start</dt><dd>' + P.einweisung + '</dd></div></dl></div>'; }).join('');
 var dialog = document.getElementById('dialog');
 function dialogAuf(){ dialog.classList.add('auf'); }
 document.getElementById('leistungen-auf').onclick = dialogAuf;
