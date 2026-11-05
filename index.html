@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>endo – Odoo für Ihren Betrieb, eingerichtet und betreut</title>
-<meta name="description" content="endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.">
+<title>endo – Ihr ERP-System mit Odoo, eingerichtet und betreut</title>
+<meta name="description" content="endo richtet Ihr ERP-System auf Basis von Odoo ein und betreut es danach.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="endo – Ihr Betrieb. In einem System.">
-<meta property="og:description" content="endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.">
+<meta property="og:description" content="endo richtet Ihr ERP-System auf Basis von Odoo ein und betreut es danach.">
 <meta property="og:url" content="https://endo-ergun.vercel.app/">
 <meta property="og:locale" content="de_DE">
 <link rel="canonical" href="https://endo-ergun.vercel.app/">
@@ -362,11 +362,11 @@ main,.fuss{position:relative;z-index:1}
 /* Dialog */
 .ring{display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;font-size:13px;font-weight:500;color:#E8EAEE;letter-spacing:-.01em}
 .ring--zahl{width:44px;height:44px;font-size:14px}
-.dlg{max-width:1040px!important;padding:30px!important}
+.dlg__kopf h2{margin-top:8px}
 .dlg__kopf{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}.dlg__kopf h2{font-size:clamp(26px,3.4vw,36px);margin-top:8px}
 .dlg__zu{width:40px;height:40px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:var(--text);font-size:20px;cursor:pointer}
-.pk-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.pk{border-radius:22px;padding:22px;background:radial-gradient(120% 80% at 0% 0%,#15171d,#090a0e 60%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+.pk-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
+.pk{padding:26px 4px 6px;border-top:1px solid rgba(255,255,255,.1)}
 .pk__kopf{display:flex;gap:14px;align-items:center}.pk__name{margin:0;font-size:20px;font-weight:500;letter-spacing:-.02em}.pk__satz{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.4}
 .pk__preis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 18px;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
 .pk__preis b{display:block;font-size:26px;font-weight:500;letter-spacing:-.04em}.pk__preis span{font-size:12px;color:var(--grau)}
@@ -374,12 +374,15 @@ main,.fuss{position:relative;z-index:1}
 .pk__liste li{position:relative;padding-left:24px;font-size:14px;line-height:1.4;color:#D4D7DE}
 .pk__liste li::before{content:"";position:absolute;left:0;top:9px;width:13px;height:1px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.25))}
 .pk__fakten{margin:18px 0 0;display:grid;gap:8px}.pk__fakten div{display:flex;justify-content:space-between;gap:10px;font-size:13px}.pk__fakten dt{color:var(--grau)}.pk__fakten dd{margin:0;text-align:right}
-.pk-hinweise{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.pk-hinweis{display:flex;gap:14px;padding:18px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.pk-hinweis b{font-weight:500;font-size:14px}.pk-hinweis p{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.5}
-@media (max-width:900px){.pk-raster,.pk-hinweise{grid-template-columns:1fr}.dlg{padding:20px!important}}
-.dialog{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(2,3,8,.7);backdrop-filter:blur(6px);padding:20px}
-.dialog.auf{display:grid}
-.dialog .glas{max-width:860px;max-height:86vh;overflow:auto}
+.pk-hinweise{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:40px}
+.pk-hinweis{display:flex;gap:14px;padding:22px 4px 0;border-top:1px solid rgba(255,255,255,.1)}.pk-hinweis b{font-weight:500;font-size:14px}.pk-hinweis p{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.5}
+@media (max-width:900px){.pk-raster,.pk-hinweise{grid-template-columns:1fr}.dialog .dlg{padding:76px 16px 60px}}
+.dialog{position:fixed;inset:0;z-index:130;display:block;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:rgba(0,0,0,.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);opacity:0;visibility:hidden;transition:opacity .45s cubic-bezier(.33,0,.2,1),visibility 0s .45s}
+.dialog.auf{opacity:1;visibility:visible;transition:opacity .45s cubic-bezier(.33,0,.2,1),visibility 0s}
+.dialog .dlg{max-width:1040px;margin:0 auto;padding:90px 22px 70px;transform:translateY(16px);transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.dialog.auf .dlg{transform:none}
+.dlg__zu{position:fixed;top:16px;right:16px;z-index:2}
+body.dlg-offen{overflow:hidden}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(200,215,255,.12);vertical-align:top}
 th{font-weight:500;color:var(--grau);font-size:13px}
@@ -423,9 +426,9 @@ td:first-child{color:var(--grau)}
   <div class="wrap held__raster">
     <div id="held-text">
       <h1><span class="zeile"><span style="transition-delay:.2s">Ihr Betrieb.</span></span><span class="zeile"><span style="transition-delay:.34s">In <span class="chrom">einem System.</span></span></span></h1>
-      <p class="satz hebt" style="transition-delay:.55s">endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.</p>
+      <p class="satz hebt" style="transition-delay:.55s">endo richtet Ihr ERP-System auf Basis von Odoo ein und betreut es danach.</p>
       <div class="held__knoepfe hebt" style="transition-delay:.7s"><a class="knopf" href="#fragebogen">Erstgespräch vereinbaren <span class="pfeil">→</span></a></div>
-      <p class="held__vertrauen">Feste Preise  ·  Persönlich betreut  ·  Odoo</p>
+      <p class="held__vertrauen">ERP-System  ·  Feste Preise  ·  Persönlich betreut</p>
     </div>
   </div>
   <span class="scroll-hinweis" aria-hidden="true"></span>
@@ -434,9 +437,9 @@ td:first-child{color:var(--grau)}
 
 <section class="abschnitt was" id="was">
   <div class="wrap">
-    <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in Odoo – eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
+    <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in ein ERP-System: Odoo, eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
     <div class="was__raster">
-      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>Odoo, passend eingerichtet</h3><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
+      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System, passend eingerichtet</h3><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.24s"><div class="karte"><span class="was__nr chrom">3</span><h3>Betreut zum Festpreis</h3><p>Ein fester Ansprechpartner für Fragen und kleine Änderungen. Feste Pakete, feste Preise, keine Überraschungen.</p></div></div>
     </div>
@@ -481,12 +484,12 @@ td:first-child{color:var(--grau)}
 </main>
 
 <footer class="fuss"><div class="wrap"><div class="linie beob" style="margin-bottom:40px"></div><div class="fuss__in">
-  <span><span class="fuss-z" id="fuss-sh"><svg viewBox="-56 -56 112 112" width="100%" height="100%" aria-hidden="true" style="position:absolute;inset:18%;width:64%;height:64%"><defs><radialGradient id="fk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#fl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#fk)"/><circle cx="25.98" cy="15" r="14" fill="url(#fk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#fk)"/></svg></span><span class="fuss__marke"><b class="chrom">endo</b><small>Odoo eingerichtet und betreut</small></span></span>
+  <span><span class="fuss-z" id="fuss-sh"><svg viewBox="-56 -56 112 112" width="100%" height="100%" aria-hidden="true" style="position:absolute;inset:18%;width:64%;height:64%"><defs><radialGradient id="fk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#fl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#fk)"/><circle cx="25.98" cy="15" r="14" fill="url(#fk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#fk)"/></svg></span><span class="fuss__marke"><b class="chrom">endo</b><small>ERP-Systeme mit Odoo, eingerichtet und betreut</small></span></span>
   <nav class="fuss__nav" aria-label="Fußleiste"><button type="button" id="leistungen-auf">Leistungen</button><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" id="intro-nochmal">Intro ansehen</button></nav>
 </div><p class="fuss__klein">© 2026 endo · Alle Preise netto zzgl. MwSt.</p></div></footer>
 
 
-<div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Leistungen"><div class="glas dlg">
+<div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Leistungen"><div class="dlg">
   <div class="dlg__kopf"><div><span class="label">Pakete</span><h2>Was genau <span class="chrom">enthalten</span> ist</h2></div><button class="dlg__zu" id="dialog-zu" type="button" aria-label="Schließen">×</button></div>
   <div id="tabelle" class="pk-raster"></div>
   <div class="pk-hinweise">
@@ -494,6 +497,7 @@ td:first-child{color:var(--grau)}
     <div class="pk-hinweis"><span class="ring">✓</span><div><b>Betreuung</b><p>Fragen per E-Mail und kleine Änderungen, ohne Stundenzusage. Antwort innerhalb von 2 Werktagen.</p></div></div>
   </div>
   <p class="klein" style="text-align:center;margin-top:18px">Alle Preise netto zzgl. MwSt.</p>
+  <div style="text-align:center;margin-top:26px"><button type="button" class="knopf knopf--glas" id="dialog-zurueck">← Zurück zur Seite</button></div>
 </div></div>
 
 <script>
@@ -590,10 +594,12 @@ document.getElementById('tabelle').innerHTML = ['Start', 'Business', 'Komplett']
     '<ul class="pk__liste"><li>Virtuelles Büro – live sehen, was passiert</li>' + alleApps(k).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '</ul>' +
     '<dl class="pk__fakten"><div><dt>Nutzer</dt><dd>' + P.nutzer + '</dd></div><div><dt>Datenumzug</dt><dd>' + P.umzug + '</dd></div><div><dt>Persönlicher Start</dt><dd>' + P.einweisung + '</dd></div></dl></div>'; }).join('');
 var dialog = document.getElementById('dialog');
-function dialogAuf(){ dialog.classList.add('auf'); }
+function dialogAuf(){ dialog.scrollTop = 0; dialog.classList.add('auf'); document.body.classList.add('dlg-offen'); }
+function dialogZu(){ dialog.classList.remove('auf'); document.body.classList.remove('dlg-offen'); }
+addEventListener('keydown', function(e){ if (e.key === 'Escape' && dialog.classList.contains('auf')) dialogZu(); });
 document.getElementById('leistungen-auf').onclick = dialogAuf;
-document.getElementById('dialog-zu').onclick = function(){ dialog.classList.remove('auf'); };
-dialog.addEventListener('click', function(e){ if (e.target === dialog) dialog.classList.remove('auf'); });
+document.getElementById('dialog-zu').onclick = dialogZu; document.getElementById('dialog-zurueck').onclick = dialogZu;
+dialog.addEventListener('click', function(e){ if (e.target === dialog || e.target.classList.contains('dlg')) dialogZu(); });
 
 /* ---------- Fragebogen ---------- */
 var I = {
