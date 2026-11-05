@@ -107,7 +107,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .held-zeichen.da{opacity:1}
 .held-zeichen>div{position:absolute;inset:0}
 .held>.wrap{position:relative;z-index:1}
-.held-licht{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(calc(320px * var(--ls,1)) calc(260px * var(--ls,1)) at var(--lx,50%) var(--ly,27svh),rgba(255,255,255,var(--la,.07)),transparent 70%)}
+.held-licht{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(calc(230px * var(--ls,1)) calc(120px * var(--ls,1)) at var(--lx,50%) var(--ly,27svh),rgba(255,255,255,var(--la,.07)),rgba(255,255,255,calc(var(--la,.07) * .35)) 45%,transparent 100%)}
 .hg-chrom{position:absolute;top:30px;width:min(980px,150vw);height:560px;pointer-events:none;z-index:0;opacity:.17;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%)}
 .hg-chrom>div{position:absolute;inset:0}
 @media (max-width:900px){.hg-chrom{height:440px;top:20px;opacity:.2}}
@@ -742,7 +742,7 @@ const FORM_ZWEIG = `
         if (i < 3) {
           vec2 ziel = ecke[i] * 1.3 - .025 * traj;
           vec2 mitte = mix(-traj, ziel, zug);
-          feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., 1.15, zug), 0.0, 1.0), 4.0);
+          feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., 1.25, zug), 0.0, 1.0), 4.0);
         } else {
           vec2 mitte = mix(-traj, vec2(0.), zug);
           feld += (1. - zug) * pow(1.0 - clamp(length(mUV - mitte), 0.0, 1.0), 4.0);
@@ -757,9 +757,8 @@ const FORM_ZWEIG = `
         float db = endoBox(pp, gr * .5 - u_rahmen * gr.x, u_rund * gr.x) / (u_rahmen * gr.x);
         feldZ = clamp(.66 - db * .9, 0., 1.3);
       }
-      float wz = smoothstep(.1, 1., u_morph);
-      // weiche Verschmelzung: in der Mitte wie flüssige Vereinigung beider Formen, nie dünner als eine der beiden
-      feld = mix(mix(feld, feldZ, wz), max(feld, feldZ), .85 * sin(3.14159 * wz));
+      float wz = smoothstep(.12, .95, u_morph);
+      feld = mix(mix(feld, feldZ, wz), max(feld, feldZ), .4 * sin(3.14159 * wz));
       edge = 1. - smoothstep(.65, .9, feld);
       edge = pow(edge, 4.);
     }
@@ -865,7 +864,7 @@ function introSpielen() {
   const tick = () => {
     if (id !== lauf) return;
     const e = (performance.now() - t0) / 1000;
-    var km = Math.max(0, Math.min(1, (e - .5) / 2.5)), kg = Math.max(0, Math.min(1, e / 2.4));
+    var km = Math.max(0, Math.min(1, (e - .6) / 1.9)), kg = Math.max(0, Math.min(1, e / 2.4));
     const vm = vollMass(), zg = .5 - .5 * Math.cos(Math.PI * kg);
     setz(zeichen, { u_morph: .5 - .5 * Math.cos(Math.PI * km), u_scale: vm.u_scale * (1 + .7 * (1 - zg)), u_offsetY: vm.u_offsetY * (.55 + .45 * zg) });
     /* Lichthof folgt der Metallmasse wie ein Verfolger-Spot und kommt mit ihr zur Ruhe */
@@ -874,9 +873,9 @@ function introSpielen() {
       licht.style.setProperty('--lx', lx + 'px'); licht.style.setProperty('--ly', ly + 'px'); licht.style.setProperty('--ls', sp.toFixed(3)); licht.style.setProperty('--la', ((.07 + .05 * frei) * Math.min(1, e / .5)).toFixed(3)); }
     Z.style.opacity = Math.max(0, Math.min(1, e / .3));
     
-    if (e > 3.0 && !wort.classList.contains('da') && !aus) { wort.classList.add('da'); setTimeout(() => html.classList.add('linie-auf'), 350); }
-    if (e > 4.4 && !aus) fertig();
-    if (e < 4.5) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
+    if (e > 2.6 && !wort.classList.contains('da') && !aus) { wort.classList.add('da'); setTimeout(() => html.classList.add('linie-auf'), 350); }
+    if (e > 4.0 && !aus) fertig();
+    if (e < 4.1) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
   };
   requestAnimationFrame(tick);
 }
