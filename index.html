@@ -155,11 +155,10 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .schritt__kopf{display:flex;align-items:center;gap:14px}
 .schritt__kopf h3{margin:0;font-size:19px}
 .schritt__kopf .nr{margin:0 0 0 auto;font-size:34px}
-.schritt__sym{position:relative;width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff,#d9dbe0 22%,#7e8491 58%,#24272e 92%)}
-.schritt__sym.an{background:none}
-.schritt__sh{position:absolute;inset:-4px}
-.schritt__sym::after{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08);z-index:1}
-.schritt__sym svg{position:relative;z-index:2;width:18px;height:18px;color:#E8EAEE;stroke-width:1.6}
+.schritt__sym{position:relative;width:48px;height:48px;flex:none;display:grid;place-items:center;border-radius:50%;background:#111318;box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.55)}
+.schritt__sym.an{box-shadow:none}
+.schritt__sh{position:absolute;inset:-1px;-webkit-mask:radial-gradient(closest-side,transparent 85%,#000 87%);mask:radial-gradient(closest-side,transparent 85%,#000 87%)}
+.schritt__sym svg{position:relative;z-index:2;width:20px;height:20px;color:#E8EAEE;stroke-width:1.5}
 .schritt__liste{list-style:none;margin:18px 0 0;padding:0}
 .schritt__liste li{position:relative;padding:5px 0 5px 20px;color:#C9CDD6;font-size:15px}
 .schritt__liste li::before{content:"";position:absolute;left:3px;top:13px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9a9fa9 70%)}
@@ -194,15 +193,15 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .wahl:active{transform:scale(.985)}
 .wahl__sym{position:relative;width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1b1d23,#0b0c10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);transition:background .4s var(--kurve),box-shadow .4s}
 .wahl__sym svg{position:relative;z-index:2;width:19px;height:19px;color:#B9BEC8;transition:color .3s}
-.wahl__chrom{position:absolute;left:-4px;top:-4px;width:50px;height:50px;opacity:0;transform:scale(.7);transition:opacity .45s var(--kurve),transform .55s var(--kurve);pointer-events:none}
+.wahl__chrom{position:absolute;left:-1px;top:-1px;width:44px;height:44px;-webkit-mask:radial-gradient(closest-side,transparent 84%,#000 86%);mask:radial-gradient(closest-side,transparent 84%,#000 86%);opacity:0;transform:scale(.7);transition:opacity .45s var(--kurve),transform .55s var(--kurve);pointer-events:none}
 .wahl__sym::after{content:"";position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9);opacity:0;transition:opacity .35s;z-index:1}
 .wahl__txt b{display:block;font-weight:500;font-size:15px;letter-spacing:-.01em}
 .wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
 .wahl__ck{margin-left:auto;width:18px;height:18px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
 .wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),rgba(255,255,255,.012) 60%);box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.6),0 14px 34px -18px rgba(255,255,255,.25)}
-.wahl.an .wahl__sym{background:none;box-shadow:0 8px 18px -8px rgba(255,255,255,.35)}
+.wahl.an .wahl__sym{background:#111318;box-shadow:none}
 .wahl.an .wahl__chrom{opacity:1;transform:none}
-.wahl.an .wahl__sym::after{opacity:1}
+
 .wahl.an .wahl__sym svg{color:#F1F2F5}
 .wahl.an .wahl__ck{background:#F1F2F5;box-shadow:inset 0 0 0 4px #0c0e14,0 0 0 1px rgba(255,255,255,.75)}
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
