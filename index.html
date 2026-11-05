@@ -32,7 +32,7 @@ body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist
 body.intro-an{overflow:hidden}
 a{color:inherit}
 .korn{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
-.chrom{background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%) no-repeat,linear-gradient(180deg,#FFFFFF 0%,#EEF2FB 30%,#8A95AE 50%,#5E6983 56%,#C3CDE4 70%,#FFFFFF 86%,#A9B4CE 100%);background-size:300% 100%,100% 100%;background-position:150% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:glanz 7s cubic-bezier(.4,0,.2,1) infinite}
+.chrom{background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%) no-repeat,linear-gradient(180deg,#FFFFFF 0%,#F1F2F5 30%,#8E939E 50%,#5F646F 56%,#CDD0D7 70%,#FFFFFF 86%,#AEB2BB 100%);background-size:300% 100%,100% 100%;background-position:150% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:glanz 7s cubic-bezier(.4,0,.2,1) infinite}
 @keyframes glanz{0%,55%{background-position:150% 0,0 0}100%{background-position:-50% 0,0 0}}
 .wrap{width:min(1160px,100% - 48px);margin:0 auto}
 /* Kopf */
@@ -82,7 +82,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .label::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .linie{height:1px;background:linear-gradient(90deg,transparent,rgba(175,192,232,.7),transparent);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--kurve)}
 .linie.in{transform:none}
-.kante{position:relative;overflow:hidden;border-radius:22px;padding:1.2px;background:linear-gradient(140deg,#F4F7FF,#6F7C99 26%,#2a3040 48%,#9FB3E8 70%,#DCE4F7)}
+.kante{position:relative;overflow:hidden;border-radius:22px;padding:1.2px;background:linear-gradient(140deg,#FFFFFF,#7E8491 26%,#24272E 48%,#C8CCD4 70%,#E6E8EC)}
 .kante::before{content:"";position:absolute;inset:-40% -60%;background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%);transform:translateX(-70%);transition:transform 1.1s var(--kurve);pointer-events:none}
 .kante:hover::before{transform:translateX(70%)}
 .kante>*{position:relative}
@@ -121,10 +121,10 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .rad__mitte{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
 .rad__mitte canvas{position:absolute;inset:-6%;width:112%;height:112%}
 .knoten{position:absolute;display:grid;justify-items:center;gap:8px;width:110px;border:0;background:none;color:var(--grau);font:500 13px/1.2 Geist,sans-serif;cursor:pointer;transform:translate(-50%,-50%);padding:0}
-.knoten span.k{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(var(--flaeche),var(--flaeche)) padding-box,linear-gradient(140deg,#F4F7FF,#6F7C99 30%,#2a3040 55%,#9FB3E8 80%,#DCE4F7) border-box;color:#B9C4DA;transition:all .4s var(--kurve)}
+.knoten span.k{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(var(--flaeche),var(--flaeche)) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:#B9C4DA;transition:all .4s var(--kurve)}
 .knoten svg{width:22px;height:22px}
 .knoten.an{color:var(--text)}
-.knoten.an span.k{background:radial-gradient(circle at 35% 30%,#2a3550,#0b1020) padding-box,linear-gradient(140deg,#fff,#AFC0E8 40%,#fff 70%,#8FA3D6) border-box;box-shadow:0 0 22px -6px rgba(160,185,240,.5);color:#fff}
+.knoten.an span.k{background:radial-gradient(circle at 35% 30%,#2a3550,#0b1020) padding-box,linear-gradient(140deg,#fff,#BFC3CB 40%,#fff 70%,#9A9FA9) border-box;box-shadow:0 0 22px -6px rgba(160,185,240,.5);color:#fff}
 /* Bereiche interaktiv: Leiste + Tafel mit drei Punkten und Live-Ablauf */
 .bereiche{display:grid;gap:16px;align-content:start}
 .ber-leiste{display:flex;flex-wrap:wrap;gap:8px}
@@ -150,10 +150,22 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 @media (max-width:900px){.ber-tafel>div{grid-template-columns:1fr;padding:20px}}
 .machen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .nr{font-size:44px;font-weight:500;letter-spacing:-.05em;line-height:1;margin-bottom:26px}
+.schritt .karte{background:radial-gradient(120% 100% at 0% 0%,#14161c,var(--flaeche) 60%)}
+.schritt__kopf{display:flex;align-items:center;gap:14px}
+.schritt__kopf h3{margin:0;font-size:19px}
+.schritt__kopf .nr{margin:0 0 0 auto;font-size:34px}
+.schritt__sym{position:relative;width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff,#d9dbe0 22%,#7e8491 58%,#24272e 92%)}
+.schritt__sym.an{background:none}
+.schritt__sh{position:absolute;inset:-4px}
+.schritt__sym::after{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08);z-index:1}
+.schritt__sym svg{position:relative;z-index:2;width:18px;height:18px;color:#E8EAEE;stroke-width:1.6}
+.schritt__liste{list-style:none;margin:18px 0 0;padding:0}
+.schritt__liste li{position:relative;padding:5px 0 5px 20px;color:#C9CDD6;font-size:15px}
+.schritt__liste li::before{content:"";position:absolute;left:3px;top:13px;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9a9fa9 70%)}
 /* Erstgespraech */
 .erst{position:relative;padding:150px 0 130px;overflow:hidden}
 .fb-buehne{position:relative;max-width:620px;margin:0 auto}
-.fb-rand{position:relative;z-index:1;border-radius:29px;padding:1.2px;background:linear-gradient(140deg,#F4F7FF,#6F7C99 26%,#2a3040 48%,#9FB3E8 70%,#DCE4F7)}
+.fb-rand{position:relative;z-index:1;border-radius:29px;padding:1.2px;background:linear-gradient(140deg,#FFFFFF,#7E8491 26%,#24272E 48%,#C8CCD4 70%,#E6E8EC)}
 .fb-rand #fb{max-width:none;background:#06080f;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 .fb-tropfen{position:absolute;z-index:0;pointer-events:none;opacity:0;transform:scale(.6);transition:opacity 1.2s var(--kurve),transform 1.6s var(--kurve)}
 .fb-tropfen.da{opacity:1;transform:none}
@@ -170,7 +182,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .fb__oben{display:flex;justify-content:space-between;font-size:13px;color:var(--grau);margin-bottom:10px}
 .fb__balken{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:28px}
 .fb__balken i{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;position:relative}
-.fb__balken i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#9FB3E8,#F4F7FF);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
+.fb__balken i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#8E939E,#FFFFFF);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
 .fb__balken i.an::after{transform:none}
 .fb__frage{font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.15;margin:0 0 6px}
 .fb__unter{color:var(--grau);font-size:15px;margin:0 0 20px}
@@ -185,7 +197,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
 .wahl__ck{margin-left:auto;width:18px;height:18px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
 .wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(120,150,230,.16),rgba(255,255,255,.015) 60%);box-shadow:inset 0 0 0 1.2px rgba(225,234,255,.75),0 14px 34px -18px rgba(120,150,230,.55)}
-.wahl.an .wahl__sym{background:radial-gradient(circle at 34% 28%,#fff,#D6DEEF 22%,#7C88A3 58%,#2a3042 92%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 6px 16px -6px rgba(160,185,240,.6)}
+.wahl.an .wahl__sym{background:radial-gradient(circle at 34% 28%,#fff,#d9dbe0 22%,#7e8491 58%,#24272e 92%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 6px 16px -6px rgba(160,185,240,.6)}
 .wahl.an .wahl__sym svg{color:#0b0f1a}
 .wahl.an .wahl__ck{background:radial-gradient(circle at 35% 30%,#fff,#C9D3EA 55%,#7C88A3);box-shadow:inset 0 0 0 4px #0c1122,0 0 0 1px rgba(235,242,255,.8)}
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
@@ -404,7 +416,7 @@ function tafelZeigen(i){
 }
 var rad = document.getElementById('rad'), R = 39, linien = '', punkte = '', knoten = '';
 function ort(i){ var a = -Math.PI / 2 + i * Math.PI * 2 / 6; return [50 + Math.cos(a) * R, 50 + Math.sin(a) * R]; }
-var defs = '<defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="#AFC0E8" stop-opacity=".05"/><stop offset=".5" stop-color="#E6EDFF" stop-opacity=".55"/><stop offset="1" stop-color="#AFC0E8" stop-opacity=".1"/></linearGradient><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F7FF"/><stop offset=".3" stop-color="#6F7C99"/><stop offset=".55" stop-color="#2a3040"/><stop offset=".78" stop-color="#9FB3E8"/><stop offset="1" stop-color="#DCE4F7"/></linearGradient><filter id="lglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter><radialGradient id="halo"><stop offset="0" stop-color="#C9D8FF" stop-opacity=".55"/><stop offset=".45" stop-color="#9FB6F0" stop-opacity=".16"/><stop offset="1" stop-color="#9FB6F0" stop-opacity="0"/></radialGradient><radialGradient id="tr" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9C4DA"/><stop offset="1" stop-color="#3C475E"/></radialGradient></defs>';
+var defs = '<defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="#AFC0E8" stop-opacity=".05"/><stop offset=".5" stop-color="#E6EDFF" stop-opacity=".55"/><stop offset="1" stop-color="#AFC0E8" stop-opacity=".1"/></linearGradient><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".78" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient><filter id="lglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter><radialGradient id="halo"><stop offset="0" stop-color="#C9D8FF" stop-opacity=".55"/><stop offset=".45" stop-color="#9FB6F0" stop-opacity=".16"/><stop offset="1" stop-color="#9FB6F0" stop-opacity="0"/></radialGradient><radialGradient id="tr" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9C4DA"/><stop offset="1" stop-color="#3C475E"/></radialGradient></defs>';
 BER.forEach(function(b, i){ var p = ort(i);
   var a0 = [50 + (p[0] - 50) * (16.2 / R), 50 + (p[1] - 50) * (16.2 / R)], a1 = [50 + (p[0] - 50) * ((R - 4.8) / R), 50 + (p[1] - 50) * ((R - 4.8) / R)];
   var lin = ' x1="' + a0[0] + '" y1="' + a0[1] + '" x2="' + a1[0] + '" y2="' + a1[1] + '"', rein = ' x1="' + a1[0] + '" y1="' + a1[1] + '" x2="' + a0[0] + '" y2="' + a0[1] + '"';
@@ -440,8 +452,13 @@ var pk = rad.querySelectorAll('[data-pk]'), fl = rad.querySelectorAll('[data-fl]
 })();
 
 /* ---------- Das machen wir ---------- */
-document.getElementById('machen-karten').innerHTML = [['01','Einrichten','Odoo passend zu Ihrem Betrieb, Ihre Daten ziehen mit um.'],['02','Einweisen','Ihr Team kann sofort damit arbeiten.'],['03','Betreuen','Fragen und kleine Änderungen, zum festen Monatspreis.']].map(function(m, i){
-  return '<div class="kante reihe beob" style="transition-delay:' + (i * .12) + 's"><div class="karte"><div class="nr chrom">' + m[0] + '</div><h3>' + m[1] + '</h3><p>' + m[2] + '</p></div></div>'; }).join('');
+var SCHRITTE = [
+  ['01', 'Einrichten', '<path d="M14.5 6.5a4 4 0 0 0-5 5L4 17l3 3 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z"/>', ['Ihre Abläufe gemeinsam aufnehmen', 'Odoo passend zu Ihrem Betrieb einrichten', 'Kontakte und Daten übernehmen']],
+  ['02', 'Einweisen', '<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6 6 0 0 1 3 5.5"/>', ['Kurze Schulung für Ihr Team', 'Spickzettel zum Nachlesen', 'Fragen direkt klären']],
+  ['03', 'Betreuen', '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="m9 12 2 2 4-4"/>', ['Fester Ansprechpartner', 'Kleine Änderungen inklusive', 'Zum festen Monatspreis']]
+];
+document.getElementById('machen-karten').innerHTML = SCHRITTE.map(function(m, i){
+  return '<div class="kante schritt reihe beob" style="transition-delay:' + (i * .12) + 's"><div class="karte"><div class="schritt__kopf"><span class="schritt__sym"><span class="schritt__sh" data-sym></span>' + svg(m[2]) + '</span><h3>' + m[1] + '</h3><span class="nr chrom">' + m[0] + '</span></div><ul class="schritt__liste">' + m[3].map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul></div></div>'; }).join('');
 
 /* ---------- Pakete ---------- */
 var PAKETE = {
@@ -706,6 +723,10 @@ try {
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   try { const fz = document.getElementById('fuss-sh'), fuss = new P.ShaderMount(fz, FS, basis(), undefined, .7); fz.classList.add('an'); mitPause(fz, fuss, .7); } catch (e) { console.warn(e); }
   try { const hz = document.getElementById('held-sh'), held = new P.ShaderMount(hz, FS, basis(), undefined, .4); mitPause(hz, held, .4); } catch (e) { console.warn(e); }
+  document.querySelectorAll('[data-sym]').forEach(el => { try {
+    const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
+    const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .4); mitPause(el, t, .4); el.parentNode.classList.add('an');
+  } catch (e) { console.warn(e); } });
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.2 }, undefined, .35); mitPause(el, tr, .35); } catch (e) { console.warn(e); } });
   document.querySelectorAll('[data-fbt]').forEach(el => { try {
