@@ -806,8 +806,8 @@ let tiefe = null;
 function tiefeStart() {
   if (tiefe) return;
   const box = document.createElement('div'); box.id = 'intro-tiefe'; box.setAttribute('aria-hidden', 'true');
-  box.style.cssText = 'position:fixed;inset:0;z-index:105;pointer-events:none;opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);overflow:hidden';
-  document.body.appendChild(box);
+  box.style.cssText = 'position:fixed;left:0;top:0;width:100vw;height:' + innerHeight + 'px;z-index:0;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent);will-change:transform;pointer-events:none;opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);overflow:hidden';
+  document.body.insertBefore(box, Z);
   const quelle = (form, sc, v) => { const q = document.createElement('div'); q.style.cssText = 'position:absolute;left:0;top:0;width:180px;height:180px;opacity:0'; box.appendChild(q);
     return { q, sh: new P.ShaderMount(q, P.liquidMetalFragmentShader, { ...basis(), u_shape: form, u_scale: sc }, { preserveDrawingBuffer: true }, v) }; };
   const Q = [quelle(4, .9, .32), quelle(4, 1.25, .22)];
@@ -821,16 +821,18 @@ function tiefeStart() {
     const t = (performance.now() - t0) / 1000;
     cs.forEach(c => { const d = c.dataset, ph = +d.ph, src = Q[+d.qi].q.querySelector('canvas');
       const st = +d.st * (1 + .08 * Math.sin(t * .5 + ph));
-      c.style.transform = `translate(${Math.sin(t * .3 + ph) * 16}px, ${Math.cos(t * .23 + ph) * 18}px) rotate(${+d.rot + t * +d.rv * 57}deg) scale(${st}, ${1 / Math.sqrt(st)})`;
+      c.style.transform = `translate(${Math.sin(t * .21 + ph) * 26}px, ${Math.cos(t * .17 + ph) * 30}px) rotate(${+d.rot + t * +d.rv * 57}deg) scale(${st}, ${1 / Math.sqrt(st)})`;
       if (src && src.width) { const g = c.getContext('2d'); g.clearRect(0, 0, 180, 180); g.drawImage(src, 0, 0, 180, 180); } });
   })();
   requestAnimationFrame(() => { box.style.opacity = 1; });
   tiefe = { box, Q, sicht: v => { sicht = v; Q.forEach(x => x.sh.setSpeed && x.sh.setSpeed(v ? .3 : 0)); } };
 }
+/* Nach dem Intro bleibt der Hintergrund unverändert an Ort und Stelle (kein Umhängen, kein Zucken)
+   und läuft einfach mit dem Scrollen nach oben aus dem Bild. */
 function tiefeInsTitelbild() {
-  if (!tiefe) return; const held = document.querySelector('.held'), b = tiefe.box;
-  b.style.transition = 'none'; b.style.position = 'absolute'; b.style.zIndex = '0'; held.prepend(b);
-  new IntersectionObserver(l => tiefe && tiefe.sicht(l[0].isIntersecting)).observe(held);
+  if (!tiefe || tiefe.scroll) return; const b = tiefe.box;
+  tiefe.scroll = () => { const y = scrollY, h = innerHeight; b.style.transform = `translate3d(0, ${-y}px, 0)`; const v = y < h * 1.1; if (v !== tiefe.v) { tiefe.v = v; tiefe.sicht(v); b.style.visibility = v ? '' : 'hidden'; } };
+  tiefe.v = true; addEventListener('scroll', tiefe.scroll, { passive: true }); tiefe.scroll();
 }
 function introSpielen() {
   const id = ++lauf; let aus = false;
