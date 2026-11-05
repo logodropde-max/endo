@@ -276,6 +276,15 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erg__weiter{list-style:none;margin:0;padding:0;display:grid;gap:9px;counter-reset:w}
 .erg__weiter li{position:relative;padding-left:34px;font-size:15px;color:#C9CDD6;counter-increment:w}
 .erg__weiter li::before{content:counter(w);position:absolute;left:0;top:-1px;width:22px;height:22px;box-sizing:border-box;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.ok-panel{display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px 10px;transition:opacity .4s}
+.ok-panel.geht{opacity:0}
+.ok-ring{width:76px;height:76px;margin-bottom:22px}
+.ok-kreis{stroke-dasharray:170;stroke-dashoffset:170;animation:okZeichnen 1s cubic-bezier(.65,0,.35,1) forwards;transform-origin:center;transform:rotate(-90deg)}
+.ok-haken{stroke-dasharray:40;stroke-dashoffset:40;animation:okZeichnen .55s cubic-bezier(.65,0,.35,1) .75s forwards}
+@keyframes okZeichnen{to{stroke-dashoffset:0}}
+.ok-titel{font-size:26px;font-weight:500;letter-spacing:-.03em;margin:0 0 10px;opacity:0;animation:rein .8s ease .9s forwards}
+.ok-text{color:var(--grau);font-size:15px;max-width:34ch;margin:0;opacity:0;animation:rein .8s ease 1.1s forwards}
+.fe-wege{display:block;margin-top:6px;color:var(--grau)}.fe-wege a{color:var(--text)}
 .andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .andere button{text-align:left;padding:14px;border-radius:14px;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,230,255,.18);color:var(--text);font:400 14px Geist,sans-serif;cursor:pointer}
 .andere button b{display:block;font-weight:500;font-size:16px}
@@ -665,21 +674,27 @@ function zeichne(nurMessen){
     weiterSanft(1);
   };
 }
+var API = /endo-ergun\.vercel\.app$/.test(location.host) ? '/api/support' : 'https://endo-ergun.vercel.app/api/support';
+function gesendetZeigen(){
+  fb.style.minHeight = fb.offsetHeight + 'px';
+  fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="#F1F2F5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
+    '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns innerhalb von 24 Stunden.</p></div>';
+  setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = 5; zeichne(); }, 450); }, 2600);
+}
+function fehlerZeigen(fe, text){
+  var knopf = document.getElementById('weiter'); knopf.disabled = false; knopf.firstChild.textContent = 'Erneut senden ';
+  fe.innerHTML = text + '<span class="fe-wege">Oder direkt: <a href="https://wa.me/4915906344961">WhatsApp</a> · <a href="mailto:ergun.eu@gmail.com">E-Mail</a></span>';
+}
 function senden(fe){
-  if (!/endo-ergun\.vercel\.app$/.test(location.host)) {
-    var w2 = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); }, e2 = empfehlung();
-    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBereiche: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nHeute: ' + w2(2, A[2]) + '\nStart: ' + w2(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + e2;
-    location.href = 'mailto:ergun.eu@gmail.com?subject=' + encodeURIComponent('Erstgespräch endo – ' + A[4].b) + '&body=' + encodeURIComponent(t2);
-    schritt = 5; zeichne(); var h = document.createElement('p'); h.className = 'klein'; h.textContent = 'Ihr E-Mail-Programm öffnet sich mit Ihren Angaben – bitte dort noch auf Senden tippen.'; fb.appendChild(h); return; }
   var knopf = document.getElementById('weiter'); knopf.disabled = true; knopf.firstChild.textContent = 'Wird gesendet … ';
   var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
   var emp = empfehlung();
-  var text = 'Erstgespräch über den Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
+  var text = '[endo Erstgespräch] · Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
   var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
-  fetch('/api/support', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
+  fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
-    .then(function(x){ if (x.ok){ schritt = 5; zeichne(); } else { knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht. Schreiben Sie uns bitte über die Direktwege unten.'; } })
-    .catch(function(){ knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = 'Keine Verbindung. Bitte versuchen Sie es gleich noch einmal.'; });
+    .then(function(x){ if (x.ok) gesendetZeigen(); else fehlerZeigen(fe, (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht.'); })
+    .catch(function(){ fehlerZeigen(fe, 'Das Senden klappt gerade nicht.'); });
 }
 function alleApps(k){ return PAKETE[k].apps.reduce(function(l, a){ var m = /^Alles aus (\w+)/.exec(a); return l.concat(m ? alleApps(m[1]) : (a.indexOf('Virtuelles Büro') === 0 ? [] : [a])); }, []); }
 function ergebnis(name){
