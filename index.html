@@ -192,15 +192,19 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .wahl{position:relative;display:flex;align-items:center;gap:14px;text-align:left;padding:12px 14px;border-radius:16px;border:0;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 0 0 1px rgba(200,215,255,.12);color:var(--text);font:400 15px/1.3 Geist,sans-serif;cursor:pointer;transition:box-shadow .35s var(--kurve),background .35s var(--kurve),transform .2s}
 .wahl:hover{box-shadow:inset 0 0 0 1px rgba(220,230,255,.32)}
 .wahl:active{transform:scale(.985)}
-.wahl__sym{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#161d31,#0a0d17);box-shadow:inset 0 0 0 1px rgba(200,215,255,.16);transition:background .4s var(--kurve),box-shadow .4s}
-.wahl__sym svg{width:20px;height:20px;color:#AEB9D6;transition:color .3s}
+.wahl__sym{position:relative;width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1b1d23,#0b0c10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);transition:background .4s var(--kurve),box-shadow .4s}
+.wahl__sym svg{position:relative;z-index:2;width:19px;height:19px;color:#B9BEC8;transition:color .3s}
+.wahl__chrom{position:absolute;left:-4px;top:-4px;width:50px;height:50px;opacity:0;transform:scale(.7);transition:opacity .45s var(--kurve),transform .55s var(--kurve);pointer-events:none}
+.wahl__sym::after{content:"";position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9);opacity:0;transition:opacity .35s;z-index:1}
 .wahl__txt b{display:block;font-weight:500;font-size:15px;letter-spacing:-.01em}
 .wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
 .wahl__ck{margin-left:auto;width:18px;height:18px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
-.wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(120,150,230,.16),rgba(255,255,255,.015) 60%);box-shadow:inset 0 0 0 1.2px rgba(225,234,255,.75),0 14px 34px -18px rgba(120,150,230,.55)}
-.wahl.an .wahl__sym{background:radial-gradient(circle at 34% 28%,#fff,#d9dbe0 22%,#7e8491 58%,#24272e 92%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 6px 16px -6px rgba(160,185,240,.6)}
-.wahl.an .wahl__sym svg{color:#0b0f1a}
-.wahl.an .wahl__ck{background:radial-gradient(circle at 35% 30%,#fff,#C9D3EA 55%,#7C88A3);box-shadow:inset 0 0 0 4px #0c1122,0 0 0 1px rgba(235,242,255,.8)}
+.wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),rgba(255,255,255,.012) 60%);box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.6),0 14px 34px -18px rgba(255,255,255,.25)}
+.wahl.an .wahl__sym{background:none;box-shadow:0 8px 18px -8px rgba(255,255,255,.35)}
+.wahl.an .wahl__chrom{opacity:1;transform:none}
+.wahl.an .wahl__sym::after{opacity:1}
+.wahl.an .wahl__sym svg{color:#F1F2F5}
+.wahl.an .wahl__ck{background:#F1F2F5;box-shadow:inset 0 0 0 4px #0c0e14,0 0 0 1px rgba(255,255,255,.75)}
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
 .fb__wahl.zwei .wahl{padding:12px}
 .fb__wahl.zwei .wahl__ck{position:absolute;top:10px;right:10px}
@@ -527,7 +531,7 @@ function zeichne(){
       '<div class="fb__wahl" style="margin:6px 0 12px">' + [['video','Video-Anruf'],['tel','Telefon']].map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>' +
       '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
-    inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
+    inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
   }
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
@@ -728,6 +732,15 @@ try {
     const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
     const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .4); mitPause(el, t, .4); el.parentNode.classList.add('an');
   } catch (e) { console.warn(e); } });
+  try {
+    const q = document.createElement('div'); q.setAttribute('aria-hidden', 'true'); q.style.cssText = 'position:fixed;left:0;top:0;width:120px;height:120px;pointer-events:none;opacity:0;z-index:-1';
+    document.body.appendChild(q);
+    const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
+    new P.ShaderMount(q, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, { preserveDrawingBuffer: true }, .45);
+    (function kopie() { const c = q.querySelector('canvas'), ziele = document.querySelectorAll('.wahl.an .wahl__chrom');
+      if (c && c.width) ziele.forEach(z => { const g = z.getContext('2d'); g.clearRect(0, 0, z.width, z.height); g.drawImage(c, 0, 0, z.width, z.height); });
+      requestAnimationFrame(kopie); })();
+  } catch (e) { console.warn('Chrom-Quelle:', e); }
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.2 }, undefined, .35); mitPause(el, tr, .35); } catch (e) { console.warn(e); } });
   document.querySelectorAll('[data-fbt]').forEach(el => { try {
