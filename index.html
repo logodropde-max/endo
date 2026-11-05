@@ -410,7 +410,7 @@ td:first-child{color:var(--grau)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.zeile>span,.hebt,.reihe{transform:none!important;opacity:1!important}.linie{transform:none}}
 </style>
-<script>/* Intro nur beim ersten Besuch */try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash)document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
+<script>/* Intro */try{if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash)document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
 <meta http-equiv="Cache-Control" content="no-cache">
 </head>
 <body>
@@ -987,7 +987,7 @@ try {
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
-document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
+document.getElementById('intro-nochmal').onclick = () => { scrollTo({ top: 0, behavior: 'instant' }); location.replace(location.pathname + '?intro=' + Date.now()); };
 </script>
 
 <script>document.addEventListener('contextmenu', function(e){ if (document.body.classList.contains('intro-an') || e.target.closest('canvas,.intro')) e.preventDefault(); });
