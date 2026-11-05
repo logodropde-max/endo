@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>endo – Odoo für Ihren Betrieb, eingerichtet und betreut</title>
 <meta name="description" content="endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.">
 <meta property="og:type" content="website">
@@ -22,13 +22,13 @@
 :root{--grund:#000;--flaeche:#07090F;--text:#E8ECF5;--grau:#8A93A8;--hell:#F4F7FF;--kurve:cubic-bezier(.2,.7,.1,1);--chrom:linear-gradient(100deg,#8C95A8 0%,#F4F7FF 30%,#9FB3E8 45%,#FFFFFF 52%,#6F7C99 70%,#DCE4F7 100%)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--grund)}
+html,body{overflow-x:hidden;overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 body.intro-an{overflow:hidden}
 a{color:inherit}
 .korn{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
-.chrom{background:var(--chrom);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
-.in .chrom,.chrom.in{animation:glanz 2.4s var(--kurve) .35s both}
-@keyframes glanz{from{background-position:100% 0}to{background-position:0 0}}
+.chrom{background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%) no-repeat,linear-gradient(180deg,#FFFFFF 0%,#EEF2FB 30%,#8A95AE 50%,#5E6983 56%,#C3CDE4 70%,#FFFFFF 86%,#A9B4CE 100%);background-size:300% 100%,100% 100%;background-position:150% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:glanz 7s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes glanz{0%,55%{background-position:150% 0,0 0}100%{background-position:-50% 0,0 0}}
 .wrap{width:min(1160px,100% - 48px);margin:0 auto}
 /* Kopf */
 .kopf{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
@@ -230,7 +230,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .zeichen-fix.ohne-shader>div{display:none}
 /* kein Leuchten hinter dem Zeichen */
 .zeichen-fix::after{display:none;content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
-#marke-platz{display:inline-block;width:44px;height:44px;flex:none;transition:width .45s var(--kurve)}
+#marke-platz{display:none;width:44px;height:44px;flex:none;transition:width .45s var(--kurve)}
 .gerollt #marke-platz{width:0}
 .zeichen-fix.im-menue{transition:opacity .45s var(--kurve)}
 .zeichen-fix.im-menue.versteckt{opacity:0!important;pointer-events:none}
@@ -659,7 +659,7 @@ const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh
 let zeichen = null, lauf = 0;
 function introSpielen() {
   const id = ++lauf; let aus = false;
-  document.getElementById('held-sh').classList.remove('da'); Z.style.transition = ''; Z.style.filter = '';
+  document.getElementById('held-sh').classList.remove('da'); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = '';
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
@@ -676,8 +676,7 @@ function introSpielen() {
     intro.classList.add('raus');
     setTimeout(() => { if (id === lauf) hz.classList.add('da'); }, 1100);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 1300);
-    setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; Z.style.transition = 'none'; Z.style.opacity = 0; Z.style.filter = ''; klein(); Z.dataset.ort = 'menue';
-      requestAnimationFrame(() => requestAnimationFrame(() => { Z.style.transition = 'opacity 1.1s cubic-bezier(.4,0,.2,1)'; Z.style.opacity = 1; })); }, 2400);
+    setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; Z.style.transition = 'none'; Z.style.opacity = 0; Z.style.filter = ''; Z.style.display = 'none'; Z.dataset.ort = 'weg'; }, 2400);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
@@ -710,12 +709,13 @@ try {
   } catch (e) { console.warn(e); } });
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); insMenue(true); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); Z.style.display = 'none'; seiteZeigen(); } else introSpielen();
 } catch (e) {
-  console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); insMenue(true); intro.style.display = 'none'; seiteZeigen();
+  console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; intro.style.display = 'none'; seiteZeigen();
 }
 document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
 </script>
 
+<script>['gesturestart','gesturechange'].forEach(function(t){ document.addEventListener(t, function(e){ e.preventDefault(); }, { passive: false }); }); var letzt = 0; document.addEventListener('touchend', function(e){ var n = Date.now(); if (n - letzt < 300 && !e.target.closest('input,textarea,select,button,a')) e.preventDefault(); letzt = n; }, { passive: false });</script>
 </body>
 </html>
