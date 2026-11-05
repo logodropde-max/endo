@@ -553,7 +553,7 @@ function menueZiel() {
   return `translate(${dx}px, ${dy}px) scale(${s})`;
 }
 let ruhe = null;
-function klein() { const r = platz.getBoundingClientRect(); Z.classList.add('sofort'); Z.style.setProperty('--g', Math.round(Math.max(r.width, 44) * 1.3) + 'px'); Z.style.transform = menueZiel(); void Z.offsetWidth; Z.classList.add('im-menue'); oben(); }
+function klein() { Z.classList.add('sofort'); Z.style.transform = menueZiel(); void Z.offsetWidth; Z.classList.add('im-menue'); oben(); }
 function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.dataset.ort = 'menue'; if (sofort) klein(); }
 function oben() { if (!Z.classList.contains('im-menue')) return; const da = scrollY < 40; Z.classList.toggle('versteckt', !da); if (ruhe) ruhe(da); }
 addEventListener('scroll', oben, { passive: true });
