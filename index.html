@@ -222,7 +222,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erst__kopf p{color:rgba(232,236,245,.7);margin:14px 0 0}
 .glas{max-width:620px;margin:0 auto;border-radius:28px;padding:30px;background:rgba(8,12,23,.58);-webkit-backdrop-filter:blur(22px) saturate(1.35);backdrop-filter:blur(22px) saturate(1.35);box-shadow:inset 0 0 0 1px rgba(200,215,255,.22),inset 0 1px 0 rgba(255,255,255,.16),0 40px 90px -30px rgba(0,0,0,.9)}
 .fb__oben{display:flex;justify-content:space-between;font-size:13px;color:var(--grau);margin-bottom:10px}
-.fb__balken{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:28px}
+.fb__balken{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:28px}
 .fb__balken i{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;position:relative}
 .fb__balken i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#8E939E,#FFFFFF);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
 .fb__balken i.an::after{transform:none}
@@ -653,6 +653,12 @@ var S = [
 ];
 I.chat = '<path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/>';
 var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['chat', 'WhatsApp', 'Kurz per Nachricht']];
+/* Ansichten: Frage 1 (Bereiche) ist auf zwei kurze Schritte verteilt, die Antworten landen weiter in A[0] */
+var VIEWS = [
+  { s: 0, nur: [0, 2, 5, 6], q: 'Was soll endo bei Kunden und Verkauf übernehmen?', u: 'Mehrere möglich. Gleich danach geht es um die Organisation.' },
+  { s: 0, nur: [1, 3, 4, 7], q: 'Und bei der Organisation?', u: 'Mehrere möglich. Ihr virtuelles Büro zeigt später genau diese Bereiche live.', pruef: true },
+  { s: 1 }, { s: 2 }, { s: 3 }, { s: 4 }
+], ENDE = VIEWS.length;
 var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
 function empfehlung(){
   var p = A[1][0], z = A[0];
@@ -660,7 +666,7 @@ function empfehlung(){
   if (p === 2 || z.indexOf(2) > -1 || z.indexOf(3) > -1 || z.indexOf(7) > -1) return 'Business';
   return 'Start';
 }
-function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, 5) + ' von 5</span><span>' + (schritt < 5 ? 'etwa ' + (5 - schritt) * 12 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + S.map(function(_, j){ return '<i class="' + (j < schritt || schritt === 5 ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
+function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, ENDE) + ' von ' + ENDE + '</span><span>' + (schritt < ENDE ? 'etwa ' + (ENDE - schritt) * 10 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + VIEWS.map(function(_, j){ return '<i class="' + (j < schritt || schritt === ENDE ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
 function sichern(){ ['n','b','e','t'].forEach(function(k){ var el = document.getElementById('f-' + k); if (el) A[4][k] = el.value.trim(); }); var d = document.getElementById('f-d'); if (d) A[4].d = d.checked; }
 function weiterSanft(d){ var st = fb.querySelector('.fb__schritt'); if (!st || ruhig) { schritt += d; zeichne(); return; }
   var h0 = fb.offsetHeight; st.classList.add('geht');
@@ -669,7 +675,7 @@ function weiterSanft(d){ var st = fb.querySelector('.fb__schritt'); if (!st || r
     setTimeout(function(){ fb.classList.remove('gleitet'); fb.style.height = ''; }, 480); }, 200); }
 var fbHoehe = 0;
 function hoeheMessen(){
-  if (schritt === 5) return; if (S[schritt].form) sichern();
+  if (schritt === ENDE) return;
   var alt = schritt, altA = JSON.stringify(A), max = 0, w = fb.offsetWidth; if (!w) return;
   var probe = fb.cloneNode(false); probe.removeAttribute('id'); probe.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;min-height:0;width:' + w + 'px';
   fb.parentNode.appendChild(probe);
@@ -678,22 +684,22 @@ function hoeheMessen(){
 }
 function zeichne(nurMessen){
   if (A[4].g == null) A[4].g = 0;
-  if (schritt === 5){ return ergebnis(); }
-  var x = S[schritt], inhalt;
+  if (schritt === ENDE){ return ergebnis(); }
+  var V = VIEWS[schritt], ai = V.s, B = S[ai], x = { q: V.q || B.q, u: V.u || B.u, mehr: B.mehr, form: B.form, o: B.o }, liste = V.nur || (B.o || []).map(function(_, j){ return j; }), inhalt;
   if (x.form){
     inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '">' +
       '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg zwei-weg" style="margin:0 0 10px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
       '<input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"' + (A[4].g === 1 ? ' hidden' : '') + '><input class="feld" id="f-t" type="tel" placeholder="Ihre WhatsApp-Nummer" autocomplete="tel" value="' + (A[4].t || '') + '"' + (A[4].g === 1 ? '' : ' hidden') + '>' +
       '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
-    inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
+    inhalt = '<div class="fb__wahl' + (liste.length > 5 ? ' zwei' : '') + '">' + liste.map(function(j){ var o = x.o[j]; return '<button type="button" class="wahl' + (A[ai].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
   }
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
   if (nurMessen) return;
   fb.querySelectorAll('[data-j]').forEach(function(b){ b.onclick = function(){ var j = +b.dataset.j;
-    if (x.mehr){ var i = A[schritt].indexOf(j); i > -1 ? A[schritt].splice(i, 1) : A[schritt].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
-    else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; } }; });
+    if (x.mehr){ var i = A[ai].indexOf(j); i > -1 ? A[ai].splice(i, 1) : A[ai].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
+    else { A[ai] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; } }; });
   fb.querySelectorAll('[data-g]').forEach(function(b){ b.onclick = function(){ A[4].g = +b.dataset.g; var wa = A[4].g === 1; document.getElementById('f-e').hidden = wa; document.getElementById('f-t').hidden = !wa; (wa ? document.getElementById('f-t') : document.getElementById('f-e')).focus(); fb.querySelectorAll('[data-g]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; }; });
   fb.querySelectorAll('.feld').forEach(function(f){ f.oninput = function(){ document.getElementById('fehler').textContent = ''; }; });
   document.getElementById('zurueck').onclick = function(){ if (x.form) sichern(); weiterSanft(-1); };
@@ -706,7 +712,7 @@ function zeichne(nurMessen){
       if (A[4].g == null) return fe.textContent = 'Bitte wählen Sie, wie wir uns melden sollen.';
       if (A[4].g === 1 && (A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Bitte geben Sie Ihre WhatsApp-Nummer ein.';
       if (!A[4].d) return fe.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
-    } else if (!A[schritt].length) return fe.textContent = x.mehr ? 'Bitte wählen Sie mindestens eine Antwort.' : 'Bitte wählen Sie eine Antwort.';
+    } else if (V.nur ? (V.pruef && !A[0].length) : !A[ai].length) return fe.textContent = V.nur ? 'Bitte wählen Sie mindestens einen Bereich.' : x.mehr ? 'Bitte wählen Sie mindestens eine Antwort.' : 'Bitte wählen Sie eine Antwort.';
     if (x.form) return senden(fe);
     weiterSanft(1);
   };
@@ -716,7 +722,7 @@ function gesendetZeigen(){
   fb.style.minHeight = fb.offsetHeight + 'px';
   fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9BEC8"/><stop offset=".7" stop-color="#6F7480"/><stop offset="1" stop-color="#F1F2F5"/></linearGradient><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="url(#okh)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
     '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. ' + (A[4].g === 1 ? 'Wir melden uns per WhatsApp' : 'Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns') + ' innerhalb von 24 Stunden.</p></div>';
-  setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = 5; zeichne(); }, 450); }, 2600);
+  setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = ENDE; zeichne(); }, 450); }, 2600);
 }
 function fehlerZeigen(fe, text){
   var knopf = document.getElementById('weiter'); knopf.disabled = false; knopf.firstChild.textContent = 'Erneut senden ';
