@@ -267,7 +267,7 @@ td:first-child{color:var(--grau)}
 <div class="korn" aria-hidden="true"></div>
 
 
-<div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
+<div class="intro" id="intro" aria-hidden="true"></div>
 <a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
 
 <header class="kopf"><div class="kopf__in">
@@ -329,7 +329,7 @@ td:first-child{color:var(--grau)}
 </main>
 
 <footer class="fuss"><div class="wrap"><div class="linie beob" style="margin-bottom:40px"></div><div class="fuss__in">
-  <span><b class="chrom" style="font-weight:500;font-size:18px;letter-spacing:-.04em">endo</b> &nbsp;·&nbsp; Odoo eingerichtet und betreut</span>
+  <span><svg viewBox="-56 -56 112 112" width="26" height="26" aria-hidden="true" style="vertical-align:-7px;margin-right:6px"><defs><radialGradient id="fk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#fl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#fk)"/><circle cx="25.98" cy="15" r="14" fill="url(#fk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#fk)"/></svg><b class="chrom" style="font-weight:500;font-size:18px;letter-spacing:-.04em">endo</b> &nbsp;·&nbsp; Odoo eingerichtet und betreut</span>
   <span><button type="button" id="leistungen-auf">Leistungen</button><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" id="intro-nochmal">Intro nochmal ansehen</button></span>
 </div></div></footer>
 
@@ -380,21 +380,20 @@ function tafelZeigen(i){
 }
 var rad = document.getElementById('rad'), R = 39, linien = '', punkte = '', knoten = '';
 function ort(i){ var a = -Math.PI / 2 + i * Math.PI * 2 / 6; return [50 + Math.cos(a) * R, 50 + Math.sin(a) * R]; }
-var defs = '<defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="#AFC0E8" stop-opacity=".05"/><stop offset=".5" stop-color="#E6EDFF" stop-opacity=".55"/><stop offset="1" stop-color="#AFC0E8" stop-opacity=".1"/></linearGradient><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F7FF"/><stop offset=".3" stop-color="#6F7C99"/><stop offset=".55" stop-color="#2a3040"/><stop offset=".78" stop-color="#9FB3E8"/><stop offset="1" stop-color="#DCE4F7"/></linearGradient><radialGradient id="halo"><stop offset="0" stop-color="#C9D8FF" stop-opacity=".55"/><stop offset=".45" stop-color="#9FB6F0" stop-opacity=".16"/><stop offset="1" stop-color="#9FB6F0" stop-opacity="0"/></radialGradient><radialGradient id="tr" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9C4DA"/><stop offset="1" stop-color="#3C475E"/></radialGradient></defs>';
+var defs = '<defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="#AFC0E8" stop-opacity=".05"/><stop offset=".5" stop-color="#E6EDFF" stop-opacity=".55"/><stop offset="1" stop-color="#AFC0E8" stop-opacity=".1"/></linearGradient><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F7FF"/><stop offset=".3" stop-color="#6F7C99"/><stop offset=".55" stop-color="#2a3040"/><stop offset=".78" stop-color="#9FB3E8"/><stop offset="1" stop-color="#DCE4F7"/></linearGradient><filter id="lglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter><radialGradient id="halo"><stop offset="0" stop-color="#C9D8FF" stop-opacity=".55"/><stop offset=".45" stop-color="#9FB6F0" stop-opacity=".16"/><stop offset="1" stop-color="#9FB6F0" stop-opacity="0"/></radialGradient><radialGradient id="tr" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9C4DA"/><stop offset="1" stop-color="#3C475E"/></radialGradient></defs>';
 BER.forEach(function(b, i){ var p = ort(i);
   var a0 = [50 + (p[0] - 50) * (16.2 / R), 50 + (p[1] - 50) * (16.2 / R)], a1 = [50 + (p[0] - 50) * ((R - 4.8) / R), 50 + (p[1] - 50) * ((R - 4.8) / R)];
-  var dx = a1[0] - a0[0], dy = a1[1] - a0[1], dl = Math.hypot(dx, dy), nx = -dy / dl * .8, ny = dx / dl * .8;
-  [1, -1].forEach(function(d){
-    linien += '<line x1="' + (a0[0] + nx * d) + '" y1="' + (a0[1] + ny * d) + '" x2="' + (a1[0] + nx * d) + '" y2="' + (a1[1] + ny * d) + '" stroke="rgba(200,215,255,.16)" stroke-width=".18" stroke-linecap="round" data-sp="' + i + '"/>';
-    punkte += '<g data-pk="' + i + '" data-d="' + d + '"><circle r="1.6" fill="url(#halo)"/><circle data-sw="3" r=".2" fill="#DCE6FF" opacity=".18"/><circle data-sw="2" r=".27" fill="#E6EDFF" opacity=".32"/><circle data-sw="1" r=".34" fill="#F4F7FF" opacity=".55"/><circle r=".44" fill="#fff"/></g>';
-  });
+  var lin = ' x1="' + a0[0] + '" y1="' + a0[1] + '" x2="' + a1[0] + '" y2="' + a1[1] + '"', rein = ' x1="' + a1[0] + '" y1="' + a1[1] + '" x2="' + a0[0] + '" y2="' + a0[1] + '"';
+  linien += '<line' + lin + ' stroke="rgba(140,170,240,.22)" stroke-width="1.5" filter="url(#lglow)" data-lg="' + i + '"/><line' + lin + ' stroke="rgba(230,238,255,.5)" stroke-width=".2" data-sp="' + i + '"/>';
+  punkte += '<line' + rein + ' stroke="#EAF0FF" stroke-width="1.3" stroke-linecap="round" filter="url(#lglow)" pathLength="100" stroke-dasharray="22 200" data-pk="' + i + '"/>';
   knoten += '<button class="knoten" type="button" data-k="' + i + '" style="left:' + p[0] + '%;top:' + p[1] + '%"><span class="k">' + svg(b[4]) + '</span>' + b[1] + '</button>';
 });
 rad.innerHTML = '<div class="rad-karte" id="rad-karte" role="dialog" aria-modal="false" aria-label="Bereich"><button type="button" class="rad-zu" id="rad-zu" aria-label="Schließen">×</button><div id="ber-tafel"></div></div><svg class="linien" viewBox="0 0 100 100" aria-hidden="true">' + defs + '' + linien + '<circle cx="50" cy="50" r="15.6" fill="#05070c" stroke="url(#rg)" stroke-width=".7"/>' + punkte + '</svg><div class="rad__mitte"><div id="mitte-sh" style="position:absolute;inset:-4%"></div></div>' + knoten;
 var aktiv = 0, radUhr = 0, radPause = false;
 function waehle(i){ aktiv = i;
   rad.querySelectorAll('[data-k]').forEach(function(k, n){ k.classList.toggle('an', n === i); });
-  rad.querySelectorAll('[data-sp]').forEach(function(s){ var an = +s.dataset.sp === i; s.setAttribute('stroke', an ? 'rgba(225,234,255,.42)' : 'rgba(200,215,255,.16)'); s.setAttribute('stroke-width', an ? '.24' : '.18'); });
+  rad.querySelectorAll('[data-sp]').forEach(function(s){ var an = +s.dataset.sp === i; s.setAttribute('stroke', an ? 'rgba(240,245,255,.8)' : 'rgba(230,238,255,.5)'); s.setAttribute('stroke-width', an ? '.26' : '.2'); });
+  rad.querySelectorAll('[data-lg]').forEach(function(s){ s.setAttribute('stroke', +s.dataset.lg === i ? 'rgba(150,180,245,.4)' : 'rgba(140,170,240,.22)'); });
 }
 tafel = document.getElementById('ber-tafel');
 var karte = document.getElementById('rad-karte'), kartAuf = false;
@@ -410,14 +409,8 @@ waehle(0); takt();
 var pk = rad.querySelectorAll('[data-pk]'), fl = rad.querySelectorAll('[data-fl]');
 (function punktLauf(){
   var t = performance.now();
-  pk.forEach(function(g, n){ var i = +g.dataset.pk, d = +g.dataset.d, an = i === aktiv, sp = an ? 1700 : 4300;
-    var v = ((t / sp) + i * .23 + (d > 0 ? 0 : .5)) % 1, e = .5 - .5 * Math.cos(Math.PI * v), lauf = d > 0 ? e : 1 - e;
-    var p = ort(i), ux = (p[0] - 50) / R, uy = (p[1] - 50) / R, nx = -uy * .8 * d, ny = ux * .8 * d;
-    var r0 = 16.4, r1 = R - 5.2, r = r1 + (r0 - r1) * lauf, rich = d > 0 ? 1 : -1;
-    g.setAttribute('transform', 'translate(' + (50 + ux * r + nx) + ' ' + (50 + uy * r + ny) + ')');
-    g.querySelectorAll('[data-sw]').forEach(function(c){ var k = +c.dataset.sw * .75 * rich; c.setAttribute('cx', ux * k); c.setAttribute('cy', uy * k); });
-    g.setAttribute('opacity', (an ? 1 : .5) * Math.pow(Math.sin(Math.PI * v), .7));
-  });
+  pk.forEach(function(l){ var i = +l.dataset.pk, an = i === aktiv, sp = an ? 1800 : 4600, v = ((t / sp) + i * .21) % 1;
+    l.setAttribute('stroke-dashoffset', 22 - v * 125); l.setAttribute('opacity', (an ? .9 : .4) * Math.sin(Math.PI * v)); });
   if (0) fl.forEach(function(l){ var i = +l.dataset.fl, v = (t / (i === aktiv ? 900 : 2400) + i * .21) % 1, rein = (Math.floor(t / (i === aktiv ? 900 : 2400) + i * .21) % 2); l.setAttribute('stroke-dashoffset', (rein ? -(1 - v) : -v) * 40); l.setAttribute('opacity', i === aktiv ? .95 : .35); });
   if (!ruhig) requestAnimationFrame(punktLauf);
 })();
@@ -647,7 +640,7 @@ function introSpielen() {
   setz(zeichen, { u_morph: 0 });
   const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) { intro.style.display = 'none'; klein(); } }, 2000); };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
-  intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen; document.getElementById('intro-weg').onclick = ueberspringen;
+  intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
   const t0 = performance.now();
   const tick = () => {
     if (id !== lauf) return;
