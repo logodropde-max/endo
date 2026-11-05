@@ -466,7 +466,7 @@ td:first-child{color:var(--grau)}
     <p class="satz hebt" style="margin-top:16px">Antwort innerhalb von 24 Stunden.</p>
     <div class="wege">
       <a class="kante reihe" href="https://wa.me/4915906344961"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2.5 4 5 5l1.2-1.4 2 .8"/></svg></span><h3>WhatsApp</h3><small>+49 1590 6344961</small></div></a>
-      <a class="kante reihe" href="mailto:ergun.eu@gmail.com" style="transition-delay:.12s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><h3>E-Mail</h3><small>ergun.eu@gmail.com</small></div></a>
+      <a class="kante reihe" href="mailto:ergun.eu@gmail.com" style="transition-delay:.12s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><h3>E-Mail</h3><small>Nachricht an endo</small></div></a>
     </div>
   </div>
 </section>
@@ -824,7 +824,8 @@ const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh
 let zeichen = null, lauf = 0;
 /* Maße für das bildschirmweite Intro: das Dreieck landet genau in Größe und Lage des Titelbild-Zeichens. */
 /* Logo bleibt immer sichtbar: beim Scrollen gleitet das Dreieck im selben Shader klein in die Ecke oben links. */
-const massBei = (gr, cx, cy) => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), ws = W / m;
+const zW = () => Z.offsetWidth || innerWidth, zH = () => Z.offsetHeight || innerHeight;
+const massBei = (gr, cx, cy) => { const W = zW(), H = zH(), m = Math.min(W, H), ws = W / m;
   const r = { u_scale: .372 * gr / m, u_offsetY: -(H / 2 - cy) / m, u_offsetX: 0, u_originX: .5 };
   /* Auf breiten Bildschirmen das Feld selbst verschieben, sonst wird das Zeichen am Rand abgeschnitten */
   if (ws > 1.01) r.u_originX = .5 + (cx / W - .5) * ws / (ws - 1); else r.u_offsetX = (cx - W / 2) / m;
@@ -835,15 +836,17 @@ const massBei = (gr, cx, cy) => { const W = innerWidth, H = innerHeight, m = Mat
    Die Leiste oben verschwindet beim Scrollen. */
 let logoLauf = false;
 function logoMalen() {
-  const W = innerWidth, H = innerHeight;
+  const W = zW(), H = zH();
   setz(zeichen, { ...massBei(Math.min(340, W * .8), W / 2, H * .27), u_morph: 1, u_rotation: 0 });
 }
+/* Das Zeichen bleibt dieselbe feste Fläche wie im Intro (kein Wechsel der Positionierung = kein Ruck) und läuft beim Scrollen mit */
 function logoLage() {
   html.classList.toggle('kopf-weg', scrollY > innerHeight * .08);
+  if (Z.dataset.ort === 'hg') { Z.style.transform = `translate3d(0, ${-scrollY}px, 0)`; Z.style.visibility = scrollY > zH() ? 'hidden' : ''; }
 }
 addEventListener('scroll', logoLage, { passive: true });
 
-const vollMass = () => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), klein = Math.min(340, W * .8);
+const vollMass = () => { const W = zW(), H = zH(), m = Math.min(W, H), klein = Math.min(340, W * .8);
   return { u_scale: .372 * klein / m, u_offsetX: 0, u_offsetY: -.23 * (H / m) }; };
 /* Intro-Hintergrund: unscharfe Chrom-Kugeln in der Tiefe. Ein einziger Shader, sein Bild wird in alle Kugeln kopiert. */
 let tiefe = null;
@@ -894,7 +897,7 @@ function introSpielen() {
   const fertig = () => { if (aus) return; aus = true;
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
-    Z.dataset.ort = 'hg'; intro.style.display = 'none'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
+    Z.dataset.ort = 'hg'; intro.style.display = 'none'; logoMalen(); logoLage();
     const wort = document.getElementById('intro-wort'); wortBleibt(wort); ['--lx', '--ly', '--ls', '--la'].forEach(v => document.querySelector('.held-licht').style.removeProperty(v));
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
@@ -960,7 +963,7 @@ try {
   window.ENDO_REST = restStarten;
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { wortBleibt(document.getElementById('intro-wort')); Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { wortBleibt(document.getElementById('intro-wort')); Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.style.transform = 'none'; logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
