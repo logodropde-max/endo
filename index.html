@@ -176,6 +176,13 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .ber-schritt i{margin-left:auto;font-style:normal;font-size:12px;color:#C9CDD6}
 .ber-schritt .p{width:5px;height:5px;border-radius:50%;background:#E6E8EC;box-shadow:0 0 6px rgba(255,255,255,.35);flex:none}
 @media (max-width:900px){.ber-tafel>div{grid-template-columns:1fr;padding:20px}}
+.erp-frage{display:inline-grid;place-items:center;width:22px;height:22px;margin-left:6px;vertical-align:2px;border-radius:50%;cursor:pointer;font:500 12px Geist,sans-serif;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.erp-frage[aria-expanded="true"]{transform:rotate(360deg)}
+.erp-info{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.33,0,.2,1),opacity .45s;opacity:0}
+.erp-info>div{overflow:hidden}
+.erp-info.auf{grid-template-rows:1fr;opacity:1}
+.erp-info p{margin:12px 0 6px;font-size:14px;color:#C9CDD6;line-height:1.55}.erp-info p b{font-weight:500;color:var(--text)}
+.erp-info small{display:block;font-size:12.5px;color:var(--grau);padding-bottom:4px}
 .was__raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .was__nr{display:block;font-size:34px;font-weight:500;letter-spacing:-.04em;line-height:1;margin-bottom:22px}
 .was-link{font-size:14px;text-decoration:none;color:var(--text);opacity:.8;padding:8px 12px;margin-left:auto}
@@ -444,7 +451,7 @@ td:first-child{color:var(--grau)}
   <div class="wrap">
     <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in ein ERP-System: Odoo, eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
     <div class="was__raster">
-      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System, passend eingerichtet</h3><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
+      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System? <button type="button" class="erp-frage" aria-expanded="false" aria-controls="erp-info" aria-label="Was ist ein ERP-System?">?</button></h3><div class="erp-info" id="erp-info"><div><p><b>Was ist ein ERP-System?</b> Eine einzige Software, in der Ihr ganzer Betrieb läuft. Statt Zetteln, Excel und mehreren Programmen hängt alles zusammen: Aus der Anfrage wird das Angebot, daraus der Auftrag und die Rechnung. Ihr Team sieht dabei immer dieselben, aktuellen Daten.</p><small>ERP steht für „Enterprise Resource Planning“, auf Deutsch etwa Betriebsplanung. endo nutzt dafür Odoo.</small></div></div><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.24s"><div class="karte"><span class="was__nr chrom">3</span><h3>Betreut zum Festpreis</h3><p>Ein fester Ansprechpartner für Fragen und kleine Änderungen. Feste Pakete, feste Preise, keine Überraschungen.</p></div></div>
     </div>
@@ -740,6 +747,7 @@ function ergebnis(name){
   document.getElementById('neu').onclick = function(e){ e.preventDefault(); schritt = 0; A = [[], [], [], [], {}]; zeichne(); };
 }
 zeichne();
+document.querySelectorAll('.erp-frage').forEach(function(b){ b.onclick = function(){ var i = document.getElementById(b.getAttribute('aria-controls')), auf = !i.classList.contains('auf'); i.classList.toggle('auf', auf); b.setAttribute('aria-expanded', auf); }; });
 
 /* ---------- Scroll-Animationen ---------- */
 var io = new IntersectionObserver(function(l){ l.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add('in'); x.target.querySelectorAll('.reihe').forEach(function(r){ r.classList.add('in'); }); io.unobserve(x.target); } }); }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
