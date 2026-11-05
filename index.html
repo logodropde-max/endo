@@ -799,6 +799,34 @@ addEventListener('scroll', logoLage, { passive: true });
 
 const vollMass = () => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), klein = Math.min(340, W * .8);
   return { u_scale: .372 * klein / m, u_offsetX: 0, u_offsetY: -.23 * (H / m) }; };
+/* Intro-Hintergrund: unscharfe Chrom-Kugeln in der Tiefe. Ein einziger Shader, sein Bild wird in alle Kugeln kopiert. */
+let tiefe = null;
+function tiefeStart() {
+  tiefeEnde(true);
+  const box = document.createElement('div'); box.id = 'intro-tiefe'; box.setAttribute('aria-hidden', 'true');
+  box.style.cssText = 'position:fixed;inset:0;z-index:105;pointer-events:none;opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)';
+  const q = document.createElement('div'); q.style.cssText = 'position:absolute;left:0;top:0;width:160px;height:160px;opacity:0';
+  box.appendChild(q); document.body.appendChild(box);
+  const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
+  const sh = new P.ShaderMount(q, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, { preserveDrawingBuffer: true }, .3);
+  const L = [[-.30, .10, 150, 6, .55, 0], [.32, .55, 110, 4, .5, 1.3], [-.25, .75, 80, 3, .4, 2.1], [.28, .05, 60, 2, .45, .7], [0, .92, 130, 8, .3, 3]];
+  const cs = L.map(([x, y, g, b, o, ph]) => { const c = document.createElement('canvas'); c.width = c.height = 160;
+    c.style.cssText = `position:absolute;left:calc(50% + ${x * 100}vw - ${g / 2}px);top:calc(${y * 100}% - ${g / 2}px);width:${g}px;height:${g}px;filter:blur(${b}px);opacity:${o}`;
+    c.dataset.ph = ph; box.appendChild(c); return c; });
+  const t0 = performance.now(); let lauf = true;
+  (function male() { if (!lauf) return; requestAnimationFrame(male);
+    const src = q.querySelector('canvas'), t = (performance.now() - t0) / 1000;
+    cs.forEach(c => { const ph = +c.dataset.ph; c.style.transform = `translate(${Math.sin(t * .35 + ph) * 10}px, ${Math.cos(t * .28 + ph) * 12}px)`;
+      if (src && src.width) { const g = c.getContext('2d'); g.clearRect(0, 0, 160, 160); g.drawImage(src, 0, 0, 160, 160); } });
+  })();
+  requestAnimationFrame(() => { box.style.opacity = 1; });
+  tiefe = { box, sh, stopp: () => { lauf = false; } };
+}
+function tiefeEnde(sofort) {
+  if (!tiefe) return; const t = tiefe; tiefe = null;
+  t.box.style.opacity = 0;
+  setTimeout(() => { t.stopp(); try { t.sh.dispose && t.sh.dispose(); } catch (e) {} t.box.remove(); }, sofort ? 0 : 1300);
+}
 function introSpielen() {
   const id = ++lauf; let aus = false;
   const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
@@ -810,13 +838,14 @@ function introSpielen() {
   const fertig = () => { if (aus) return; aus = true;
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
-    Z.dataset.ort = 'hg'; intro.style.display = 'none'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
+    tiefeEnde(); Z.dataset.ort = 'hg'; intro.style.display = 'none'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
     const wort = document.getElementById('intro-wort'); wort.classList.remove('da'); setTimeout(() => { wort.style.display = 'none'; }, 1200);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
+  try { tiefeStart(); } catch (e) { console.warn(e); }
   const t0 = performance.now() + 150, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da');
   const tick = () => {
     if (id !== lauf) return;
