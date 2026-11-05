@@ -99,9 +99,9 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .kante{position:relative;overflow:hidden;border-radius:22px;padding:1.2px;background:linear-gradient(140deg,#FFFFFF,#7E8491 26%,#24272E 48%,#C8CCD4 70%,#E6E8EC)}
 .kante::before{content:"";position:absolute;inset:-40% -60%;background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%);transform:translateX(-70%);transition:transform 1.1s var(--kurve);pointer-events:none}
 .kante:hover::before{transform:translateX(70%)}
-.kante.schritt::before{transition:none;animation:glanzLauf 6s cubic-bezier(.45,0,.2,1) infinite}
-.kante.schritt:nth-child(2)::before{animation-delay:2s}.kante.schritt:nth-child(3)::before{animation-delay:4s}
-@keyframes glanzLauf{0%,30%{transform:translateX(-70%)}70%,100%{transform:translateX(70%)}}
+.kante.schritt::before{transition:none;animation:glanzLauf 11s cubic-bezier(.45,.05,.55,.95) infinite}
+.kante.schritt:nth-child(2)::before{animation-delay:3.6s}.kante.schritt:nth-child(3)::before{animation-delay:7.2s}
+@keyframes glanzLauf{0%,20%{transform:translateX(-70%)}75%,100%{transform:translateX(70%)}}
 .kante>*{position:relative}
 .fuss-z{position:relative;display:inline-block;width:38px;height:38px;vertical-align:-13px;margin-right:4px}
 .fuss-z.an>svg{display:none}
@@ -190,9 +190,9 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .schritt__sh{position:absolute;inset:-1px;-webkit-mask:radial-gradient(closest-side,transparent 85%,#000 87%);mask:radial-gradient(closest-side,transparent 85%,#000 87%)}
 .schritt__sym svg{position:relative;z-index:2;width:20px;height:20px;color:#E8EAEE;stroke-width:1.5}
 .schritt__liste{list-style:none;margin:18px 0 0;padding:0}
-.schritt__liste li{position:relative;padding:5px 0 5px 20px;color:#C9CDD6;font-size:15px}
-.schritt__liste li::before{content:"";position:absolute;left:0;top:15px;width:14px;height:1.5px;border-radius:1px;background:linear-gradient(90deg,#6F7480 0%,#fff 25%,#8E939E 45%,#3a3d46 60%,#C8CCD4 80%,#6F7480 100%);background-size:300% 100%;animation:strichGlanz 3.2s linear infinite}
-.schritt__liste li:nth-child(2)::before{animation-delay:-1.1s}.schritt__liste li:nth-child(3)::before{animation-delay:-2.2s}
+.schritt__liste li{position:relative;padding:5px 0 5px 28px;color:#C9CDD6;font-size:15px}
+.schritt__liste li::before{content:"";position:absolute;left:0;top:15px;width:18px;height:1.5px;border-radius:1px;background:linear-gradient(90deg,#6F7480 0%,#fff 25%,#8E939E 45%,#3a3d46 60%,#C8CCD4 80%,#6F7480 100%);background-size:300% 100%;animation:strichGlanz 6.5s cubic-bezier(.45,.05,.55,.95) infinite}
+.schritt__liste li:nth-child(2)::before{animation-delay:-.6s}.schritt__liste li:nth-child(3)::before{animation-delay:-1.2s}
 @keyframes strichGlanz{from{background-position:0 0}to{background-position:-300% 0}}
 /* Erstgespraech */
 .erst{position:relative;padding:150px 0 130px;overflow:hidden}
