@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Datenschutz – endo Studio</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+html { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+@font-face { font-family: "Clash Display"; src: url("schriften/ClashDisplay-Variable.woff2") format("woff2"); font-weight: 200 700; font-display: swap; }
+@font-face { font-family: "Satoshi"; src: url("schriften/Satoshi-Variable.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
+:root { --bg:#0E0E0C; --text:#F2EFE8; --muted:#8A867D; --accent:#FF5A1F; --line:rgba(242,239,232,0.14); }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:"Satoshi",system-ui,sans-serif; font-size:16px; line-height:1.6; }
+main { max-width:68ch; margin-inline:auto; padding:clamp(48px,8vw,96px) clamp(24px,5vw,64px); }
+h1, h2 { font-family:"Clash Display",system-ui,sans-serif; font-weight:400; letter-spacing:-0.02em; margin:0; }
+h1 { font-size:clamp(2rem,4vw,3rem); margin-bottom:32px; }
+h2 { font-size:1.4rem; margin:40px 0 12px; }
+p { margin:0 0 12px; }
+ul { margin:0 0 12px; padding-left:20px; }
+.stumm { color:var(--muted); }
+a { color:inherit; }
+a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.zurueck { display:inline-block; margin-bottom:48px; color:var(--muted); text-decoration:none; font-size:.9rem; }
+.zurueck:hover { color:var(--text); }
+.entwurf { padding:16px; border:1px solid var(--accent); border-radius:4px; color:var(--text); font-size:.95rem; margin-bottom:40px; }
+.hinweis { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+</style>
+<link rel="stylesheet" href="endo-recht.css?v=1">
+</head>
+<body>
+<header class="er-kopf"><div class="er-kopf__innen"><a class="er-marke" href="./"><img src="bilder/zeichen/endo-zeichen-1.svg" alt="" width="24" height="24">endo</a><a class="er-knopf" href="#fragebogen">Erstgespräch</a></div></header>
+<main>
+  <a class="zurueck" href="./">&larr; Zurück zu endo</a>
+  <h1>Datenschutzerklärung</h1>
+
+  <h2>1. Verantwortlicher</h2>
+  <p>Emre Ergun<br>Gerberstraße 13<br>25336 Elmshorn<br>E-Mail: <a href="mailto:ergun.eu@gmail.com">ergun.eu@gmail.com</a><br>Telefon: +49 1590 6344961</p>
+
+  <h2>2. Allgemeines</h2>
+  <p>Der Schutz Ihrer persönlichen Daten ist mir wichtig. Diese Website kommt ohne Cookies, ohne Tracking und ohne Analyse-Dienste aus. Schriften und Skripte werden vom eigenen Server geladen. Erst wenn Sie den Assistenten endo nutzen, sich in die Warteliste eintragen oder ein Konto anlegen, werden Daten an die unten genannten Dienste übertragen.</p>
+
+  <h2>3. Server-Logfiles</h2>
+  <p>Beim Aufruf der Website speichert der Hosting-Anbieter automatisch Informationen in sogenannten Server-Logfiles: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browsertyp und Betriebssystem. Diese Daten dienen dem sicheren Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO) und werden nach kurzer Zeit gelöscht.</p>
+  <p>Hosting-Anbieter ist Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Vercel verarbeitet die Server-Logfiles in meinem Auftrag; dabei können Daten in die USA übermittelt werden. Vercel ist nach dem EU-US Data Privacy Framework zertifiziert; ergänzend gelten die Standardvertragsklauseln der EU. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO (Data Processing Addendum). Datenschutzerklärung von Vercel: <a href="https://vercel.com/legal/privacy-policy" rel="noopener" target="_blank">vercel.com/legal/privacy-policy</a>.</p>
+
+  <h2 id="warteliste">4. Warteliste</h2>
+  <p>Auf der Startseite können Sie sich in die Warteliste eintragen, um benachrichtigt zu werden, sobald endo Studio startet. Gespeichert werden Ihre E-Mail-Adresse und der Zeitpunkt der Eintragung, und zwar bei Supabase (Supabase Inc., USA) auf Servern in Frankfurt am Main (EU). Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit widerrufen können – schreiben Sie mir dafür kurz an die oben genannte Adresse, dann lösche ich Ihre Adresse. Die Adresse wird nur für die Benachrichtigung zum Start verwendet und nicht weitergegeben.</p>
+
+  <h2 id="endo">5. KI-Assistent endo (Studio)</h2>
+  <p>Im endo Studio (derzeit nur für Testzugänge freigeschaltet) können Sie dem Assistenten endo Fragen stellen. Die Auswahl im Chat (zum Beispiel Kategorie, Look und Werkzeug) bleibt in Ihrem Browser. Frei geschriebene Fragen werden zusammen mit dem bisherigen Gesprächsverlauf über eine Funktion bei Vercel an Anthropic PBC, 548 Market Street, San Francisco, CA 94104, USA, übermittelt, damit das KI-Modell Claude eine Antwort erzeugt. Dabei findet eine Übermittlung in die USA statt. Anthropic verwendet diese Daten nach seinen Bedingungen für gewerbliche Kunden nicht zum Training. Ich speichere den Chat nicht. Nähere Informationen finden Sie in der <a href="https://www.anthropic.com/legal/privacy" rel="noopener" target="_blank">Datenschutzerklärung von Anthropic</a>.</p>
+  <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) sowie mein berechtigtes Interesse, Fragen sofort zu beantworten (Art. 6 Abs. 1 lit. f DSGVO). Bitte geben Sie im Chat keine sensiblen Daten ein. Ohne Anmeldung bleiben Fotos, die Sie im Chat auswählen, nur in Ihrem Browser und werden nicht übertragen.</p>
+
+  <h3 id="konto">Kundenkonto bei endo Studio</h3>
+  <p>Sie können im Chat ein kostenloses Konto mit E-Mail-Adresse und Passwort anlegen. Die Anmeldung läuft über Supabase (Supabase Inc., USA); die Daten liegen auf Servern in Frankfurt am Main (EU). Ihr Passwort wird nur verschlüsselt bei Supabase gespeichert – ich kann es nicht sehen. Zur Bestätigung Ihrer Adresse und beim Zurücksetzen des Passworts erhalten Sie eine E-Mail. Gespeichert werden Ihre E-Mail-Adresse, Ihr Guthaben (Credits) und Ihre Aufträge (Werkzeug, Look, Format, Zeitpunkt, Ergebnis).</p>
+  <p>Damit Sie angemeldet bleiben, legt die Seite nur nach Ihrer Anmeldung einen Sitzungsschlüssel im Speicher Ihres Browsers ab (localStorage, Eintrag „endo-sitzung“). Beim Abmelden wird er gelöscht. Ohne Anmeldung speichert die Seite nichts in Ihrem Browser. Einzige Ausnahme: Die nicht verlinkte interne Seite /trading merkt sich die gewählte Plattform und den Zeitraum der Statistik (Einträge „ck-plattform“ und „ck-tage“); sie enthalten keine persönlichen Daten und bleiben nur in Ihrem Browser. Um Missbrauch zu verhindern, zählt der Server Anmeldeversuche und Chat-Nachrichten pro Tag anhand eines nicht umkehrbaren Kürzels Ihrer IP-Adresse; die Zähler werden nach spätestens zwei Tagen gelöscht.</p>
+  <p>Fotos, die Sie als angemeldeter Kunde hochladen, und die fertigen Ergebnisse speichere ich bei Vercel (Vercel Blob, Region Frankfurt) und zeige sie Ihnen unter „Mein Konto“. Sie werden nach 90 Tagen automatisch gelöscht; im Konto können Sie jede Datei jederzeit selbst löschen. Die Adressen enthalten eine zufällige Zeichenfolge; wer einen Link kennt, kann die Datei ohne Anmeldung öffnen.</p>
+  <p>Vor der Verarbeitung wird jedes Foto automatisch auf unzulässige Inhalte geprüft (Anthropic, USA, siehe oben). Zum Erstellen eines Bildes oder Videos wird Ihr Foto an Higgsfield AI (USA) übermittelt; das Ergebnis liegt dort etwa sieben Tage und wird sofort in meinen eigenen Speicher kopiert. Ihre Fotos werden nur für Ihre Aufträge verwendet und nicht zum Training genutzt. Bei allen genannten Diensten in den USA findet eine Übermittlung in ein Drittland statt; sie erfolgt auf Grundlage der Standardvertragsklauseln der EU-Kommission bzw. des EU-US Data Privacy Framework, soweit der Anbieter daran teilnimmt.</p>
+  <p id="konto-startseite"><strong>Konto auf der Startseite.</strong> Auf der endo-Startseite können Sie dasselbe Konto (E-Mail-Adresse und Passwort, Anmeldung über Supabase wie oben) anlegen. Das frühere Vormerken einzelner Fähigkeiten gibt es seit dem 4. Oktober 2026 nicht mehr; neue Vormerkungen werden nicht mehr gespeichert. Ihr Konto löschen Sie jederzeit selbst unter „Konto“ – damit werden auch früher gespeicherte Vormerkungen gelöscht. Geben Sie beim Anlegen Ihren Firmennamen und – freiwillig – eine Telefonnummer an, speichere ich beides ebenfalls in den Kontodaten bei Supabase, um Sie im Erstgespräch richtig anzusprechen und auf Wunsch zurückzurufen (Art. 6 Abs. 1 lit. b DSGVO, vorvertragliche Maßnahme). Beides ändern Sie im Konto unter „Profil“; mit dem Konto wird es gelöscht.</p>
+  <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag über die Nutzung von endo Studio). Ihr Konto löschen Sie, indem Sie mir eine kurze Nachricht an die oben genannte Adresse schicken; dann lösche ich Konto, Aufträge und Dateien. Ein Kauf von Credits ist noch nicht möglich; bevor er startet, wird diese Erklärung um die Zahlung ergänzt.</p>
+
+  <h2 id="support">6. Support-Anfragen</h2>
+  <p>Über das Support-Formular auf der Startseite können Sie uns eine Nachricht schicken. Dabei verarbeiten wir Ihren Namen, je nach gewähltem Antwort-Weg Ihre E-Mail-Adresse oder Telefonnummer, Ihre Nachricht, den Zeitpunkt und – falls Sie etwas mitschicken – den Link zu Ihrem Anhang. Zweck ist allein, Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anfrage zu unserem Angebot bzw. Ihrem Konto), im Übrigen Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung von Anfragen).</p>
+  <p>Die Anfrage wird in unserer Datenbank bei Supabase (Supabase Inc., Rechenzentrum in Frankfurt am Main) gespeichert und nach 12 Monaten automatisch gelöscht, auf Wunsch auch früher. Zum Schutz vor massenhaften Anfragen wird aus Ihrer IP-Adresse ein nicht umkehrbarer Kennwert gebildet, mit dem wir die Zahl der Anfragen pro Stunde begrenzen; die IP-Adresse selbst speichern wir nicht.</p>
+  <p>Damit Emre Ihre Anfrage sofort sieht, wird sie zusätzlich per E-Mail an ihn weitergeleitet. Für den Versand nutzen wir Resend (Resend, Inc., USA). Dabei können Ihre Angaben in die USA übermittelt werden; Grundlage sind die EU-Standardvertragsklauseln. Nähere Informationen finden Sie in der <a href="https://resend.com/legal/privacy-policy" rel="noopener">Datenschutzerklärung von Resend</a>.</p>
+  <p>Wählen Sie „Antwort per WhatsApp“, öffnet sich zusätzlich WhatsApp mit Ihrer fertigen Nachricht an Emre; übertragen wird sie erst, wenn Sie dort auf „Senden“ tippen. WhatsApp ist ein Dienst der WhatsApp Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland (Meta). Bei der Nutzung werden Daten (unter anderem Ihre Telefonnummer, Metadaten und der Nachrichteninhalt) von WhatsApp verarbeitet; dabei kann eine Übermittlung in die USA stattfinden. Nähere Informationen finden Sie in der <a href="https://www.whatsapp.com/legal/privacy-policy-eea" rel="noopener">Datenschutzrichtlinie von WhatsApp</a>. Wenn Sie das nicht möchten, wählen Sie bitte „E-Mail“.</p>
+  <p>Dateien, die Sie mitschicken (z. B. ein Screenshot), werden beim Auswählen bei Vercel Blob gespeichert, einem Speicherdienst des Hosting-Anbieters Vercel. Große Fotos werden vorher in Ihrem Browser verkleinert. Die Links enthalten eine zufällige Zeichenfolge und werden nirgends veröffentlicht; wer einen Link kennt, kann die Datei jedoch ohne Anmeldung öffnen. Laden Sie deshalb bitte keine Dokumente mit sensiblen Daten hoch. Die Dateien werden nach 30 Tagen automatisch gelöscht.</p>
+
+  <h2 id="einrichtung">6a. Formular nach dem Kauf</h2>
+  <p>Nach dem Kauf eines endo-Pakets können Sie uns über das Formular „Nach dem Kauf“ die Angaben für die Einrichtung schicken. Dabei verarbeiten wir das gewählte Paket, den Namen Ihrer Firma, die Adresse, die Branche, die Telefonnummer (freiwillig), Ihre E-Mail-Adresse, die E-Mail-Adressen Ihres Teams (freiwillig) und den Zeitpunkt. Zweck ist allein die Einrichtung Ihres Systems: Wir tragen die Firmendaten in Ihr eigenes Odoo ein und laden die genannten Personen dorthin ein. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Vertrags). Wenn Sie E-Mail-Adressen Ihres Teams angeben, informieren Sie diese Personen bitte darüber.</p>
+  <p>Gespeichert und weitergeleitet wird das Formular genau wie eine Support-Anfrage (Abschnitt 6): in unserer Datenbank bei Supabase (Rechenzentrum in Frankfurt am Main), nach 12 Monaten automatisch gelöscht, auf Wunsch auch früher, und zusätzlich per E-Mail über Resend. Über dieses Formular werden keine Dateien und keine Kontaktlisten übertragen: Ihr Logo schicken Sie uns per E-Mail, Ihre Kontakte importieren Sie selbst in Ihr Odoo. Ihr Odoo-Konto schließen Sie selbst bei Odoo ab; dafür gilt die Datenschutzerklärung von Odoo.</p>
+
+  <h2 id="fragebogen">6b. Fragebogen</h2>
+  <p>Über den Fragebogen auf der Startseite können Sie uns in drei Schritten von Ihrem Betrieb erzählen. Dabei verarbeiten wir Ihre Antworten zur Zahl der Personen im Betrieb und zu den Aufgaben, die zuerst laufen sollen (eine oder mehrere Antworten). Außerdem verarbeiten wir die Seite, über die Sie kommen, Ihren Namen, den Namen Ihres Betriebs, Ihre E-Mail-Adresse und Telefonnummer, ob Sie lieber per Video-Anruf oder Telefon sprechen möchten, und den Zeitpunkt. Zweck ist allein, Sie für ein Erstgespräch zu kontaktieren einen Termin vorzuschlagen und das Gespräch vorzubereiten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anfrage zu unserem Angebot).</p>
+  <p>Gespeichert und weitergeleitet werden die Antworten genau wie eine Support-Anfrage (Abschnitt 6): in unserer Datenbank bei Supabase (Rechenzentrum in Frankfurt am Main), nach 12 Monaten automatisch gelöscht, auf Wunsch auch früher, und zusätzlich per E-Mail über Resend. Erst beim Absenden wird etwas übertragen; Antworten, die Sie vorher eingeben, bleiben in Ihrem Browser und werden nicht gespeichert.</p>
+
+  <p>Seit dem 14.10.2026 fragt der Fragebogen im letzten Schritt Ihren Namen, Ihre Firma, Ihre E-Mail-Adresse und Ihre Telefonnummer ab. Zusätzlich legen wir aus diesen Angaben und Ihren Antworten einen Eintrag (Lead) in unserem Kundensystem (Odoo, Anbieter Odoo S.A., Belgien) an, damit wir Ihre Anfrage dort bearbeiten und Sie zurückrufen können. Rechtsgrundlage ist Ihre Einwilligung bzw. die Anbahnung eines Vertrags (Art. 6 Abs. 1 lit. a und b DSGVO). Kann der Eintrag nicht angelegt werden, werden Ihre Angaben vorübergehend in den Protokollen unseres Hosters Vercel festgehalten, damit Ihre Anfrage nicht verloren geht.</p>
+
+  <h2 id="kunde-anlegen">6c. Angaben über unsere Mitarbeiter und Partner („Kunde anlegen“)</h2>
+  <p>Mitarbeiter und Partner von ERGUN. können im Gespräch mit Ihnen Ihre Angaben über eine eigene Seite an uns schicken – nur mit Ihrem Einverständnis, das vor dem Absenden ausdrücklich bestätigt wird. Dabei verarbeiten wir den Namen Ihres Betriebs, den Namen der Ansprechperson, Ihre E-Mail-Adresse oder Telefonnummer, Ihre Antworten zu Ihrer Tätigkeit, zur Zahl der Personen im Betrieb, zu dem, was Sie am meisten Zeit kostet, wie bei Ihnen die Schritte bis zum Auftrag heißen (freiwillig), womit Sie heute arbeiten und wie dringend es ist, eine Notiz aus dem Gespräch (freiwillig), die Stufe, die die Seite aus Ihren Antworten vorschlägt, die Kennung der Person, die Ihre Angaben aufgenommen hat („gebracht von“), und den Zeitpunkt. Zweck ist allein, Sie für ein Erstgespräch zu kontaktieren und es vorzubereiten. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit mit Wirkung für die Zukunft widerrufen können, und Art. 6 Abs. 1 lit. b DSGVO (Anfrage zu unserem Angebot).</p>
+  <p>Gespeichert und weitergeleitet werden die Angaben genau wie eine Support-Anfrage (Abschnitt 6): in unserer Datenbank bei Supabase (Rechenzentrum in Frankfurt am Main), nach 12 Monaten automatisch gelöscht, auf Wunsch auch früher, und zusätzlich per E-Mail über Resend. Die vorgeschlagene Stufe ist unverbindlich und führt zu keiner automatisierten Entscheidung; wir prüfen sie im Erstgespräch gemeinsam mit Ihnen. Auf dem Gerät der aufnehmenden Person wird nichts gespeichert.</p>
+
+  <h2 id="kontakt">6d. Kontakt per WhatsApp oder E-Mail</h2>
+  <p>Unter „Lieber direkt?“ auf der Startseite können Sie uns direkt schreiben oder anrufen. Die Seite selbst speichert und überträgt dabei nichts: Die Knöpfe öffnen nur WhatsApp, Ihr Mailprogramm bzw. den Anruf. Übertragen wird sie erst, wenn Sie dort selbst auf „Senden“ tippen; Dateien können Sie hier nicht hochladen. Ebenso öffnen die Knöpfe „WhatsApp“, „E-Mail“ und „Anrufen“ nur die passende App auf Ihrem Gerät. Ihre Nachricht verwenden wir allein, um Ihre Anfrage zu beantworten; Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anfrage zu unserem Angebot). Für WhatsApp gilt der Hinweis in Abschnitt 6 (WhatsApp Ireland Limited, mögliche Übermittlung in die USA); wenn Sie das nicht möchten, wählen Sie bitte „E-Mail“.</p>
+
+  <h2>7. Ihre Rechte</h2>
+  <ul>
+    <li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
+    <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+    <li>Löschung (Art. 17 DSGVO) und Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+    <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+    <li>Widerspruch gegen eine Verarbeitung auf Grundlage berechtigter Interessen (Art. 21 DSGVO)</li>
+    <li>Beschwerde bei einer Datenschutz-Aufsichtsbehörde (Art. 77 DSGVO), z. B. beim Unabhängigen Landeszentrum für Datenschutz Schleswig-Holstein</li>
+  </ul>
+  <p>Wenden Sie sich dafür an die oben genannte Adresse.</p>
+
+  <h2>8. Stand</h2>
+  <p>Oktober 2026. Diese Erklärung wird angepasst, wenn sich die Website oder die Rechtslage ändert.</p>
+</main>
+<script>
+/* Kein Zoomen: iPhone ignoriert user-scalable=no, daher Zwei-Finger-Zoom und Doppeltippen hier sperren */
+(function () {
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (t) { document.addEventListener(t, function (e) { e.preventDefault(); }, { passive: false }); });
+  document.addEventListener('touchmove', function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  var zuletzt = 0;
+  document.addEventListener('touchend', function (e) { var jetzt = Date.now(); if (jetzt - zuletzt < 300 && !e.target.closest('input, textarea, select')) e.preventDefault(); zuletzt = jetzt; }, { passive: false });
+})();
+</script>
+<footer class="er-fuss"><span>© 2026 endo · ERGUN. · Odoo ist eine eingetragene Marke der Odoo S.A.</span><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Impressum – endo Studio</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+html { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+@font-face { font-family: "Clash Display"; src: url("schriften/ClashDisplay-Variable.woff2") format("woff2"); font-weight: 200 700; font-display: swap; }
+@font-face { font-family: "Satoshi"; src: url("schriften/Satoshi-Variable.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
+:root { --bg:#0E0E0C; --text:#F2EFE8; --muted:#8A867D; --accent:#FF5A1F; --line:rgba(242,239,232,0.14); }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:"Satoshi",system-ui,sans-serif; font-size:16px; line-height:1.6; }
+main { max-width:68ch; margin-inline:auto; padding:clamp(48px,8vw,96px) clamp(24px,5vw,64px); }
+h1, h2 { font-family:"Clash Display",system-ui,sans-serif; font-weight:400; letter-spacing:-0.02em; margin:0; }
+h1 { font-size:clamp(2rem,4vw,3rem); margin-bottom:32px; }
+h2 { font-size:1.4rem; margin:40px 0 12px; }
+p { margin:0 0 12px; }
+.stumm { color:var(--muted); }
+a { color:inherit; }
+a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.zurueck { display:inline-block; margin-bottom:48px; color:var(--muted); text-decoration:none; font-size:.9rem; }
+.zurueck:hover { color:var(--text); }
+.hinweis { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+</style>
+<link rel="stylesheet" href="endo-recht.css?v=1">
+</head>
+<body>
+<header class="er-kopf"><div class="er-kopf__innen"><a class="er-marke" href="./"><img src="bilder/zeichen/endo-zeichen-1.svg" alt="" width="24" height="24">endo</a><a class="er-knopf" href="#fragebogen">Erstgespräch</a></div></header>
+<main>
+  <h1>Impressum</h1>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>Emre Ergun<br>ERGUN. – endo Studio<br>Gerberstraße 13<br>25336 Elmshorn</p>
+
+  <h2>Kontakt</h2>
+  <p>Telefon: <a href="tel:+4915906344961">+49 1590 6344961</a><br>
+     E-Mail: <a href="mailto:ergun.eu@gmail.com">ergun.eu@gmail.com</a></p>
+
+  <h2>Umsatzsteuer</h2>
+  <p class="stumm">Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).</p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>Emre Ergun, Anschrift wie oben.</p>
+
+  <h2>Streitbeilegung</h2>
+  <p class="stumm">Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+</main>
+<script>
+/* Kein Zoomen: iPhone ignoriert user-scalable=no, daher Zwei-Finger-Zoom und Doppeltippen hier sperren */
+(function () {
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (t) { document.addEventListener(t, function (e) { e.preventDefault(); }, { passive: false }); });
+  document.addEventListener('touchmove', function (e) { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  var zuletzt = 0;
+  document.addEventListener('touchend', function (e) { var jetzt = Date.now(); if (jetzt - zuletzt < 300 && !e.target.closest('input, textarea, select')) e.preventDefault(); zuletzt = jetzt; }, { passive: false });
+})();
+</script>
+<footer class="er-fuss"><span>© 2026 endo · ERGUN. · Odoo ist eine eingetragene Marke der Odoo S.A.</span><nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>endo – Odoo für Ihren Betrieb, eingerichtet und betreut</title>
+<meta name="description" content="endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="endo – Ihr Betrieb. In einem System.">
+<meta property="og:description" content="endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.">
+<meta property="og:url" content="https://endo-ergun.vercel.app/">
+<meta property="og:locale" content="de_DE">
+<link rel="canonical" href="https://endo-ergun.vercel.app/">
+<meta name="theme-color" content="#04060C">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--grund:#04060C;--flaeche:#080C17;--text:#E8ECF5;--grau:#8A93A8;--hell:#F4F7FF;--kurve:cubic-bezier(.2,.7,.1,1);--chrom:linear-gradient(100deg,#8C95A8 0%,#F4F7FF 30%,#9FB3E8 45%,#FFFFFF 52%,#6F7C99 70%,#DCE4F7 100%)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--grund)}
+body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.intro-an{overflow:hidden}
+a{color:inherit}
+.korn{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.chrom{background:var(--chrom);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+.in .chrom,.chrom.in{animation:glanz 2.4s var(--kurve) .35s both}
+@keyframes glanz{from{background-position:100% 0}to{background-position:0 0}}
+.wrap{width:min(1160px,100% - 48px);margin:0 auto}
+/* Kopf */
+.kopf{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.kopf__in{pointer-events:auto;display:flex;align-items:center;gap:22px;width:min(1160px,100% - 28px);padding:8px 8px 8px 14px;border-radius:999px;transition:background .5s,box-shadow .5s,width .6s var(--kurve)}
+.gerollt .kopf__in{width:min(920px,100% - 28px);background:rgba(8,12,23,.62);box-shadow:inset 0 0 0 1px rgba(200,215,255,.14),0 18px 40px -18px rgba(0,0,0,.8);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+.marke{display:flex;align-items:center;gap:6px;text-decoration:none}
+.marke canvas{width:40px;height:40px;display:block}
+.marke b{font-weight:500;font-size:21px;letter-spacing:-.045em}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{font-size:14px;text-decoration:none;padding:8px 14px;border-radius:999px;opacity:.78;transition:opacity .2s,background .2s}
+.nav a:hover{opacity:1;background:rgba(255,255,255,.07)}
+.knopf{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:12px 22px;font:500 15px/1 Geist,sans-serif;text-decoration:none;cursor:pointer;background:var(--hell);color:var(--grund);transition:transform .35s var(--kurve)}
+.knopf::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(140,165,220,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .9s var(--kurve)}
+.knopf:hover::after{transform:translateX(120%)}
+.knopf:hover{transform:translateY(-1px)}
+.knopf--klein{padding:10px 18px;font-size:14px}
+.knopf--glas{background:rgba(255,255,255,.06);color:var(--text);box-shadow:inset 0 0 0 1px rgba(200,215,255,.22)}
+.pfeil{display:grid;place-items:center;width:26px;height:26px;margin-right:-10px;border-radius:50%;background:var(--grund);color:var(--hell);font-size:14px}
+/* Hero */
+.held{position:relative;min-height:100svh;display:flex;align-items:center;padding:120px 0 80px}
+.held__raster{display:grid;grid-template-columns:1fr;justify-items:center;text-align:center}
+.held .satz{margin-left:auto;margin-right:auto}.held__knoepfe{justify-content:center}
+.pille{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:13px;color:var(--grau);box-shadow:inset 0 0 0 1px rgba(200,215,255,.18);background:rgba(255,255,255,.03)}
+.pille i{width:6px;height:6px;border-radius:50%;background:#9FB6F0;box-shadow:0 0 10px #9FB6F0}
+h1,h2{font-weight:500;letter-spacing:-.04em;margin:0}
+h1{font-size:clamp(46px,8vw,112px);line-height:.98;margin:26px 0 24px}
+h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
+.zeile{display:block;overflow:hidden;padding-bottom:.08em}
+.zeile>span{display:inline-block;transform:translateY(110%);transition:transform 1.1s var(--kurve)}
+.in .zeile>span,.zeile.in>span{transform:none}
+.satz{font-size:19px;color:var(--grau);max-width:440px;margin:0 0 34px}
+.held__knoepfe{display:flex;gap:12px;flex-wrap:wrap}
+.held__logo{position:relative;aspect-ratio:1;width:100%;max-width:620px;justify-self:end}
+.held__logo canvas{position:absolute;inset:-12%;width:124%;height:124%}
+.hebt{opacity:0;transform:translateY(22px);transition:opacity 1s var(--kurve),transform 1s var(--kurve)}
+.in .hebt,.hebt.in{opacity:1;transform:none}
+.scroll-hinweis{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:1px;height:46px;background:linear-gradient(transparent,rgba(200,215,255,.6));overflow:hidden}
+.scroll-hinweis::after{content:"";position:absolute;left:0;top:-20px;width:1px;height:20px;background:#fff;animation:fall 2.2s ease-in-out infinite}
+@keyframes fall{to{top:46px}}
+/* Abschnitte */
+.abschnitt{position:relative;padding:130px 0}
+.kopfzeile{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:56px}
+.label{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--grau);margin-bottom:18px}
+.label::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.linie{height:1px;background:linear-gradient(90deg,transparent,rgba(175,192,232,.7),transparent);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--kurve)}
+.linie.in{transform:none}
+.kante{position:relative;border-radius:22px;padding:1px;background:linear-gradient(140deg,rgba(220,230,255,.5),rgba(255,255,255,.04) 42%,rgba(120,150,230,.32));transition:background .5s}
+.kante:hover{background:linear-gradient(140deg,rgba(240,245,255,.85),rgba(255,255,255,.08) 42%,rgba(150,175,240,.55))}
+.kante>div{height:100%;border-radius:21px;background:var(--flaeche);padding:26px}
+.zeichen{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;margin-bottom:18px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.02));box-shadow:inset 0 0 0 1px rgba(200,215,255,.2);color:#DCE4F7}
+.zeichen svg{width:22px;height:22px}
+.karte h3{margin:0 0 6px;font-size:18px;font-weight:500;letter-spacing:-.02em}
+.karte p{margin:0;color:var(--grau);font-size:15px}
+.reihe{opacity:0;transform:translateY(28px);transition:opacity .9s var(--kurve),transform .9s var(--kurve)}
+.reihe.in{opacity:1;transform:none}
+/* Rad */
+.rad-raster{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:56px;align-items:center}
+.rad{position:relative;aspect-ratio:1;width:100%;max-width:500px;margin:0 auto}
+.rad svg.linien{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rad__mitte{position:absolute;left:50%;top:50%;width:27%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 28%,#141b2e,#05070d 70%);box-shadow:inset 0 0 0 1px rgba(200,215,255,.28),0 20px 50px -18px rgba(0,0,0,.9)}
+.rad__mitte canvas{position:absolute;inset:-6%;width:112%;height:112%}
+.knoten{position:absolute;display:grid;justify-items:center;gap:8px;width:110px;border:0;background:none;color:var(--grau);font:500 13px/1.2 Geist,sans-serif;cursor:pointer;transform:translate(-50%,-50%);padding:0}
+.knoten span.k{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--flaeche);box-shadow:inset 0 0 0 1px rgba(200,215,255,.2);color:#B9C4DA;transition:all .4s var(--kurve)}
+.knoten svg{width:22px;height:22px}
+.knoten.an{color:var(--text)}
+.knoten.an span.k{background:radial-gradient(circle at 35% 30%,#2a3550,#0b1020);box-shadow:inset 0 0 0 1.5px rgba(235,242,255,.9),0 0 26px -4px rgba(160,185,240,.55);color:#fff}
+.bereiche{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.bereiche .kante>div{padding:22px}
+.bereiche .kante.an{background:linear-gradient(140deg,rgba(245,248,255,.95),rgba(255,255,255,.1) 45%,rgba(150,175,240,.6))}
+.machen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.nr{font-size:44px;font-weight:500;letter-spacing:-.05em;line-height:1;margin-bottom:26px}
+/* Erstgespraech */
+.erst{position:relative;padding:150px 0 130px;overflow:hidden}
+.erst .fluss{position:absolute;inset:0;opacity:.85}
+.erst::before,.erst::after{content:"";position:absolute;left:0;right:0;height:200px;z-index:1;pointer-events:none}
+.erst::before{top:0;background:linear-gradient(var(--grund),transparent)}
+.erst::after{bottom:0;background:linear-gradient(transparent,var(--grund))}
+.erst .wrap{position:relative;z-index:2}
+.erst__kopf{text-align:center;margin-bottom:38px}
+.erst__kopf p{color:rgba(232,236,245,.7);margin:14px 0 0}
+.glas{max-width:620px;margin:0 auto;border-radius:28px;padding:30px;background:rgba(8,12,23,.58);-webkit-backdrop-filter:blur(22px) saturate(1.35);backdrop-filter:blur(22px) saturate(1.35);box-shadow:inset 0 0 0 1px rgba(200,215,255,.22),inset 0 1px 0 rgba(255,255,255,.16),0 40px 90px -30px rgba(0,0,0,.9)}
+.fb__oben{display:flex;justify-content:space-between;font-size:13px;color:var(--grau);margin-bottom:10px}
+.fb__balken{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:28px}
+.fb__balken i{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;position:relative}
+.fb__balken i::after{content:"";position:absolute;inset:0;background:var(--hell);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
+.fb__balken i.an::after{transform:none}
+.fb__frage{font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.15;margin:0 0 6px}
+.fb__unter{color:var(--grau);font-size:15px;margin:0 0 20px}
+.fb__wahl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.wahl{display:flex;align-items:center;gap:12px;text-align:left;padding:16px;border-radius:16px;border:0;background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 1px rgba(220,230,255,.2);color:var(--text);font:400 15px/1.3 Geist,sans-serif;cursor:pointer;transition:all .25s var(--kurve)}
+.wahl:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);background:rgba(255,255,255,.07)}
+.wahl.an{background:var(--hell);color:var(--grund);box-shadow:none}
+.wahl svg{width:22px;height:22px;flex:none;opacity:.85}
+.fb__fuss{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+.zurueck{background:none;border:0;color:var(--grau);font:400 14px Geist,sans-serif;cursor:pointer;padding:8px 4px}
+.fehler{color:#FFB4A8;font-size:14px;min-height:20px;margin-top:12px}
+.feld{width:100%;background:rgba(255,255,255,.05);border:0;box-shadow:inset 0 0 0 1px rgba(220,230,255,.24);border-radius:14px;color:#fff;padding:14px 15px;font:400 15px Geist,sans-serif;margin-bottom:10px;outline:none;transition:box-shadow .2s}
+.feld:focus{box-shadow:inset 0 0 0 1.5px rgba(235,242,255,.85)}
+.feld::placeholder{color:rgba(232,236,245,.45)}
+.haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
+.haken input{margin-top:3px;accent-color:#DCE4F7}
+.fb__schritt{animation:rein .55s var(--kurve)}
+@keyframes rein{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.paket{font-size:48px;font-weight:500;letter-spacing:-.05em;line-height:1;margin:6px 0 10px}
+.preis{display:flex;gap:26px;margin:18px 0;padding:18px 0;border-top:1px solid rgba(200,215,255,.14);border-bottom:1px solid rgba(200,215,255,.14)}
+.preis b{display:block;font-size:30px;font-weight:500;letter-spacing:-.04em}
+.preis span{font-size:13px;color:var(--grau)}
+.liste{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
+.liste li{display:flex;gap:10px}
+.liste li::before{content:"";flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9aa6be 55%,#3c475e)}
+.andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.andere button{text-align:left;padding:14px;border-radius:14px;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,230,255,.18);color:var(--text);font:400 14px Geist,sans-serif;cursor:pointer}
+.andere button b{display:block;font-weight:500;font-size:16px}
+.klein{font-size:12.5px;color:var(--grau);margin-top:18px}
+.klein a{color:#DCE4F7}
+/* Kontakt */
+.wege{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.wege a{text-decoration:none}
+.wege small{display:block;color:var(--grau);font-size:14px;margin-top:4px}
+/* Fuss */
+.fuss{padding:60px 0 50px;color:var(--grau);font-size:14px}
+.fuss__in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.fuss a{text-decoration:none;margin-left:18px}
+.fuss button{background:none;border:0;color:var(--grau);font:inherit;cursor:pointer;margin-left:18px;text-decoration:underline;text-underline-offset:3px}
+/* Intro: Metall-Masse → endo-Zeichen → fließt ins Menü (Original-Liquid-Metal-Shader, Paper Shaders) */
+.intro{position:fixed;inset:0;z-index:100;background:var(--grund);transition:opacity 1.3s var(--kurve)}
+.intro.raus{opacity:0;pointer-events:none}
+.intro__weg{position:absolute;right:22px;bottom:20px;background:rgba(255,255,255,.06);border:0;box-shadow:inset 0 0 0 1px rgba(200,215,255,.2);color:var(--grau);border-radius:999px;padding:8px 14px;font:400 13px Geist,sans-serif;cursor:pointer;opacity:0;transition:opacity .6s .8s}
+.intro.laeuft .intro__weg{opacity:1}
+.zeichen-fix{position:fixed;z-index:110;left:50%;top:47%;width:min(340px,78vw);height:min(340px,78vw);transform:translate(-50%,-50%);display:block;transition:left 1.35s cubic-bezier(.65,0,.25,1),top 1.35s cubic-bezier(.65,0,.25,1),width 1.35s cubic-bezier(.65,0,.25,1),height 1.35s cubic-bezier(.65,0,.25,1),transform 1.35s cubic-bezier(.65,0,.25,1)}
+.zeichen-fix.sofort{transition:none}
+.zeichen-fix>div{position:absolute;inset:0;transition:opacity .4s}
+.zeichen-fix .fest{display:none}
+.zeichen-fix.ohne-shader .fest{display:block}
+.zeichen-fix.ohne-shader>div{display:none}
+.zeichen-fix .fest{position:absolute;inset:14%}
+#marke-platz{display:inline-block;width:44px;height:44px;flex:none}
+.held{transition:opacity 1.3s var(--kurve)}
+.vor .held,.vor .kopf__in>*:not(.marke){opacity:0}
+.ohne-intro .intro{display:none}
+.vor .marke b{opacity:0}
+.marke b,.kopf__in>*{transition:opacity 1s var(--kurve)}
+.vorschau{position:fixed;left:14px;bottom:14px;z-index:60;font-size:12px;color:var(--grau);background:rgba(8,12,23,.7);backdrop-filter:blur(10px);padding:6px 12px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(200,215,255,.14)}
+/* Dialog */
+.dialog{position:fixed;inset:0;z-index:95;display:none;place-items:center;background:rgba(2,3,8,.7);backdrop-filter:blur(6px);padding:20px}
+.dialog.auf{display:grid}
+.dialog .glas{max-width:860px;max-height:86vh;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(200,215,255,.12);vertical-align:top}
+th{font-weight:500;color:var(--grau);font-size:13px}
+td:first-child{color:var(--grau)}
+@media (max-width:900px){
+  .nav{display:none}
+  .held{padding-top:100px}
+  .held__raster{grid-template-columns:1fr}
+  .held__logo{order:-1;max-width:330px;justify-self:center;margin-bottom:-20px}
+  .kopfzeile{display:block}
+  .rad-raster,.machen,.wege{grid-template-columns:1fr}
+  .bereiche{grid-template-columns:1fr}
+  .knoten{width:80px;font-size:11.5px}.knoten span.k{width:42px;height:42px}
+  .fb__wahl,.andere{grid-template-columns:1fr}
+  .glas{padding:22px}
+  .abschnitt{padding:90px 0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.zeile>span,.hebt,.reihe{transform:none!important;opacity:1!important}.linie{transform:none}}
+</style>
+<script>/* Intro nur beim ersten Besuch */try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash||localStorage.getItem('endo-intro')==='1')document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
+</head>
+<body>
+<div class="korn" aria-hidden="true"></div>
+
+<div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
+<a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang"><div id="z-mb" style="opacity:0"></div><div id="z-sh" style="opacity:0"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
+
+<header class="kopf"><div class="kopf__in">
+  <a class="marke" href="#start" aria-label="endo, zum Anfang"><span id="marke-platz"></span><b class="chrom" id="marke-wort">endo</b></a>
+  <nav class="nav" aria-label="Hauptnavigation"><a href="#bereiche">Das nimmt endo ab</a><a href="#machen">Das machen wir</a></nav>
+  <a class="knopf knopf--klein" href="#fragebogen">Erstgespräch</a>
+</div></header>
+
+<main id="start">
+<section class="held">
+  <div class="wrap held__raster">
+    <div id="held-text">
+      <span class="pille hebt" style="transition-delay:.1s"><i></i>Für Betriebe in ganz Deutschland</span>
+      <h1><span class="zeile"><span style="transition-delay:.2s">Ihr Betrieb.</span></span><span class="zeile"><span style="transition-delay:.34s">In <span class="chrom">einem System.</span></span></span></h1>
+      <p class="satz hebt" style="transition-delay:.55s">endo richtet Odoo in Ihrem Betrieb ein und betreut es danach.</p>
+      <div class="held__knoepfe hebt" style="transition-delay:.7s"><a class="knopf" href="#fragebogen">Erstgespräch vereinbaren <span class="pfeil">→</span></a><a class="knopf knopf--glas" href="#bereiche">Das nimmt endo ab</a></div>
+    </div>
+  </div>
+  <span class="scroll-hinweis" aria-hidden="true"></span>
+</section>
+
+<div class="wrap"><div class="linie beob"></div></div>
+
+<section class="abschnitt" id="bereiche">
+  <div class="wrap">
+    <div class="kopfzeile beob"><div><span class="label">Aufgaben</span><h2><span class="zeile"><span>Das nimmt Ihnen</span></span><span class="zeile"><span style="transition-delay:.12s"><span class="chrom">endo</span> ab</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:380px">Sechs Bereiche, ein System. Alles, was heute auf Zetteln, in Excel und in fünf Programmen liegt.</p></div>
+    <div class="rad-raster">
+      <div class="rad reihe beob" id="rad"></div>
+      <div class="bereiche" id="bereiche-karten"></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="linie beob"></div></div>
+
+<section class="abschnitt" id="machen">
+  <div class="wrap">
+    <div class="kopfzeile beob"><div><span class="label">Ablauf</span><h2><span class="zeile"><span>Das <span class="chrom">machen</span> wir</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:380px">Sie sagen uns, wie Ihr Betrieb läuft. Den Rest übernehmen wir.</p></div>
+    <div class="machen" id="machen-karten"></div>
+  </div>
+</section>
+
+<section class="erst" id="fragebogen">
+  <div class="fluss" id="fluss-sh"></div>
+  <div class="wrap">
+    <div class="erst__kopf beob"><span class="label">Erstgespräch</span><h2><span class="zeile"><span>Erstgespräch <span class="chrom">vereinbaren</span></span></span></h2><p class="hebt">5 kurze Fragen, etwa 1 Minute. Kostenlos und unverbindlich.</p></div>
+    <div class="glas reihe beob" id="fb"></div>
+  </div>
+</section>
+
+<section class="abschnitt" id="kontakt" style="padding-top:60px">
+  <div class="wrap beob">
+    <span class="label">Kontakt</span>
+    <h2><span class="zeile"><span>Lieber <span class="chrom">direkt</span>?</span></span></h2>
+    <p class="satz hebt" style="margin-top:16px">Antwort innerhalb von 24 Stunden.</p>
+    <div class="wege">
+      <a class="kante reihe" href="https://wa.me/4915906344961"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2.5 4 5 5l1.2-1.4 2 .8"/></svg></span><h3>WhatsApp</h3><small>+49 1590 6344961</small></div></a>
+      <a class="kante reihe" href="mailto:ergun.eu@gmail.com" style="transition-delay:.12s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><h3>E-Mail</h3><small>ergun.eu@gmail.com</small></div></a>
+      <a class="kante reihe" href="tel:+4915906344961" style="transition-delay:.24s"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><h3>Telefon</h3><small>+49 1590 6344961</small></div></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="fuss"><div class="wrap"><div class="linie beob" style="margin-bottom:40px"></div><div class="fuss__in">
+  <span><b class="chrom" style="font-weight:500;font-size:18px;letter-spacing:-.04em">endo</b> &nbsp;·&nbsp; Odoo eingerichtet und betreut</span>
+  <span><button type="button" id="leistungen-auf">Leistungen</button><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" id="intro-nochmal">Intro nochmal ansehen</button></span>
+</div></div></footer>
+
+
+<div class="dialog" id="dialog" role="dialog" aria-modal="true" aria-label="Leistungen"><div class="glas">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><h2 style="font-size:30px">Was genau <span class="chrom in">enthalten</span> ist</h2><button class="zurueck" id="dialog-zu" type="button" style="font-size:22px">×</button></div>
+  <div id="tabelle"></div>
+  <p class="klein"><b style="color:var(--text);font-weight:500">In allen Paketen nicht enthalten:</b> eigene Programmierung, Anbindung fremder Programme, Buchhaltung und Steuer (bleibt bei Ihrem Steuerberater, den Export richten wir auf Wunsch ein) und die Odoo-Lizenz, die Sie direkt beim Hersteller zahlen.</p>
+  <p class="klein"><b style="color:var(--text);font-weight:500">Betreuung:</b> Fragen per E-Mail und kleine Änderungen, ohne Stundenzusage. Antwort innerhalb von 2 Werktagen.</p>
+  <p class="klein">Alle Preise netto zzgl. MwSt.</p>
+</div></div>
+
+<script>
+(function(){
+'use strict';
+var ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var handy = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+var DPR = Math.min(window.devicePixelRatio || 1, handy ? 1.25 : 2);
+var T0 = performance.now();
+function zeit(){ return (performance.now() - T0) / 1000; }
+
+/* ---------- Bereiche + Rad ---------- */
+var BER = [
+  ['kunden','Kunden','Kunden und Anfragen','Keine Anfrage bleibt liegen.','<circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>'],
+  ['angebote','Angebote','Angebote und Aufträge','Schneller vom Angebot zur Zusage.','<path d="M6 3.5h9l3 3V20.5H6z"/><path d="M9 11h6M9 14.5h3"/>'],
+  ['rechnungen','Rechnungen','Rechnungen und Zahlungen','Weniger Abtippen, offene Posten im Blick.','<path d="M6 3.5h12v17l-3-1.8-3 1.8-3-1.8-3 1.8z"/><path d="M9 8.5h6M9 12h6"/>'],
+  ['termine','Termine','Termine und Projekte','Jeder weiß, was wann ansteht.','<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'],
+  ['team','Team','Team und Organisation','Klare Zuständigkeiten, alles an einem Ort.','<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6 6 0 0 1 3 5.5"/>'],
+  ['marketing','Marketing','Marketing und Website','Kunden erreichen, ohne fünf Programme.','<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/>']
+];
+function svg(z){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + z + '</svg>'; }
+var karten = document.getElementById('bereiche-karten');
+karten.innerHTML = BER.map(function(b, i){ return '<div class="kante reihe beob" data-b="' + i + '" style="transition-delay:' + (i * .08) + 's"><div class="karte"><span class="zeichen">' + svg(b[4]) + '</span><h3>' + b[2] + '</h3><p>' + b[3] + '</p></div></div>'; }).join('');
+var rad = document.getElementById('rad'), R = 39, linien = '', punkte = '', knoten = '';
+function ort(i){ var a = -Math.PI / 2 + i * Math.PI * 2 / 6; return [50 + Math.cos(a) * R, 50 + Math.sin(a) * R]; }
+var defs = '<defs><linearGradient id="sp" x1="0" x2="1"><stop offset="0" stop-color="#AFC0E8" stop-opacity=".05"/><stop offset=".5" stop-color="#E6EDFF" stop-opacity=".55"/><stop offset="1" stop-color="#AFC0E8" stop-opacity=".1"/></linearGradient><radialGradient id="tr" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9C4DA"/><stop offset="1" stop-color="#3C475E"/></radialGradient></defs>';
+BER.forEach(function(b, i){ var p = ort(i);
+  linien += '<line x1="50" y1="50" x2="' + p[0] + '" y2="' + p[1] + '" stroke="rgba(200,215,255,.16)" stroke-width=".3" data-sp="' + i + '"/>';
+  punkte += '<circle r="1.1" fill="url(#tr)" data-pk="' + i + '"/><circle r=".8" fill="url(#tr)" data-pk="' + i + '"/>';
+  knoten += '<button class="knoten" type="button" data-k="' + i + '" style="left:' + p[0] + '%;top:' + p[1] + '%"><span class="k">' + svg(b[4]) + '</span>' + b[1] + '</button>';
+});
+rad.innerHTML = '<svg class="linien" viewBox="0 0 100 100" aria-hidden="true">' + defs + '<circle cx="50" cy="50" r="' + R + '" fill="none" stroke="url(#sp)" stroke-width=".35"/><circle cx="50" cy="50" r="' + (R - 9) + '" fill="none" stroke="rgba(200,215,255,.07)" stroke-width=".25" stroke-dasharray=".6 1.4"/>' + linien + punkte + '</svg><div class="rad__mitte"><div id="mitte-sh" style="position:absolute;inset:-4%"></div></div>' + knoten;
+var aktiv = 0, radUhr = 0, radPause = false;
+function waehle(i){ aktiv = i;
+  rad.querySelectorAll('[data-k]').forEach(function(k, n){ k.classList.toggle('an', n === i); });
+  rad.querySelectorAll('[data-sp]').forEach(function(s, n){ s.setAttribute('stroke', n === i ? 'rgba(235,242,255,.75)' : 'rgba(200,215,255,.16)'); s.setAttribute('stroke-width', n === i ? '.45' : '.3'); });
+  karten.querySelectorAll('[data-b]').forEach(function(k, n){ k.classList.toggle('an', n === i); });
+}
+function takt(){ clearTimeout(radUhr); if (ruhig || radPause) return; radUhr = setTimeout(function(){ waehle((aktiv + 1) % 6); takt(); }, 3200); }
+rad.addEventListener('click', function(e){ var k = e.target.closest('[data-k]'); if (k){ waehle(+k.dataset.k); takt(); } });
+karten.addEventListener('pointerenter', function(e){}, true);
+karten.addEventListener('pointerover', function(e){ var k = e.target.closest('[data-b]'); if (k && +k.dataset.b !== aktiv){ waehle(+k.dataset.b); radPause = true; clearTimeout(radUhr); } });
+karten.addEventListener('pointerleave', function(){ radPause = false; takt(); });
+waehle(0); takt();
+var pk = rad.querySelectorAll('[data-pk]');
+(function punktLauf(){
+  var t = performance.now();
+  pk.forEach(function(c, n){ var i = +c.dataset.pk, p = ort(i), v = ((t / (i === aktiv ? 1400 : 3400)) + n * .37) % 1, s = v < .5 ? v * 2 : 2 - v * 2; s = .17 + s * .83;
+    c.setAttribute('cx', 50 + (p[0] - 50) * s); c.setAttribute('cy', 50 + (p[1] - 50) * s); c.setAttribute('opacity', i === aktiv ? 1 : .55); });
+  if (!ruhig) requestAnimationFrame(punktLauf);
+})();
+
+/* ---------- Das machen wir ---------- */
+document.getElementById('machen-karten').innerHTML = [['01','Einrichten','Odoo passend zu Ihrem Betrieb, Ihre Daten ziehen mit um.'],['02','Einweisen','Ihr Team kann sofort damit arbeiten.'],['03','Betreuen','Fragen und kleine Änderungen, zum festen Monatspreis.']].map(function(m, i){
+  return '<div class="kante reihe beob" style="transition-delay:' + (i * .12) + 's"><div class="karte"><div class="nr chrom">' + m[0] + '</div><h3>' + m[1] + '</h3><p>' + m[2] + '</p></div></div>'; }).join('');
+
+/* ---------- Pakete ---------- */
+var PAKETE = {
+  Start: { e: '1.500 €', m: '99 €', satz: 'Der leichte Einstieg für kleine Teams.', apps: ['Anfragen (CRM)', 'Formular und Live-Chat', 'Termine', 'Rechnungen', 'Virtuelles Büro'], nutzer: 'bis 3', umzug: 'Kontakte aus einer Excel- oder CSV-Datei', einweisung: '1 × 1 Stunde online' },
+  Business: { e: '3.000 €', m: '149 €', satz: 'Die wichtigsten Abläufe verbunden, vom Angebot bis zum Auftrag.', apps: ['Alles aus Start', 'Angebote mit Online-Unterschrift', 'Aufträge und Aufgaben'], nutzer: 'bis 10', umzug: 'Kontakte und Produkte', einweisung: '2 × 1 Stunde online' },
+  Komplett: { e: '5.000 €', m: '249 €', satz: 'Der ganze Betrieb in einem System, mit Kundenservice und Newsletter.', apps: ['Alles aus Business', 'Kundenservice', 'E-Mail-Marketing'], nutzer: 'bis 25', umzug: 'Kontakte, Produkte, offene Aufträge', einweisung: '3 × 1 Stunde online' }
+};
+document.getElementById('tabelle').innerHTML = '<table><tr><th></th><th>Start</th><th>Business</th><th>Komplett</th></tr>' +
+  [['Einrichtung einmalig','e'],['Betreuung monatlich','m'],['Eingerichtete Nutzer','nutzer'],['Datenumzug','umzug'],['Einweisung','einweisung']].map(function(r){ return '<tr><td>' + r[0] + '</td>' + ['Start','Business','Komplett'].map(function(p){ return '<td>' + PAKETE[p][r[1]] + '</td>'; }).join('') + '</tr>'; }).join('') +
+  '<tr><td>Odoo-Apps</td><td>Anfragen (CRM), Formular und Live-Chat, Termine, Rechnungen</td><td>+ Angebote mit Online-Unterschrift, Aufträge und Aufgaben</td><td>+ Kundenservice, E-Mail-Marketing</td></tr><tr><td>Virtuelles Büro</td><td>ja</td><td>ja</td><td>ja</td></tr></table>';
+var dialog = document.getElementById('dialog');
+function dialogAuf(){ dialog.classList.add('auf'); }
+document.getElementById('leistungen-auf').onclick = dialogAuf;
+document.getElementById('dialog-zu').onclick = function(){ dialog.classList.remove('auf'); };
+dialog.addEventListener('click', function(e){ if (e.target === dialog) dialog.classList.remove('auf'); });
+
+/* ---------- Fragebogen ---------- */
+var I = {
+  hammer: '<path d="M14 6l4 4M12.5 7.5l-8 8a2 2 0 0 0 3 3l8-8"/><path d="M13 4l7 7-2 2-7-7z"/>',
+  haus: '<path d="M4 11l8-6 8 6v9H4z"/><path d="M10 20v-5h4v5"/>',
+  koffer: '<rect x="3.5" y="7" width="17" height="12" rx="2"/><path d="M9 7V5h6v2M3.5 12h17"/>',
+  uhr: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+  tasche: '<path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
+  punkte: '<circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/>',
+  eins: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>',
+  zwei: BER[4][4], drei: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2.5 19a5.5 5.5 0 0 1 11 0M10.5 19a5.5 5.5 0 0 1 11 0"/>',
+  gross: '<path d="M4 20V8l6-3v15M10 20V10l10 3v7M4 20h16"/>',
+  kunden: BER[0][4], termine: BER[3][4], rechnung: BER[2][4], auftrag: '<path d="M9 5h10M9 12h10M9 19h10"/><path d="m3.5 5 1.5 1.5L7.5 4M3.5 12l1.5 1.5L7.5 11M3.5 19l1.5 1.5 2.5-2.5"/>',
+  service: '<path d="M4 13a8 8 0 0 1 16 0v4a2 2 0 0 1-2 2h-2v-6h4M4 13v4a2 2 0 0 0 2 2h2v-6H4"/>', news: BER[5][4],
+  buero: '<rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M8 20h8M12 16.5V20"/><path d="M7 12l3-3 2 2 4-4"/>',
+  auge: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+  nein: '<circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/>',
+  video: '<rect x="3" y="6.5" width="12.5" height="11" rx="2"/><path d="m15.5 10.5 5-3v9l-5-3"/>',
+  tel: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'
+};
+var S = [
+  { q: 'Was für ein Betrieb sind Sie?', u: 'Damit wir die Live-Demo passend vorbereiten.', o: [['hammer','Handwerk'],['haus','Immobilien'],['koffer','Büro und Beratung'],['uhr','Termin-Betrieb'],['tasche','Handel und Shop'],['punkte','Etwas anderes']] },
+  { q: 'Wie viele Personen arbeiten bei Ihnen?', u: 'Sie selbst mitgezählt.', o: [['eins','Nur ich'],['zwei','2 bis 3'],['drei','4 bis 10'],['zwei','11 bis 25'],['gross','Mehr als 25']] },
+  { q: 'Was soll zuerst laufen?', u: 'Mehrere möglich.', mehr: true, o: [['kunden','Anfragen und Kontakte'],['termine','Termine'],['rechnung','Angebote und Rechnungen'],['auftrag','Aufträge und Aufgaben'],['service','Kundenservice'],['news','Newsletter an Kunden']] },
+  { q: 'Möchten Sie live sehen, was in Ihrem Betrieb passiert?', u: 'In Ihrem virtuellen Büro sehen Sie neue Anfragen, Termine und Aufträge auf einen Blick.', o: [['buero','Ja, im virtuellen Büro'],['auge','Zeigen Sie es mir im Gespräch'],['nein','Erstmal nicht']] },
+  { q: 'Wie erreichen wir Sie?', u: 'Wir melden uns innerhalb von 24 Stunden mit einem Terminvorschlag.', form: true }
+];
+var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
+function empfehlung(){
+  var p = A[1][0], z = A[2];
+  if (p >= 3 || z.indexOf(4) > -1 || z.indexOf(5) > -1) return 'Komplett';
+  if (p === 2 || z.indexOf(2) > -1 || z.indexOf(3) > -1) return 'Business';
+  return 'Start';
+}
+function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, 5) + ' von 5</span><span>' + (schritt < 5 ? 'etwa ' + (5 - schritt) * 12 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + S.map(function(_, j){ return '<i class="' + (j < schritt || schritt === 5 ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
+function sichern(){ ['n','b','e','t'].forEach(function(k){ var el = document.getElementById('f-' + k); if (el) A[4][k] = el.value.trim(); }); var d = document.getElementById('f-d'); if (d) A[4].d = d.checked; }
+function zeichne(){
+  if (schritt === 5){ return ergebnis(); }
+  var x = S[schritt], inhalt;
+  if (x.form){
+    inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '"><input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"><input class="feld" id="f-t" type="tel" placeholder="Telefon" autocomplete="tel" value="' + (A[4].t || '') + '">' +
+      '<div class="fb__wahl" style="margin:6px 0 12px">' + [['video','Video-Anruf'],['tel','Telefon']].map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>' +
+      '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
+  } else {
+    inhalt = '<div class="fb__wahl">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>';
+  }
+  fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
+    '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
+  fb.querySelectorAll('[data-j]').forEach(function(b){ b.onclick = function(){ var j = +b.dataset.j;
+    if (x.mehr){ var i = A[schritt].indexOf(j); i > -1 ? A[schritt].splice(i, 1) : A[schritt].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
+    else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); setTimeout(function(){ schritt++; zeichne(); }, 320); } }; });
+  fb.querySelectorAll('[data-g]').forEach(function(b){ b.onclick = function(){ A[4].g = +b.dataset.g; fb.querySelectorAll('[data-g]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; }; });
+  fb.querySelectorAll('.feld').forEach(function(f){ f.oninput = function(){ document.getElementById('fehler').textContent = ''; }; });
+  document.getElementById('zurueck').onclick = function(){ if (x.form) sichern(); schritt--; zeichne(); };
+  document.getElementById('weiter').onclick = function(){
+    var fe = document.getElementById('fehler');
+    if (x.form){ sichern();
+      if (!A[4].n) return fe.textContent = 'Bitte geben Sie Ihren Namen ein.';
+      if (!A[4].b) return fe.textContent = 'Bitte geben Sie Ihre Firma ein.';
+      if (!/^\S+@\S+\.\S+$/.test(A[4].e || '')) return fe.textContent = 'Bitte prüfen Sie die E-Mail-Adresse.';
+      if ((A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Bitte prüfen Sie die Telefonnummer.';
+      if (A[4].g == null) return fe.textContent = 'Bitte wählen Sie Video-Anruf oder Telefon.';
+      if (!A[4].d) return fe.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
+    } else if (!A[schritt].length) return fe.textContent = x.mehr ? 'Bitte wählen Sie mindestens eine Antwort.' : 'Bitte wählen Sie eine Antwort.';
+    if (x.form) return senden(fe);
+    schritt++; zeichne();
+  };
+}
+function senden(fe){
+  if (!/endo-ergun\.vercel\.app$/.test(location.host)) {
+    var w2 = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); }, e2 = empfehlung();
+    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBetrieb: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nZuerst: ' + w2(2, A[2]) + '\nVirtuelles Büro: ' + w2(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + e2;
+    location.href = 'mailto:ergun.eu@gmail.com?subject=' + encodeURIComponent('Erstgespräch endo – ' + A[4].b) + '&body=' + encodeURIComponent(t2);
+    schritt = 5; zeichne(); var h = document.createElement('p'); h.className = 'klein'; h.textContent = 'Ihr E-Mail-Programm öffnet sich mit Ihren Angaben – bitte dort noch auf Senden tippen.'; fb.appendChild(h); return; }
+  var knopf = document.getElementById('weiter'); knopf.disabled = true; knopf.firstChild.textContent = 'Wird gesendet … ';
+  var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
+  var emp = empfehlung();
+  var text = 'Erstgespräch über den Fragebogen\nBetrieb: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nZuerst: ' + w(2, A[2]) + '\nVirtuelles Büro: ' + w(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
+  var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(2, A[2]), branchen: w(0, A[0]), nachricht: text, datenschutz: true, webseite: '' };
+  fetch('/api/support', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
+    .then(function(x){ if (x.ok){ schritt = 5; zeichne(); } else { knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht. Schreiben Sie uns bitte über die Direktwege unten.'; } })
+    .catch(function(){ knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = 'Keine Verbindung. Bitte versuchen Sie es gleich noch einmal.'; });
+}
+function ergebnis(name){
+  var p = name || empfehlung(), P = PAKETE[p], gross = A[1][0] === 4;
+  fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__unter" style="margin:0">' + (name ? 'Paket' : 'Unsere Empfehlung für Sie') + '</p><p class="paket">endo <span class="chrom in">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross && !name ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
+    '<div class="preis"><div><b>' + P.e + '</b><span>Einrichtung einmalig</span></div><div><b>' + P.m + '</b><span>Betreuung im Monat</span></div></div>' +
+    '<ul class="liste">' + P.apps.map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Nutzer ' + P.nutzer + ', Datenumzug: ' + P.umzug + '</li><li>Einweisung ' + P.einweisung + '</li></ul>' +
+    '<div class="andere">' + Object.keys(PAKETE).filter(function(k){ return k !== p; }).map(function(k){ return '<button type="button" data-p="' + k + '"><span style="color:var(--grau);font-size:12px">Zum Vergleich</span><b>endo ' + k + '</b>' + PAKETE[k].e + ' + ' + PAKETE[k].m + ' im Monat</button>'; }).join('') + '</div>' +
+    '<div class="liste" style="margin-top:22px;font-size:14px;color:var(--grau)"><li>Bestätigung ist unterwegs an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Terminvorschlag innerhalb von 24 Stunden</li></div>' +
+    '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Was genau enthalten ist</a> · <a href="#" id="neu">Neu starten</a></p></div>';
+  fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
+  document.getElementById('was-drin').onclick = function(e){ e.preventDefault(); dialogAuf(); };
+  document.getElementById('neu').onclick = function(e){ e.preventDefault(); schritt = 0; A = [[], [], [], [], {}]; zeichne(); };
+}
+zeichne();
+
+/* ---------- Scroll-Animationen ---------- */
+var io = new IntersectionObserver(function(l){ l.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add('in'); x.target.querySelectorAll('.reihe').forEach(function(r){ r.classList.add('in'); }); io.unobserve(x.target); } }); }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.beob').forEach(function(el){ io.observe(el); });
+document.querySelectorAll('#kontakt .reihe').forEach(function(el){ io.observe(el); });
+addEventListener('scroll', function(){ document.documentElement.classList.toggle('gerollt', scrollY > 40); }, { passive: true });
+
+window.ENDO_HELD = function(){ document.getElementById('held-text').classList.add('in'); document.querySelectorAll('.held .hebt').forEach(function(e){ e.classList.add('in'); }); };
+window.ENDO_HELD_RESET = function(){ document.getElementById('held-text').classList.remove('in'); document.querySelectorAll('.held .hebt').forEach(function(e){ e.classList.remove('in'); }); };
+})();
+</script>
+<script type="module">
+/* endo-Zeichen und Intro mit dem Original-Liquid-Metal-Shader (Paper Shaders, paper.design). Die Verwandlung Masse → Dreieck
+   wird als Formfolge berechnet; jedes Bild malt der Original-Shader. Ohne WebGL oder bei Fehlern: festes Silber-Zeichen. */
+const html = document.documentElement, intro = document.getElementById('intro'), Z = document.getElementById('zeichen');
+const zmb = document.getElementById('z-mb'), zsh = document.getElementById('z-sh'), platz = document.getElementById('marke-platz');
+const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches, handy = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+const ez = x => x <= 0 ? 0 : x >= 1 ? 1 : (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const warte = ms => new Promise(r => setTimeout(r, ms));
+function insMenue(sofort) {
+  const r = platz.getBoundingClientRect();
+  Z.classList.toggle('sofort', !!sofort);
+  Z.style.left = (r.left + r.width / 2) + 'px'; Z.style.top = (r.top + r.height / 2) + 'px';
+  Z.style.width = (r.width * 1.32) + 'px'; Z.style.height = (r.width * 1.32) + 'px';
+}
+addEventListener('resize', () => { if (Z.dataset.ort === 'menue') insMenue(true); });
+function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
+
+let P = null;
+try { P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm'); } catch (e) { P = null; }
+const T = [0, 1, 2].map(k => { const a = (-90 + k * 120) * Math.PI / 180; return [30 * Math.cos(a), 30 * Math.sin(a)]; });
+const MID = [0, 1, 2].map(k => [(T[k][0] + T[(k + 1) % 3][0]) / 2, (T[k][1] + T[(k + 1) % 3][1]) / 2]);
+const ZIEL = T.concat(MID).concat([[0, 0]]), ZR = [14, 14, 14, 6, 6, 6, 5];
+const START = [[-24, -20, 26], [22, -24, 24], [26, 18, 25], [-20, 22, 24], [0, -36, 16], [-38, 0, 15], [4, 8, 30]];
+const N = handy ? 22 : 30, S = handy ? 176 : 224, U = S / 112;
+const smin = (a, b, k) => { if (k < .01) return Math.min(a, b); const h = Math.max(0, Math.min(1, .5 + .5 * (b - a) / k)); return b + (a - b) * h - k * h * (1 - h); };
+const cap = (px, py, a, b, r) => { const pax = px - a[0], pay = py - a[1], bx = b[0] - a[0], by = b[1] - a[1], h = Math.max(0, Math.min(1, (pax * bx + pay * by) / (bx * bx + by * by))); return Math.hypot(pax - bx * h, pay - by * h) - r; };
+const sig = (x, y) => { let d = Math.min(...T.map(t => Math.hypot(x - t[0], y - t[1]) - 14)); for (let k = 0; k < 3; k++) d = Math.min(d, cap(x, y, T[k], T[(k + 1) % 3], 4.5)); return d; };
+function formBild(f) {
+  const t = f / (N - 1), k = ez(Math.min(1, t / .8)), m = ez(Math.max(0, (t - .45) / .55));
+  const D = START.map((s, j) => [s[0] + (ZIEL[j][0] - s[0]) * k, s[1] + (ZIEL[j][1] - s[1]) * k, s[2] + (ZR[j] - s[2]) * k]), kk = (14 - 8 * k) * (1 - m);
+  const c = document.createElement('canvas'); c.width = c.height = S; const x = c.getContext('2d'), im = x.createImageData(S, S);
+  for (let py = 0; py < S; py++) for (let px = 0; px < S; px++) {
+    const X = (px + .5) / U - 56, Y = (py + .5) / U - 56; let a = 1e3; for (const q of D) a = smin(a, Math.hypot(X - q[0], Y - q[1]) - q[2], kk);
+    const d = a + (sig(X, Y) - a) * m; im.data[(py * S + px) * 4 + 3] = Math.max(0, Math.min(1, .5 - d * U)) * 255;
+  }
+  x.putImageData(im, 0, 0); return c.toDataURL('image/png');
+}
+async function verarbeiten(url) { const r = await P.toProcessedLiquidMetal(url); const img = new Image(); img.src = URL.createObjectURL(r.pngBlob); await img.decode(); return img; }
+function basis() {
+  const fit = (P.ShaderFitOptions && P.ShaderFitOptions.contain != null) ? P.ShaderFitOptions.contain : 1;
+  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), u_repetition: 3, u_softness: .06, u_shiftRed: .3, u_shiftBlue: .3, u_distortion: .07, u_contour: .4, u_angle: 70, u_fit: fit, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_imageAspectRatio: 1 };
+}
+const METABALLS = () => (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs != null) ? P.LiquidMetalShapes.metaballs : 4;
+const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
+const mitPause = (el, sh) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? .6 : 0)), { rootMargin: '100px' }).observe(el); };
+
+async function start() {
+  const gesehen = html.classList.contains('ohne-intro');
+  if (!P) throw new Error('Shader nicht geladen');
+  /* Schritt 1: das fertige Zeichen zuerst (Menü, Rad-Mitte) */
+  const ende = await verarbeiten(formBild(N - 1));
+  const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), P.liquidMetalFragmentShader, { ...basis(), u_image: ende, u_isImage: true, u_shape: 0 }, undefined, .6);
+  mitPause(document.getElementById('mitte-sh'), mitte);
+  const fl = document.getElementById('fluss-sh');
+  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#BFD0FF'), u_isImage: false, u_shape: METABALLS(), u_scale: 1.1, u_repetition: 3, u_softness: .08, u_shiftBlue: .35 }, undefined, .6);
+  mitPause(fl, fluss);
+  const zeichen = new P.ShaderMount(zsh, P.liquidMetalFragmentShader, { ...basis(), u_image: ende, u_isImage: true, u_shape: 0 }, undefined, .6);
+  if (gesehen) { Z.dataset.ort = 'menue'; insMenue(true); zsh.style.opacity = 1; seiteZeigen(); return; }
+  /* Schritt 2: Intro */
+  window.ENDO_INTRO = () => introSpielen(zeichen, ende);
+  introSpielen(zeichen, ende);
+}
+let lauf = 0, bilder = null;
+async function introSpielen(zeichen, ende) {
+  const id = ++lauf; let aus = false;
+  try { localStorage.setItem('endo-intro', '1'); } catch (e) {}
+  html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
+  intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
+  Z.classList.add('sofort'); Z.style.left = Z.style.top = Z.style.width = Z.style.height = ''; void Z.offsetWidth;
+  zsh.style.opacity = 0;
+  const mb = new P.ShaderMount(zmb, P.liquidMetalFragmentShader, { ...basis(), u_isImage: false, u_shape: METABALLS(), u_colorTint: P.getShaderColorFromString('#FFFFFF') }, undefined, .9);
+  requestAnimationFrame(() => { zmb.style.transition = 'opacity 1.2s'; zmb.style.opacity = 1; });
+  const fertig = () => { if (aus) return; aus = true; Z.dataset.ort = 'menue'; Z.classList.remove('sofort'); insMenue(false); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { intro.style.display = 'none'; }, 1400); };
+  const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_image: ende }); zmb.style.opacity = 0; zsh.style.opacity = 1; fertig(); setTimeout(() => mb.dispose && mb.dispose(), 600); };
+  intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen;
+  document.getElementById('intro-weg').onclick = ueberspringen;
+  const t0 = performance.now();
+  if (!bilder) { bilder = []; for (let f = 0; f < N; f++) { if (id !== lauf) return; bilder.push(f === N - 1 ? ende : await verarbeiten(formBild(f))); } }
+  if (id !== lauf) return;
+  const vorlauf = Math.max(0, 1600 - (performance.now() - t0)); await warte(vorlauf); if (id !== lauf) return;
+  /* Masse → Dreieck: Original-Masse blendet in Bild 0 der Formfolge, dann läuft die Formfolge */
+  setz(zeichen, { u_image: bilder[0] }); zsh.style.opacity = 1; zmb.style.transition = 'opacity .45s'; zmb.style.opacity = 0;
+  const t1 = performance.now(), F = N - 1;
+  await new Promise(fertigLauf => {
+    const tick = () => {
+      if (id !== lauf) return fertigLauf();
+      const e = (performance.now() - t1) / 1000; let i;
+      if (e < 2.6) i = ez(e / 2.6) * F;
+      else if (e < 3.4) i = F;
+      else if (e < 3.8) i = F - ez((e - 3.4) / .4) * 9;
+      else if (e < 5.0) i = F - 9 + Math.sin((e - 3.8) * 5) * 1.5;
+      else i = F - 9 + ez(Math.min(1, (e - 5.0) / .6)) * 9;
+      setz(zeichen, { u_image: bilder[Math.max(0, Math.min(F, Math.round(i)))] });
+      if (e > 3.75 && !aus) fertig();
+      if (e < 5.7) requestAnimationFrame(tick); else { setz(zeichen, { u_image: ende }); fertigLauf(); }
+    };
+    requestAnimationFrame(tick);
+  });
+  mb.dispose && mb.dispose();
+}
+try { await start(); }
+catch (e) { console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.dataset.ort = 'menue'; insMenue(true); intro.style.display = 'none'; seiteZeigen(); }
+document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
+</script>
+</body>
+</html>
