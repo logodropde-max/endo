@@ -106,6 +106,7 @@ html:not(.vor) .held::before{opacity:1;transform:translateX(-50%) scaleX(1)}
 .held-zeichen.da{opacity:1}
 .held-zeichen>div{position:absolute;inset:0}
 .held>.wrap{position:relative;z-index:1}
+.held-licht{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(320px 260px at 50% 27svh,rgba(255,255,255,.07),transparent 70%)}
 .hg-chrom{position:absolute;top:30px;width:min(980px,150vw);height:560px;pointer-events:none;z-index:0;opacity:.17;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%)}
 .hg-chrom>div{position:absolute;inset:0}
 @media (max-width:900px){.hg-chrom{height:440px;top:20px;opacity:.2}}
@@ -376,7 +377,7 @@ td:first-child{color:var(--grau)}
 </div></header>
 
 <main id="start">
-<section class="held"><div class="held-zeichen" id="held-sh" aria-hidden="true"></div>
+<section class="held"><div class="held-licht" aria-hidden="true"></div><div class="held-zeichen" id="held-sh" aria-hidden="true"></div>
   <div class="wrap held__raster">
     <div id="held-text">
       <h1><span class="zeile"><span style="transition-delay:.2s">Ihr Betrieb.</span></span><span class="zeile"><span style="transition-delay:.34s">In <span class="chrom">einem System.</span></span></span></h1>
