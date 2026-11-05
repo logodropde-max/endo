@@ -294,6 +294,7 @@ html:not(.vor) .held::before{opacity:1}
 .intro.laeuft .intro__weg{opacity:1}
 .zeichen-fix{--g:min(340px,80vw);position:fixed;z-index:110;left:50%;top:27%;width:var(--g);height:var(--g);margin:calc(var(--g) / -2) 0 0 calc(var(--g) / -2);display:block;will-change:transform,opacity,filter;transform-origin:50% 50%;transition:transform 1.9s cubic-bezier(.45,0,.12,1)}
 .zeichen-fix.sofort{transition:none}
+#logo-kapsel{position:fixed;z-index:109;width:50px;height:50px;border-radius:50%;background:rgba(10,11,15,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 10px 30px -10px rgba(0,0,0,.9);opacity:0}
 .zeichen-fix.voll{left:0;top:0;width:100vw;height:100vh;margin:0}
 .zeichen-fix.liegt{position:absolute;z-index:0}
 .zeichen-fix>div{position:absolute;inset:0}
@@ -704,7 +705,7 @@ function klein() { Z.classList.add('sofort'); Z.style.transform = menueZiel(); v
 function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.dataset.ort = 'menue'; if (sofort) klein(); }
 function oben() { if (!Z.classList.contains('im-menue')) return; Z.classList.remove('versteckt'); }
 addEventListener('scroll', oben, { passive: true });
-addEventListener('resize', () => { if ((Z.dataset.ort === 'hg' || Z.dataset.ort === 'mitte') && zeichen && Z.classList.contains('voll')) setz(zeichen, vollMass()); });
+addEventListener('resize', () => { if (Z.dataset.ort === 'mitte' && zeichen) setz(zeichen, vollMass()); });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
 
 const FORM_GLSL = `
@@ -777,6 +778,24 @@ const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
 const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? v : 0)), { rootMargin: '100px' }).observe(el); };
 let zeichen = null, lauf = 0;
 /* Maße für das bildschirmweite Intro: das Dreieck landet genau in Größe und Lage des Titelbild-Zeichens. */
+/* Logo bleibt immer sichtbar: beim Scrollen gleitet das Dreieck im selben Shader klein in die Ecke oben links. */
+const massBei = (gr, cx, cy) => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), ws = W / m;
+  const r = { u_scale: .372 * gr / m, u_offsetY: -(H / 2 - cy) / m, u_offsetX: 0, u_originX: .5 };
+  /* Auf breiten Bildschirmen das Feld selbst verschieben, sonst wird das Zeichen am Rand abgeschnitten */
+  if (ws > 1.01) r.u_originX = .5 + (cx / W - .5) * ws / (ws - 1); else r.u_offsetX = (cx - W / 2) / m;
+  return r; };
+function logoLage() {
+  if (Z.dataset.ort !== 'hg' || !zeichen) return;
+  const W = innerWidth, H = innerHeight, k0 = Math.min(1, Math.max(0, scrollY / (H * .45))), k = k0 * k0 * (3 - 2 * k0);
+  const gr0 = Math.min(340, W * .8), gr1 = 84, x0 = W / 2, y0 = H * .27, x1 = (W > 900 ? Math.max(28, (W - 1160) / 2 + 14) : 14) + gr1 / 2 + 6, y1 = 34;
+  setz(zeichen, massBei(gr0 + (gr1 - gr0) * k, x0 + (x1 - x0) * k, y0 + (y1 - y0) * k));
+  let kap = document.getElementById('logo-kapsel');
+  if (!kap) { kap = document.createElement('a'); kap.id = 'logo-kapsel'; kap.href = '#start'; kap.setAttribute('aria-label', 'endo, zum Anfang'); document.body.appendChild(kap); }
+  kap.style.left = (x1 - 25) + 'px'; kap.style.top = (y1 - 25) + 'px'; kap.style.opacity = Math.max(0, (k - .6) / .4);
+  kap.style.pointerEvents = k > .9 ? 'auto' : 'none';
+}
+addEventListener('scroll', () => requestAnimationFrame(logoLage), { passive: true });
+addEventListener('resize', logoLage);
 const vollMass = () => { const W = innerWidth, H = innerHeight, m = Math.min(W, H), klein = Math.min(340, W * .8);
   return { u_scale: .372 * klein / m, u_offsetX: 0, u_offsetY: -.23 * (H / m) }; };
 function introSpielen() {
@@ -790,7 +809,7 @@ function introSpielen() {
   const fertig = () => { if (aus) return; aus = true;
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
-    Z.classList.add('liegt'); Z.dataset.ort = 'hg'; intro.style.display = 'none';
+    Z.dataset.ort = 'hg'; intro.style.display = 'none'; logoLage();
     const wort = document.getElementById('intro-wort'); wort.classList.remove('da'); setTimeout(() => { wort.style.display = 'none'; }, 1200);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
@@ -816,14 +835,13 @@ try {
   P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
   FS = shaderMitForm(P.liquidMetalFragmentShader);
   zeichen = new P.ShaderMount(zsh, FS, { ...basis(), u_scale: .372 }, undefined, .7, 0, 1.5, 1600 * 1600);
-  mitPause(document.getElementById('held-sh'), zeichen, .7);
   let restDa = false;
   /* Alle übrigen Chrom-Flächen erst nach dem Intro starten: während des Intros rechnet nur das Zeichen – nichts stockt oder verschwindet. */
   const restStarten = () => { if (restDa) return; restDa = true;
   const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   try { const fz = document.getElementById('fuss-sh'), fuss = new P.ShaderMount(fz, FS, basis(), undefined, .7); fz.classList.add('an'); mitPause(fz, fuss, .7); } catch (e) { console.warn(e); }
-  if (html.classList.contains('ohne-intro')) try { const hz = document.getElementById('held-sh'), held = new P.ShaderMount(hz, FS, { ...basis(), u_scale: .372 }, undefined, .4); mitPause(hz, held, .4); } catch (e) { console.warn(e); }
+  if (false) try { const hz = document.getElementById('held-sh'), held = new P.ShaderMount(hz, FS, { ...basis(), u_scale: .372 }, undefined, .4); mitPause(hz, held, .4); } catch (e) { console.warn(e); }
   document.querySelectorAll('[data-sym]').forEach(el => { try {
     const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
     const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .4); mitPause(el, t, .4); el.parentNode.classList.add('an');
@@ -855,7 +873,7 @@ try {
   window.ENDO_REST = restStarten;
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { document.getElementById('held-sh').classList.add('da'); Z.style.display = 'none'; restStarten(); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
