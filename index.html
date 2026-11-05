@@ -160,15 +160,27 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .fb__oben{display:flex;justify-content:space-between;font-size:13px;color:var(--grau);margin-bottom:10px}
 .fb__balken{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:28px}
 .fb__balken i{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;position:relative}
-.fb__balken i::after{content:"";position:absolute;inset:0;background:var(--hell);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
+.fb__balken i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#9FB3E8,#F4F7FF);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
 .fb__balken i.an::after{transform:none}
 .fb__frage{font-size:26px;font-weight:500;letter-spacing:-.03em;line-height:1.15;margin:0 0 6px}
 .fb__unter{color:var(--grau);font-size:15px;margin:0 0 20px}
-.fb__wahl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.wahl{display:flex;align-items:center;gap:12px;text-align:left;padding:16px;border-radius:16px;border:0;background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 1px rgba(220,230,255,.2);color:var(--text);font:400 15px/1.3 Geist,sans-serif;cursor:pointer;transition:all .25s var(--kurve)}
-.wahl:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);background:rgba(255,255,255,.07)}
-.wahl.an{background:var(--hell);color:var(--grund);box-shadow:none}
-.wahl svg{width:22px;height:22px;flex:none;opacity:.85}
+.fb__wahl{display:grid;grid-template-columns:1fr;gap:9px}
+.fb__wahl.zwei{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wahl{position:relative;display:flex;align-items:center;gap:14px;text-align:left;padding:12px 14px;border-radius:16px;border:0;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 0 0 1px rgba(200,215,255,.12);color:var(--text);font:400 15px/1.3 Geist,sans-serif;cursor:pointer;transition:box-shadow .35s var(--kurve),background .35s var(--kurve),transform .2s}
+.wahl:hover{box-shadow:inset 0 0 0 1px rgba(220,230,255,.32)}
+.wahl:active{transform:scale(.985)}
+.wahl__sym{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#161d31,#0a0d17);box-shadow:inset 0 0 0 1px rgba(200,215,255,.16);transition:background .4s var(--kurve),box-shadow .4s}
+.wahl__sym svg{width:20px;height:20px;color:#AEB9D6;transition:color .3s}
+.wahl__txt b{display:block;font-weight:500;font-size:15px;letter-spacing:-.01em}
+.wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
+.wahl__ck{margin-left:auto;width:18px;height:18px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
+.wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(120,150,230,.16),rgba(255,255,255,.015) 60%);box-shadow:inset 0 0 0 1.2px rgba(225,234,255,.75),0 14px 34px -18px rgba(120,150,230,.55)}
+.wahl.an .wahl__sym{background:radial-gradient(circle at 34% 28%,#fff,#D6DEEF 22%,#7C88A3 58%,#2a3042 92%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 6px 16px -6px rgba(160,185,240,.6)}
+.wahl.an .wahl__sym svg{color:#0b0f1a}
+.wahl.an .wahl__ck{background:radial-gradient(circle at 35% 30%,#fff,#C9D3EA 55%,#7C88A3);box-shadow:inset 0 0 0 4px #0c1122,0 0 0 1px rgba(235,242,255,.8)}
+.wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
+.fb__wahl.zwei .wahl{padding:12px}
+.fb__wahl.zwei .wahl__ck{position:absolute;top:10px;right:10px}
 .fb__fuss{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
 .zurueck{background:none;border:0;color:var(--grau);font:400 14px Geist,sans-serif;cursor:pointer;padding:8px 4px}
 .fehler{color:#FFB4A8;font-size:14px;min-height:20px;margin-top:12px}
@@ -255,7 +267,8 @@ td:first-child{color:var(--grau)}
   .rad-raster,.machen,.wege{grid-template-columns:1fr}
   .bereiche{grid-template-columns:1fr}
   .knoten{width:80px;font-size:11.5px}.knoten span.k{width:42px;height:42px}
-  .fb__wahl,.andere{grid-template-columns:1fr}
+  .fb__wahl,.fb__wahl.zwei,.andere{grid-template-columns:1fr}
+  .fb__wahl.zwei .wahl__ck{position:static}
   .glas{padding:22px}
   .abschnitt{padding:90px 0}
 }
@@ -453,18 +466,26 @@ var I = {
   video: '<rect x="3" y="6.5" width="12.5" height="11" rx="2"/><path d="m15.5 10.5 5-3v9l-5-3"/>',
   tel: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'
 };
+I.angebot = '<path d="M7 3h7l4 4v14H7z"/><path d="M10 12h5M10 16h5"/>';
+I.zettel = '<path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h3"/>';
+I.tabelle = '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15"/>';
+I.fenster = '<rect x="3" y="5" width="11" height="9" rx="1.5"/><rect x="10" y="10" width="11" height="9" rx="1.5"/>';
+I.system = '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>';
+I.blitz = '<path d="M13 3 5 13h6l-1 8 8-10h-6z"/>';
+I.kal = '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>';
+I.info = '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/>';
 var S = [
-  { q: 'Was für ein Betrieb sind Sie?', u: 'Damit wir die Live-Demo passend vorbereiten.', o: [['hammer','Handwerk'],['haus','Immobilien'],['koffer','Büro und Beratung'],['uhr','Termin-Betrieb'],['tasche','Handel und Shop'],['punkte','Etwas anderes']] },
-  { q: 'Wie viele Personen arbeiten bei Ihnen?', u: 'Sie selbst mitgezählt.', o: [['eins','Nur ich'],['zwei','2 bis 3'],['drei','4 bis 10'],['zwei','11 bis 25'],['gross','Mehr als 25']] },
-  { q: 'Was soll zuerst laufen?', u: 'Mehrere möglich.', mehr: true, o: [['kunden','Anfragen und Kontakte'],['termine','Termine'],['rechnung','Angebote und Rechnungen'],['auftrag','Aufträge und Aufgaben'],['service','Kundenservice'],['news','Newsletter an Kunden']] },
-  { q: 'Was soll Ihr virtuelles Büro zeigen?', u: 'Ihr Büro ist in jedem Paket dabei und zeigt live, was gerade passiert. Mehrere möglich.', mehr: true, o: [['kunden','Neue Anfragen live'],['termine','Termine des Tages'],['auftrag','Aufträge und Aufgaben'],['rechnung','Offene Rechnungen'],['zwei','Mein Team auf einen Blick'],['auge','Zeigen Sie es mir im Gespräch']] },
+  { q: 'Was soll endo bei Ihnen übernehmen?', u: 'Mehrere möglich. Ihr virtuelles Büro zeigt später genau diese Bereiche live.', mehr: true, o: [['kunden','Anfragen und Kunden','Formular, Live-Chat, Kontakte'],['termine','Termine','Online buchbar, mit Erinnerung'],['angebot','Angebote','Mit Online-Unterschrift'],['auftrag','Aufträge und Aufgaben','Wer macht was bis wann'],['rechnung','Rechnungen','Schreiben, versenden, Zahlungen im Blick'],['service','Kundenservice','Anfragen als Tickets'],['news','Newsletter','E-Mails an Ihre Kunden'],['zwei','Team','Zuständigkeiten und Überblick']] },
+  { q: 'Wie viele Personen arbeiten mit?', u: 'Sie selbst mitgezählt.', o: [['eins','Nur ich'],['zwei','2 bis 3'],['drei','4 bis 10'],['zwei','11 bis 25'],['gross','Mehr als 25']] },
+  { q: 'Womit arbeiten Sie heute?', u: 'Mehrere möglich. So wissen wir, welche Daten mit umziehen.', mehr: true, o: [['zettel','Zettel und Papier'],['tabelle','Excel-Listen'],['fenster','Mehrere einzelne Programme'],['system','Ein anderes System','z. B. Lexoffice, sevDesk, Pipedrive'],['nein','Noch gar nichts']] },
+  { q: 'Wann soll es losgehen?', u: 'Damit wir den Termin passend planen.', o: [['blitz','So bald wie möglich'],['kal','In 1 bis 3 Monaten'],['info','Erstmal informieren']] },
   { q: 'Wie erreichen wir Sie?', u: 'Wir melden uns innerhalb von 24 Stunden mit einem Terminvorschlag.', form: true }
 ];
 var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
 function empfehlung(){
-  var p = A[1][0], z = A[2];
-  if (p >= 3 || z.indexOf(4) > -1 || z.indexOf(5) > -1) return 'Komplett';
-  if (p === 2 || z.indexOf(2) > -1 || z.indexOf(3) > -1) return 'Business';
+  var p = A[1][0], z = A[0];
+  if (p >= 3 || z.indexOf(5) > -1 || z.indexOf(6) > -1) return 'Komplett';
+  if (p === 2 || z.indexOf(2) > -1 || z.indexOf(3) > -1 || z.indexOf(7) > -1) return 'Business';
   return 'Start';
 }
 function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, 5) + ' von 5</span><span>' + (schritt < 5 ? 'etwa ' + (5 - schritt) * 12 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + S.map(function(_, j){ return '<i class="' + (j < schritt || schritt === 5 ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
@@ -477,7 +498,7 @@ function zeichne(){
       '<div class="fb__wahl" style="margin:6px 0 12px">' + [['video','Video-Anruf'],['tel','Telefon']].map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>' +
       '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
-    inhalt = '<div class="fb__wahl">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '">' + svg(I[o[0]]) + o[1] + '</button>'; }).join('') + '</div>';
+    inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
   }
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
@@ -504,14 +525,14 @@ function zeichne(){
 function senden(fe){
   if (!/endo-ergun\.vercel\.app$/.test(location.host)) {
     var w2 = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); }, e2 = empfehlung();
-    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBetrieb: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nZuerst: ' + w2(2, A[2]) + '\nVirtuelles Büro: ' + w2(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + e2;
+    var t2 = 'Erstgespräch über den Fragebogen\n\nName: ' + A[4].n + '\nFirma: ' + A[4].b + '\nE-Mail: ' + A[4].e + '\nTelefon: ' + A[4].t + '\nBereiche: ' + w2(0, A[0]) + '\nPersonen: ' + w2(1, A[1]) + '\nHeute: ' + w2(2, A[2]) + '\nStart: ' + w2(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + e2;
     location.href = 'mailto:ergun.eu@gmail.com?subject=' + encodeURIComponent('Erstgespräch endo – ' + A[4].b) + '&body=' + encodeURIComponent(t2);
     schritt = 5; zeichne(); var h = document.createElement('p'); h.className = 'klein'; h.textContent = 'Ihr E-Mail-Programm öffnet sich mit Ihren Angaben – bitte dort noch auf Senden tippen.'; fb.appendChild(h); return; }
   var knopf = document.getElementById('weiter'); knopf.disabled = true; knopf.firstChild.textContent = 'Wird gesendet … ';
   var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
   var emp = empfehlung();
-  var text = 'Erstgespräch über den Fragebogen\nBetrieb: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nZuerst: ' + w(2, A[2]) + '\nVirtuelles Büro: ' + w(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
-  var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(2, A[2]), branchen: w(0, A[0]), nachricht: text, datenschutz: true, webseite: '' };
+  var text = 'Erstgespräch über den Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nGespräch per: ' + (A[4].g === 0 ? 'Video-Anruf' : 'Telefon') + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
+  var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
   fetch('/api/support', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
     .then(function(x){ if (x.ok){ schritt = 5; zeichne(); } else { knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht. Schreiben Sie uns bitte über die Direktwege unten.'; } })
@@ -521,7 +542,7 @@ function ergebnis(name){
   var p = name || empfehlung(), P = PAKETE[p], gross = A[1][0] === 4;
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__unter" style="margin:0">' + (name ? 'Paket' : 'Unsere Empfehlung für Sie') + '</p><p class="paket">endo <span class="chrom in">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross && !name ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
     '<div class="preis"><div><b>' + P.e + '</b><span>Einrichtung einmalig</span></div><div><b>' + P.m + '</b><span>Betreuung im Monat</span></div></div>' +
-    '<ul class="liste">' + P.apps.map(function(a){ return '<li>' + a + '</li>'; }).join('') + (A[3] && A[3].length && !name ? '<li>Ihr Büro zeigt: ' + A[3].map(function(j){ return S[3].o[j][1]; }).join(', ') + '</li>' : '') + '<li>Nutzer ' + P.nutzer + ', Datenumzug: ' + P.umzug + '</li><li>Einweisung ' + P.einweisung + '</li></ul>' +
+    '<ul class="liste">' + P.apps.map(function(a){ return '<li>' + a + '</li>'; }).join('') + (A[0] && A[0].length && !name ? '<li>Ihr virtuelles Büro zeigt live: ' + A[0].map(function(j){ return S[0].o[j][1]; }).join(', ') + '</li>' : '') + '<li>Nutzer ' + P.nutzer + ', Datenumzug: ' + P.umzug + '</li><li>Einweisung ' + P.einweisung + '</li></ul>' +
     '<div class="andere">' + Object.keys(PAKETE).filter(function(k){ return k !== p; }).map(function(k){ return '<button type="button" data-p="' + k + '"><span style="color:var(--grau);font-size:12px">Zum Vergleich</span><b>endo ' + k + '</b>' + PAKETE[k].e + ' + ' + PAKETE[k].m + ' im Monat</button>'; }).join('') + '</div>' +
     '<div class="liste" style="margin-top:22px;font-size:14px;color:var(--grau)"><li>Bestätigung ist unterwegs an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Terminvorschlag innerhalb von 24 Stunden</li></div>' +
     '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Was genau enthalten ist</a> · <a href="#" id="neu">Neu starten</a></p></div>';
