@@ -167,6 +167,11 @@ html:not(.vor) .held::before{opacity:1}
 .ber-schritt i{margin-left:auto;font-style:normal;font-size:12px;color:#9FE0B8}
 .ber-schritt .p{width:8px;height:8px;border-radius:50%;background:#9FB6F0;box-shadow:0 0 10px #9FB6F0;flex:none}
 @media (max-width:900px){.ber-tafel>div{grid-template-columns:1fr;padding:20px}}
+.was__raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.was__nr{display:block;font-size:34px;font-weight:500;letter-spacing:-.04em;line-height:1;margin-bottom:22px}
+.was-link{font-size:14px;text-decoration:none;color:var(--text);opacity:.8;padding:8px 12px;margin-left:auto}
+@media (min-width:901px){.was-link{display:none}}
+@media (max-width:900px){.was__raster{grid-template-columns:1fr}}
 .machen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .nr{font-size:44px;font-weight:500;letter-spacing:-.05em;line-height:1;margin-bottom:26px}
 .schritt .karte{background:radial-gradient(120% 100% at 0% 0%,#14161c,var(--flaeche) 60%)}
@@ -364,8 +369,8 @@ td:first-child{color:var(--grau)}
 
 <header class="kopf"><div class="kopf__in">
   <a class="marke" href="#start" aria-label="endo, zum Anfang"><span id="marke-platz"></span><b class="chrom" id="marke-wort">endo</b></a>
-  <nav class="nav" aria-label="Hauptnavigation"><a href="#bereiche">Das nimmt endo ab</a><a href="#machen">Das machen wir</a></nav>
-  <a class="knopf knopf--klein" href="#fragebogen">Erstgespräch</a>
+  <nav class="nav" aria-label="Hauptnavigation"><a href="#was">Was ist endo?</a><a href="#bereiche">Das nimmt endo ab</a><a href="#machen">Das machen wir</a></nav>
+  <a class="was-link" href="#was">Was ist endo?</a><a class="knopf knopf--klein" href="#fragebogen">Erstgespräch</a>
 </div></header>
 
 <main id="start">
@@ -381,6 +386,17 @@ td:first-child{color:var(--grau)}
   <span class="scroll-hinweis" aria-hidden="true"></span>
 </section>
 
+
+<section class="abschnitt was" id="was">
+  <div class="wrap">
+    <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in Odoo – eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
+    <div class="was__raster">
+      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>Odoo, passend eingerichtet</h3><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
+      <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p></div></div>
+      <div class="kante reihe beob" style="transition-delay:.24s"><div class="karte"><span class="was__nr chrom">3</span><h3>Betreut zum Festpreis</h3><p>Ein fester Ansprechpartner für Fragen und kleine Änderungen. Feste Pakete, feste Preise, keine Überraschungen.</p></div></div>
+    </div>
+  </div>
+</section>
 
 <section class="abschnitt" id="bereiche"><div class="hg-chrom" style="left:-18%" aria-hidden="true"><div data-tropfen></div></div>
   <div class="wrap">
@@ -780,18 +796,18 @@ function introSpielen() {
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
-  const t0 = performance.now() + 500, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da');
+  const t0 = performance.now() + 150, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da');
   const tick = () => {
     if (id !== lauf) return;
     const e = (performance.now() - t0) / 1000;
-    var km = Math.max(0, Math.min(1, (e - 2.0) / 2.6)), kg = Math.max(0, Math.min(1, e / 4.4));
+    var km = Math.max(0, Math.min(1, (e - 1.3) / 2.4)), kg = Math.max(0, Math.min(1, e / 3.5));
     const vm = vollMass(), zg = .5 - .5 * Math.cos(Math.PI * kg);
     setz(zeichen, { u_morph: .5 - .5 * Math.cos(Math.PI * km), u_scale: vm.u_scale * (1 + .7 * (1 - zg)), u_offsetY: vm.u_offsetY * (.55 + .45 * zg) });
-    Z.style.opacity = Math.max(0, Math.min(1, e / .9));
+    Z.style.opacity = Math.max(0, Math.min(1, e / .45));
     
-    if (e > 4.7 && !wort.classList.contains('da') && !aus) wort.classList.add('da');
-    if (e > 6.2 && !aus) fertig();
-    if (e < 6.3) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
+    if (e > 3.8 && !wort.classList.contains('da') && !aus) wort.classList.add('da');
+    if (e > 5.2 && !aus) fertig();
+    if (e < 5.3) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
   };
   requestAnimationFrame(tick);
 }
