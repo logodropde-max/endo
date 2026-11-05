@@ -699,7 +699,7 @@ function shaderMitForm(fs) {
   if (s.indexOf('ecke[3]') < 0 || s.indexOf('} else {\n      edge = 1.8') < 0) throw new Error('Shader-Erweiterung passt nicht');
   return s;
 }
-const GLANZ = { u_repetition: 3, u_softness: .06, u_shiftRed: .3, u_shiftBlue: .3, u_distortion: .07, u_contour: .4, u_angle: 70 };
+const GLANZ = { u_repetition: 4, u_softness: .045, u_shiftRed: .32, u_shiftBlue: .32, u_distortion: .11, u_contour: .55, u_angle: 70 };
 let P = null, FS = null;
 function basis() {
   const fit = (P.ShaderFitOptions && P.ShaderFitOptions.contain != null) ? P.ShaderFitOptions.contain : 1;
@@ -725,8 +725,7 @@ function introSpielen() {
     Z.style.transition = 'transform 1.6s cubic-bezier(.45,0,.12,1), filter 1.6s cubic-bezier(.4,0,.2,1)';
     Z.style.transform = `translate(0px, ${dy}px) scale(${zg})`; Z.style.filter = 'blur(3px)';
     intro.classList.add('raus');
-    setTimeout(() => { if (id === lauf) seiteZeigen(); }, 1300);
-    setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; hz.style.transition = 'none'; hz.classList.add('da'); hz.appendChild(zsh); Z.style.transition = 'none'; Z.style.opacity = 0; Z.style.filter = ''; Z.style.display = 'none'; Z.dataset.ort = 'weg'; }, 2400);
+    setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; hz.style.transition = 'none'; hz.classList.add('da'); hz.appendChild(zsh); Z.style.transition = 'none'; Z.style.opacity = 0; Z.style.filter = ''; Z.style.display = 'none'; Z.dataset.ort = 'weg'; requestAnimationFrame(() => requestAnimationFrame(seiteZeigen)); }, 1700);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
