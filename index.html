@@ -552,7 +552,7 @@ function menueZiel() {
 let ruhe = null;
 function klein() { Z.classList.add('sofort'); Z.style.transform = menueZiel(); void Z.offsetWidth; Z.classList.add('im-menue'); oben(); }
 function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.dataset.ort = 'menue'; if (sofort) klein(); }
-function oben() { if (!Z.classList.contains('im-menue')) return; const da = scrollY < 40; Z.classList.toggle('versteckt', !da); if (ruhe) ruhe(da); }
+function oben() { if (!Z.classList.contains('im-menue')) return; Z.classList.remove('versteckt'); }
 addEventListener('scroll', oben, { passive: true });
 addEventListener('resize', () => { if (Z.dataset.ort === 'menue') { Z.style.removeProperty('--g'); insMenue(true); } });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
