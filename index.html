@@ -153,19 +153,31 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .fuss__in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .fuss a{text-decoration:none;margin-left:18px}
 .fuss button{background:none;border:0;color:var(--grau);font:inherit;cursor:pointer;margin-left:18px;text-decoration:underline;text-underline-offset:3px}
-/* Intro: Metall-Masse → endo-Zeichen → fließt ins Menü (Original-Liquid-Metal-Shader, Paper Shaders) */
-.intro{position:fixed;inset:0;z-index:100;background:var(--grund);transition:opacity 1.3s var(--kurve)}
+/* Intro und Zeichen (Original-Liquid-Metal-Shader, Paper Shaders) – nur Shader-Werte und GPU-Verschiebung, kein Bildtausch */
+.intro{position:fixed;inset:0;z-index:100;background:transparent;transition:opacity 1.2s var(--kurve)}
 .intro.raus{opacity:0;pointer-events:none}
 .intro__weg{position:absolute;right:22px;bottom:20px;background:rgba(255,255,255,.06);border:0;box-shadow:inset 0 0 0 1px rgba(200,215,255,.2);color:var(--grau);border-radius:999px;padding:8px 14px;font:400 13px Geist,sans-serif;cursor:pointer;opacity:0;transition:opacity .6s .8s}
 .intro.laeuft .intro__weg{opacity:1}
-.zeichen-fix{position:fixed;z-index:110;left:50%;top:47%;width:min(340px,78vw);height:min(340px,78vw);transform:translate(-50%,-50%);display:block;transition:left 1.35s cubic-bezier(.65,0,.25,1),top 1.35s cubic-bezier(.65,0,.25,1),width 1.35s cubic-bezier(.65,0,.25,1),height 1.35s cubic-bezier(.65,0,.25,1),transform 1.35s cubic-bezier(.65,0,.25,1)}
+.zeichen-fix{--g:min(340px,70vw);position:fixed;z-index:110;left:50%;top:47%;width:var(--g);height:var(--g);margin:calc(var(--g) / -2) 0 0 calc(var(--g) / -2);display:block;will-change:transform,opacity,filter;transform-origin:50% 50%;transition:transform 1.45s cubic-bezier(.65,0,.2,1)}
 .zeichen-fix.sofort{transition:none}
-.zeichen-fix>div{position:absolute;inset:0;transition:opacity .4s}
-.zeichen-fix .fest{display:none}
+.zeichen-fix>div{position:absolute;inset:0}
+.zeichen-fix .fest{display:none;position:absolute;inset:14%}
 .zeichen-fix.ohne-shader .fest{display:block}
 .zeichen-fix.ohne-shader>div{display:none}
-.zeichen-fix .fest{position:absolute;inset:14%}
+.zeichen-fix::after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
 #marke-platz{display:inline-block;width:44px;height:44px;flex:none}
+/* High-Tech-Hintergrund: Punktraster, perspektivischer Boden, Lichtkegel, Lichtstreifen */
+.tech{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.tech__punkte{position:absolute;inset:0;background-image:radial-gradient(rgba(175,195,240,.28) 1px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);opacity:.9}
+.tech__boden{position:absolute;left:-50%;right:-50%;bottom:-4%;height:58%;background-image:linear-gradient(rgba(140,170,240,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(140,170,240,.22) 1px,transparent 1px);background-size:64px 64px;transform:perspective(700px) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(transparent,#000 35%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 35%,#000 70%,transparent);animation:boden 9s linear infinite}
+@keyframes boden{to{background-position:0 64px,0 0}}
+.tech__licht{position:absolute;left:50%;top:44%;width:1100px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(70,110,230,.28),rgba(40,70,170,.1) 45%,transparent 75%);filter:blur(20px)}
+.tech__kegel{position:absolute;left:50%;top:-20%;width:900px;height:120%;transform:translateX(-50%);background:conic-gradient(from 180deg at 50% 0%,transparent 160deg,rgba(150,180,255,.09) 175deg,rgba(200,215,255,.14) 180deg,rgba(150,180,255,.09) 185deg,transparent 200deg);filter:blur(6px)}
+.tech__streif{position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(190,210,255,.08) 50%,transparent 60%);background-size:250% 100%;animation:streif 7s ease-in-out infinite;-webkit-mask-image:radial-gradient(rgba(0,0,0,1) 1px,transparent 1.6px);mask-image:radial-gradient(#000 1px,transparent 1.6px);-webkit-mask-size:26px 26px;mask-size:26px 26px}
+@keyframes streif{0%{background-position:120% 0}60%,100%{background-position:-20% 0}}
+main,.fuss{position:relative;z-index:1}
+.abschnitt,.fuss{background:linear-gradient(rgba(4,6,12,.86),rgba(4,6,12,.86))}
+.held{background:transparent}
 .held{transition:opacity 1.3s var(--kurve)}
 .vor .held,.vor .kopf__in>*:not(.marke){opacity:0}
 .ohne-intro .intro{display:none}
@@ -195,13 +207,14 @@ td:first-child{color:var(--grau)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.zeile>span,.hebt,.reihe{transform:none!important;opacity:1!important}.linie{transform:none}}
 </style>
-<script>/* Intro nur beim ersten Besuch */try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash||localStorage.getItem('endo-intro')==='1')document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
+<script>/* Intro nur beim ersten Besuch */try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash)document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
+<div class="tech" aria-hidden="true"><div class="tech__licht"></div><div class="tech__kegel"></div><div class="tech__punkte"></div><div class="tech__streif"></div><div class="tech__boden"></div></div>
 
 <div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
-<a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang"><div id="z-mb" style="opacity:0"></div><div id="z-sh" style="opacity:0"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
+<a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
 
 <header class="kopf"><div class="kopf__in">
   <a class="marke" href="#start" aria-label="endo, zum Anfang"><span id="marke-platz"></span><b class="chrom" id="marke-wort">endo</b></a>
@@ -456,108 +469,74 @@ window.ENDO_HELD_RESET = function(){ document.getElementById('held-text').classL
 })();
 </script>
 <script type="module">
-/* endo-Zeichen und Intro mit dem Original-Liquid-Metal-Shader (Paper Shaders, paper.design). Die Verwandlung Masse → Dreieck
-   wird als Formfolge berechnet; jedes Bild malt der Original-Shader. Ohne WebGL oder bei Fehlern: festes Silber-Zeichen. */
+/* endo-Zeichen (drei verbundene Punkte) im Original-Liquid-Metal-Shader (Paper Shaders, paper.design). Das Intro verändert nur
+   Shader-Werte (Verzerrung, Kontur, Weichheit, Größe) und schiebt das Zeichen per GPU ins Menü – kein Bildtausch, kein Ruckeln.
+   Ohne WebGL oder bei Fehlern: festes Silber-Zeichen im Menü. */
 const html = document.documentElement, intro = document.getElementById('intro'), Z = document.getElementById('zeichen');
-const zmb = document.getElementById('z-mb'), zsh = document.getElementById('z-sh'), platz = document.getElementById('marke-platz');
-const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches, handy = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+const zsh = document.getElementById('z-sh'), platz = document.getElementById('marke-platz');
+const handy = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const ez = x => x <= 0 ? 0 : x >= 1 ? 1 : (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-const warte = ms => new Promise(r => setTimeout(r, ms));
-function insMenue(sofort) {
-  const r = platz.getBoundingClientRect();
-  Z.classList.toggle('sofort', !!sofort);
-  Z.style.left = (r.left + r.width / 2) + 'px'; Z.style.top = (r.top + r.height / 2) + 'px';
-  Z.style.width = (r.width * 1.32) + 'px'; Z.style.height = (r.width * 1.32) + 'px';
+const eo = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 4);
+const lerp = (a, b, k) => a + (b - a) * k;
+function menueZiel() {
+  const r = platz.getBoundingClientRect(), g = Z.offsetWidth;
+  const s = (r.width * 1.3) / g, dx = r.left + r.width / 2 - innerWidth / 2, dy = r.top + r.height / 2 - innerHeight * .47;
+  return `translate(${dx}px, ${dy}px) scale(${s})`;
 }
+function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.style.filter = 'none'; Z.dataset.ort = 'menue'; }
 addEventListener('resize', () => { if (Z.dataset.ort === 'menue') insMenue(true); });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
 
-let P = null;
-try { P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm'); } catch (e) { P = null; }
 const T = [0, 1, 2].map(k => { const a = (-90 + k * 120) * Math.PI / 180; return [30 * Math.cos(a), 30 * Math.sin(a)]; });
-const MID = [0, 1, 2].map(k => [(T[k][0] + T[(k + 1) % 3][0]) / 2, (T[k][1] + T[(k + 1) % 3][1]) / 2]);
-const ZIEL = T.concat(MID).concat([[0, 0]]), ZR = [14, 14, 14, 6, 6, 6, 5];
-const START = [[-24, -20, 26], [22, -24, 24], [26, 18, 25], [-20, 22, 24], [0, -36, 16], [-38, 0, 15], [4, 8, 30]];
-const N = handy ? 22 : 30, S = handy ? 176 : 224, U = S / 112;
-const smin = (a, b, k) => { if (k < .01) return Math.min(a, b); const h = Math.max(0, Math.min(1, .5 + .5 * (b - a) / k)); return b + (a - b) * h - k * h * (1 - h); };
-const cap = (px, py, a, b, r) => { const pax = px - a[0], pay = py - a[1], bx = b[0] - a[0], by = b[1] - a[1], h = Math.max(0, Math.min(1, (pax * bx + pay * by) / (bx * bx + by * by))); return Math.hypot(pax - bx * h, pay - by * h) - r; };
-const sig = (x, y) => { let d = Math.min(...T.map(t => Math.hypot(x - t[0], y - t[1]) - 14)); for (let k = 0; k < 3; k++) d = Math.min(d, cap(x, y, T[k], T[(k + 1) % 3], 4.5)); return d; };
-function formBild(f) {
-  const t = f / (N - 1), k = ez(Math.min(1, t / .8)), m = ez(Math.max(0, (t - .45) / .55));
-  const D = START.map((s, j) => [s[0] + (ZIEL[j][0] - s[0]) * k, s[1] + (ZIEL[j][1] - s[1]) * k, s[2] + (ZR[j] - s[2]) * k]), kk = (14 - 8 * k) * (1 - m);
-  const c = document.createElement('canvas'); c.width = c.height = S; const x = c.getContext('2d'), im = x.createImageData(S, S);
-  for (let py = 0; py < S; py++) for (let px = 0; px < S; px++) {
-    const X = (px + .5) / U - 56, Y = (py + .5) / U - 56; let a = 1e3; for (const q of D) a = smin(a, Math.hypot(X - q[0], Y - q[1]) - q[2], kk);
-    const d = a + (sig(X, Y) - a) * m; im.data[(py * S + px) * 4 + 3] = Math.max(0, Math.min(1, .5 - d * U)) * 255;
-  }
-  x.putImageData(im, 0, 0); return c.toDataURL('image/png');
-}
-async function verarbeiten(url) { const r = await P.toProcessedLiquidMetal(url); const img = new Image(); img.src = URL.createObjectURL(r.pngBlob); await img.decode(); return img; }
+const FORM = `<path d="M${T[0]} L${T[1]} L${T[2]} Z" fill="none" stroke="black" stroke-width="9" stroke-linejoin="round"/>` + T.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="14"/>`).join('');
+const SVG = 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56 -56 112 112" width="${handy ? 640 : 1000}" height="${handy ? 640 : 1000}"><g fill="black">${FORM}</g></svg>`);
+let P = null;
+async function zeichenBild() { const r = await P.toProcessedLiquidMetal(SVG); const img = new Image(); img.src = URL.createObjectURL(r.pngBlob); await img.decode(); return img; }
+const GLANZ = { u_repetition: 2.6, u_softness: .04, u_shiftRed: .35, u_shiftBlue: .35, u_distortion: .07, u_contour: .45, u_angle: 70 };
 function basis() {
   const fit = (P.ShaderFitOptions && P.ShaderFitOptions.contain != null) ? P.ShaderFitOptions.contain : 1;
-  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), u_repetition: 3, u_softness: .06, u_shiftRed: .3, u_shiftBlue: .3, u_distortion: .07, u_contour: .4, u_angle: 70, u_fit: fit, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_imageAspectRatio: 1 };
+  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), ...GLANZ, u_fit: fit, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_imageAspectRatio: 1 };
 }
 const METABALLS = () => (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs != null) ? P.LiquidMetalShapes.metaballs : 4;
 const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
-const mitPause = (el, sh) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? .6 : 0)), { rootMargin: '100px' }).observe(el); };
-
-async function start() {
-  const gesehen = html.classList.contains('ohne-intro');
-  if (!P) throw new Error('Shader nicht geladen');
-  /* Schritt 1: das fertige Zeichen zuerst (Menü, Rad-Mitte) */
-  const ende = await verarbeiten(formBild(N - 1));
-  const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), P.liquidMetalFragmentShader, { ...basis(), u_image: ende, u_isImage: true, u_shape: 0 }, undefined, .6);
-  mitPause(document.getElementById('mitte-sh'), mitte);
-  const fl = document.getElementById('fluss-sh');
-  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#BFD0FF'), u_isImage: false, u_shape: METABALLS(), u_scale: 1.1, u_repetition: 3, u_softness: .08, u_shiftBlue: .35 }, undefined, .6);
-  mitPause(fl, fluss);
-  const zeichen = new P.ShaderMount(zsh, P.liquidMetalFragmentShader, { ...basis(), u_image: ende, u_isImage: true, u_shape: 0 }, undefined, .6);
-  if (gesehen) { Z.dataset.ort = 'menue'; insMenue(true); zsh.style.opacity = 1; seiteZeigen(); return; }
-  /* Schritt 2: Intro */
-  window.ENDO_INTRO = () => introSpielen(zeichen, ende);
-  introSpielen(zeichen, ende);
-}
-let lauf = 0, bilder = null;
-async function introSpielen(zeichen, ende) {
+const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? v : 0)), { rootMargin: '100px' }).observe(el); };
+let zeichen = null, lauf = 0;
+function introSpielen() {
   const id = ++lauf; let aus = false;
-  try { localStorage.setItem('endo-intro', '1'); } catch (e) {}
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
-  Z.classList.add('sofort'); Z.style.left = Z.style.top = Z.style.width = Z.style.height = ''; void Z.offsetWidth;
-  zsh.style.opacity = 0;
-  const mb = new P.ShaderMount(zmb, P.liquidMetalFragmentShader, { ...basis(), u_isImage: false, u_shape: METABALLS(), u_colorTint: P.getShaderColorFromString('#FFFFFF') }, undefined, .9);
-  requestAnimationFrame(() => { zmb.style.transition = 'opacity 1.2s'; zmb.style.opacity = 1; });
-  const fertig = () => { if (aus) return; aus = true; Z.dataset.ort = 'menue'; Z.classList.remove('sofort'); insMenue(false); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { intro.style.display = 'none'; }, 1400); };
-  const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_image: ende }); zmb.style.opacity = 0; zsh.style.opacity = 1; fertig(); setTimeout(() => mb.dispose && mb.dispose(), 600); };
-  intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen;
-  document.getElementById('intro-weg').onclick = ueberspringen;
+  Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
+  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) intro.style.display = 'none'; }, 1300); };
+  const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { ...GLANZ, u_scale: .8 }); Z.style.opacity = 1; Z.style.filter = 'none'; fertig(); };
+  intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen; document.getElementById('intro-weg').onclick = ueberspringen;
   const t0 = performance.now();
-  if (!bilder) { bilder = []; for (let f = 0; f < N; f++) { if (id !== lauf) return; bilder.push(f === N - 1 ? ende : await verarbeiten(formBild(f))); } }
-  if (id !== lauf) return;
-  const vorlauf = Math.max(0, 1600 - (performance.now() - t0)); await warte(vorlauf); if (id !== lauf) return;
-  /* Masse → Dreieck: Original-Masse blendet in Bild 0 der Formfolge, dann läuft die Formfolge */
-  setz(zeichen, { u_image: bilder[0] }); zsh.style.opacity = 1; zmb.style.transition = 'opacity .45s'; zmb.style.opacity = 0;
-  const t1 = performance.now(), F = N - 1;
-  await new Promise(fertigLauf => {
-    const tick = () => {
-      if (id !== lauf) return fertigLauf();
-      const e = (performance.now() - t1) / 1000; let i;
-      if (e < 2.6) i = ez(e / 2.6) * F;
-      else if (e < 3.4) i = F;
-      else if (e < 3.8) i = F - ez((e - 3.4) / .4) * 9;
-      else if (e < 5.0) i = F - 9 + Math.sin((e - 3.8) * 5) * 1.5;
-      else i = F - 9 + ez(Math.min(1, (e - 5.0) / .6)) * 9;
-      setz(zeichen, { u_image: bilder[Math.max(0, Math.min(F, Math.round(i)))] });
-      if (e > 3.75 && !aus) fertig();
-      if (e < 5.7) requestAnimationFrame(tick); else { setz(zeichen, { u_image: ende }); fertigLauf(); }
-    };
-    requestAnimationFrame(tick);
-  });
-  mb.dispose && mb.dispose();
+  const tick = () => {
+    if (id !== lauf) return;
+    const e = (performance.now() - t0) / 1000, k = eo((e - .5) / 2.1), a = ez((e - .4) / 1.1);
+    setz(zeichen, { u_distortion: lerp(.85, .07, k), u_contour: lerp(1, .45, k), u_softness: lerp(.45, .04, k), u_repetition: lerp(1.6, 2.6, k), u_scale: lerp(.5, .8, k) });
+    Z.style.opacity = a; Z.style.filter = k < .99 ? `blur(${lerp(14, 0, k).toFixed(2)}px)` : 'none';
+    Z.style.setProperty('--glanz', e > 2.4 ? Math.sin(Math.PI * Math.min(1, (e - 2.4) / .8)) : 0);
+    if (e > 3.3 && !aus) fertig();
+    if (e < 3.4) requestAnimationFrame(tick); else setz(zeichen, { ...GLANZ, u_scale: .8 });
+  };
+  requestAnimationFrame(tick);
 }
-try { await start(); }
-catch (e) { console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.dataset.ort = 'menue'; insMenue(true); intro.style.display = 'none'; seiteZeigen(); }
+try {
+  P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
+  const bild = await zeichenBild();
+  zeichen = new P.ShaderMount(zsh, P.liquidMetalFragmentShader, { ...basis(), u_image: bild, u_isImage: true, u_shape: 0 }, undefined, .7);
+  const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), P.liquidMetalFragmentShader, { ...basis(), u_image: bild, u_isImage: true, u_shape: 0 }, undefined, .7);
+  mitPause(document.getElementById('mitte-sh'), mitte, .7);
+  const fl = document.getElementById('fluss-sh');
+  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_isImage: false, u_shape: METABALLS(), u_scale: 1.1, u_softness: .06 }, undefined, .6);
+  mitPause(fl, fluss, .6);
+  window.ENDO_INTRO = introSpielen;
+  if (html.classList.contains('ohne-intro')) { insMenue(true); seiteZeigen(); } else introSpielen();
+} catch (e) {
+  console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); insMenue(true); intro.style.display = 'none'; seiteZeigen();
+}
 document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
 </script>
+
 </body>
 </html>
