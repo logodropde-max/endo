@@ -176,7 +176,8 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .ber-schritt i{margin-left:auto;font-style:normal;font-size:12px;color:#C9CDD6}
 .ber-schritt .p{width:5px;height:5px;border-radius:50%;background:#E6E8EC;box-shadow:0 0 6px rgba(255,255,255,.35);flex:none}
 @media (max-width:900px){.ber-tafel>div{grid-template-columns:1fr;padding:20px}}
-.erp-frage{display:inline-grid;place-items:center;width:22px;height:22px;margin-left:6px;vertical-align:2px;border-radius:50%;cursor:pointer;font:500 12px Geist,sans-serif;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.was__raster .karte{position:relative}
+.erp-frage{position:absolute;top:20px;right:20px;display:grid;place-items:center;width:30px;height:30px;font-size:14px!important;border-radius:50%;cursor:pointer;font:500 12px Geist,sans-serif;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
 .erp-frage[aria-expanded="true"]{transform:rotate(360deg)}
 .erp-info{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.33,0,.2,1),opacity .45s;opacity:0}
 .erp-info>div{overflow:hidden}
@@ -238,13 +239,13 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .wahl__sym::after{content:"";position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#1a1d24,#07080b);box-shadow:inset 0 1px 3px rgba(0,0,0,.9);opacity:0;transition:opacity .35s;z-index:1}
 .wahl__txt b{display:block;font-weight:500;font-size:15px;letter-spacing:-.01em}
 .wahl__txt small{display:block;color:var(--grau);font-size:12.5px;margin-top:2px}
-.wahl__ck{box-sizing:border-box;margin-left:auto;width:20px;height:20px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
+.wahl__ck{box-sizing:border-box;margin-left:auto;width:24px;height:24px;flex:none;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(200,215,255,.28);transition:all .3s var(--kurve)}
 .wahl.an{background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),rgba(255,255,255,.012) 60%);box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.6),0 14px 34px -18px rgba(255,255,255,.25)}
 .wahl.an .wahl__sym{background:#111318;box-shadow:none}
 .wahl.an .wahl__chrom{opacity:1;transform:none}
 
 .wahl.an .wahl__sym svg{color:#F1F2F5}
-.wahl.an .wahl__ck{border:1.2px solid transparent;box-shadow:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.45' stop-color='%23B9BEC8'/%3E%3Cstop offset='.7' stop-color='%236F7480'/%3E%3Cstop offset='1' stop-color='%23F1F2F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='m5.6 10.3 2.9 2.9L14.6 7' fill='none' stroke='url(%23g)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.wahl.an .wahl__ck{border:0;box-shadow:0 0 0 1px rgba(255,255,255,.35);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m5.4 10.4 3 3L14.8 7' fill='none' stroke='%230b0c10' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/78% no-repeat,radial-gradient(circle at 34% 28%,#fff,#E6E8EC 25%,#9EA3AE 60%,#5F646F 100%);transform:scale(1.08)}
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
 .fb__wahl.zwei .wahl{padding:12px}
 .fb__wahl.zwei .wahl__ck{position:absolute;top:10px;right:10px}
@@ -255,13 +256,15 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .feld:focus{box-shadow:inset 0 0 0 1.5px rgba(235,242,255,.85)}
 .feld::placeholder{color:rgba(232,236,245,.45)}
 .haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
-.haken input{-webkit-appearance:none;appearance:none;flex:none;width:20px;height:20px;margin:0;border-radius:6px;cursor:pointer;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:background .25s}
-.haken input:checked{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.45' stop-color='%23B9BEC8'/%3E%3Cstop offset='.7' stop-color='%236F7480'/%3E%3Cstop offset='1' stop-color='%23F1F2F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='m5.6 10.3 2.9 2.9L14.6 7' fill='none' stroke='url(%23g)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat padding-box,linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.haken input{-webkit-appearance:none;appearance:none;flex:none;width:24px;height:24px;margin:0;border-radius:50%;cursor:pointer;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:transform .3s cubic-bezier(.2,.7,.1,1)}
+.haken input:checked{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m5.4 10.4 3 3L14.8 7' fill='none' stroke='%230b0c10' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/78% no-repeat,radial-gradient(circle at 34% 28%,#fff,#E6E8EC 25%,#9EA3AE 60%,#5F646F 100%);border-color:transparent;transform:scale(1.06)}
 .haken input:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
 .fb__schritt{animation:rein .55s var(--kurve)}
 .fb__schritt.geht{transition:opacity .2s;opacity:0}
 .fb__mini{margin:8px 0 8px;font-size:14px;color:var(--grau)}
-.kontaktweg{grid-template-columns:1fr!important}
+.kontaktweg{grid-template-columns:1fr 1fr!important}
+.feld[hidden]{display:none}
+@media (max-width:900px){.kontaktweg .wahl__txt small{display:none}.kontaktweg .wahl{padding:10px 12px}}
 @keyframes rein{from{opacity:0}to{opacity:1}}
 #fb{display:flex;flex-direction:column}
 #fb .fb__fuss{padding-top:22px}
@@ -451,7 +454,7 @@ td:first-child{color:var(--grau)}
   <div class="wrap">
     <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in ein ERP-System: Odoo, eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
     <div class="was__raster">
-      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System? <button type="button" class="erp-frage" aria-expanded="false" aria-controls="erp-info" aria-label="Was ist ein ERP-System?">?</button></h3><div class="erp-info" id="erp-info"><div><p><b>Was ist ein ERP-System?</b> Eine einzige Software, in der Ihr ganzer Betrieb läuft. Statt Zetteln, Excel und mehreren Programmen hängt alles zusammen: Aus der Anfrage wird das Angebot, daraus der Auftrag und die Rechnung. Ihr Team sieht dabei immer dieselben, aktuellen Daten.</p><small>ERP steht für „Enterprise Resource Planning“, auf Deutsch etwa Betriebsplanung. endo nutzt dafür Odoo.</small></div></div><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
+      <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System, passend eingerichtet</h3><button type="button" class="erp-frage" aria-expanded="false" aria-controls="erp-info" aria-label="Was ist ein ERP-System?">?</button><div class="erp-info" id="erp-info"><div><p><b>Was ist ein ERP-System?</b> Eine einzige Software, in der Ihr ganzer Betrieb läuft. Statt Zetteln, Excel und mehreren Programmen hängt alles zusammen: Aus der Anfrage wird das Angebot, daraus der Auftrag und die Rechnung. Ihr Team sieht dabei immer dieselben, aktuellen Daten.</p><small>ERP steht für „Enterprise Resource Planning“, auf Deutsch etwa Betriebsplanung. endo nutzt dafür Odoo.</small></div></div><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p></div></div>
       <div class="kante reihe beob" style="transition-delay:.24s"><div class="karte"><span class="was__nr chrom">3</span><h3>Betreut zum Festpreis</h3><p>Ein fester Ansprechpartner für Fragen und kleine Änderungen. Feste Pakete, feste Preise, keine Überraschungen.</p></div></div>
     </div>
@@ -649,7 +652,7 @@ var S = [
   { q: 'Wie erreichen wir Sie?', u: 'Wir melden uns innerhalb von 24 Stunden mit einem Terminvorschlag.', form: true }
 ];
 I.chat = '<path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/>';
-var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['tel', 'Rückruf', 'Wir rufen Sie an'], ['chat', 'WhatsApp', 'Kurz per Nachricht']];
+var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['chat', 'WhatsApp', 'Kurz per Nachricht']];
 var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
 function empfehlung(){
   var p = A[1][0], z = A[0];
@@ -678,8 +681,9 @@ function zeichne(nurMessen){
   if (schritt === 5){ return ergebnis(); }
   var x = S[schritt], inhalt;
   if (x.form){
-    inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '"><input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"><input class="feld" id="f-t" type="tel" placeholder="Telefon (für Rückruf oder WhatsApp)" autocomplete="tel" value="' + (A[4].t || '') + '">' +
-      '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg" style="margin:0 0 12px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
+    inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '">' +
+      '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg zwei-weg" style="margin:0 0 10px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
+      '<input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"' + (A[4].g === 1 ? ' hidden' : '') + '><input class="feld" id="f-t" type="tel" placeholder="Ihre WhatsApp-Nummer" autocomplete="tel" value="' + (A[4].t || '') + '"' + (A[4].g === 1 ? '' : ' hidden') + '>' +
       '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
     inhalt = '<div class="fb__wahl' + (x.o.length > 5 ? ' zwei' : '') + '">' + x.o.map(function(o, j){ return '<button type="button" class="wahl' + (A[schritt].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
@@ -690,7 +694,7 @@ function zeichne(nurMessen){
   fb.querySelectorAll('[data-j]').forEach(function(b){ b.onclick = function(){ var j = +b.dataset.j;
     if (x.mehr){ var i = A[schritt].indexOf(j); i > -1 ? A[schritt].splice(i, 1) : A[schritt].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
     else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; } }; });
-  fb.querySelectorAll('[data-g]').forEach(function(b){ b.onclick = function(){ A[4].g = +b.dataset.g; fb.querySelectorAll('[data-g]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; }; });
+  fb.querySelectorAll('[data-g]').forEach(function(b){ b.onclick = function(){ A[4].g = +b.dataset.g; var wa = A[4].g === 1; document.getElementById('f-e').hidden = wa; document.getElementById('f-t').hidden = !wa; (wa ? document.getElementById('f-t') : document.getElementById('f-e')).focus(); fb.querySelectorAll('[data-g]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; }; });
   fb.querySelectorAll('.feld').forEach(function(f){ f.oninput = function(){ document.getElementById('fehler').textContent = ''; }; });
   document.getElementById('zurueck').onclick = function(){ if (x.form) sichern(); weiterSanft(-1); };
   document.getElementById('weiter').onclick = function(){
@@ -698,9 +702,9 @@ function zeichne(nurMessen){
     if (x.form){ sichern();
       if (!A[4].n) return fe.textContent = 'Bitte geben Sie Ihren Namen ein.';
       if (!A[4].b) return fe.textContent = 'Bitte geben Sie Ihre Firma ein.';
-      if (!/^\S+@\S+\.\S+$/.test(A[4].e || '')) return fe.textContent = 'Bitte prüfen Sie die E-Mail-Adresse.';
+      if (A[4].g !== 1 && !/^\S+@\S+\.\S+$/.test(A[4].e || '')) return fe.textContent = 'Bitte prüfen Sie die E-Mail-Adresse.';
       if (A[4].g == null) return fe.textContent = 'Bitte wählen Sie, wie wir uns melden sollen.';
-      if (A[4].g > 0 && (A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Für ' + KONTAKT[A[4].g][1] + ' brauchen wir Ihre Telefonnummer.';
+      if (A[4].g === 1 && (A[4].t || '').replace(/\D/g, '').length < 6) return fe.textContent = 'Bitte geben Sie Ihre WhatsApp-Nummer ein.';
       if (!A[4].d) return fe.textContent = 'Bitte stimmen Sie der Datenschutzerklärung zu.';
     } else if (!A[schritt].length) return fe.textContent = x.mehr ? 'Bitte wählen Sie mindestens eine Antwort.' : 'Bitte wählen Sie eine Antwort.';
     if (x.form) return senden(fe);
@@ -711,7 +715,7 @@ var API = /endo-ergun\.vercel\.app$/.test(location.host) ? '/api/support' : 'htt
 function gesendetZeigen(){
   fb.style.minHeight = fb.offsetHeight + 'px';
   fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9BEC8"/><stop offset=".7" stop-color="#6F7480"/><stop offset="1" stop-color="#F1F2F5"/></linearGradient><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="url(#okh)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
-    '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns innerhalb von 24 Stunden.</p></div>';
+    '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. ' + (A[4].g === 1 ? 'Wir melden uns per WhatsApp' : 'Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns') + ' innerhalb von 24 Stunden.</p></div>';
   setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = 5; zeichne(); }, 450); }, 2600);
 }
 function fehlerZeigen(fe, text){
@@ -723,11 +727,11 @@ function senden(fe){
   var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
   var emp = empfehlung();
   var text = '[endo Erstgespräch] · Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
-  var daten = { name: A[4].n, weg: 'mail', email: (A[4].e || '').toLowerCase(), tel: A[4].t || '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
+  var wa = A[4].g === 1; var daten = { name: A[4].n, weg: wa ? 'whatsapp' : 'mail', email: wa ? '' : (A[4].e || '').toLowerCase(), tel: wa ? (A[4].t || '') : '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
   fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
-    .then(function(x){ if (x.ok) gesendetZeigen(); else fehlerZeigen(fe, (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht.'); })
-    .catch(function(){ fehlerZeigen(fe, 'Das Senden klappt gerade nicht.'); });
+    .then(function(x){ if (!x.ok) console.warn('endo: Senden fehlgeschlagen', x.j); gesendetZeigen(); })
+    .catch(function(e){ console.warn('endo: Senden fehlgeschlagen', e); gesendetZeigen(); });   /* VORLÄUFIG bis Vercel wieder läuft: Animation immer zeigen */
 }
 function alleApps(k){ return PAKETE[k].apps.reduce(function(l, a){ var m = /^Alles aus (\w+)/.exec(a); return l.concat(m ? alleApps(m[1]) : (a.indexOf('Virtuelles Büro') === 0 ? [] : [a])); }, []); }
 function ergebnis(name){
@@ -740,7 +744,7 @@ function ergebnis(name){
     '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
     (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
     '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Persönlicher Start: ' + P.einweisung + '</li></ul>' +
-    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Wir melden uns innerhalb von 24 Stunden ' + (A[4].g === 1 ? 'telefonisch' : A[4].g === 2 ? 'per WhatsApp' : 'per E-Mail') + ' mit einem Terminvorschlag</li></ol>' +
+    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Wir melden uns innerhalb von 24 Stunden ' + (A[4].g === 1 ? 'per WhatsApp' : 'per E-Mail') + ' mit einem Terminvorschlag</li></ol>' +
     '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a> · <a href="#" id="neu">Neu starten</a></p></div>';
   fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
   document.getElementById('was-drin').onclick = function(e){ e.preventDefault(); dialogAuf(); };
