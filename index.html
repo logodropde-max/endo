@@ -165,7 +165,10 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .zeichen-fix.ohne-shader .fest{display:block}
 .zeichen-fix.ohne-shader>div{display:none}
 .zeichen-fix::after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
-#marke-platz{display:inline-block;width:44px;height:44px;flex:none}
+#marke-platz{display:inline-block;width:44px;height:44px;flex:none;transition:width .45s var(--kurve)}
+.gerollt #marke-platz{width:0}
+.zeichen-fix.im-menue{transition:opacity .45s var(--kurve)}
+.zeichen-fix.im-menue.versteckt{opacity:0!important;pointer-events:none}
 /* High-Tech-Hintergrund: Punktraster, perspektivischer Boden, Lichtkegel, Lichtstreifen */
 .tech{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .tech__punkte{position:absolute;inset:0;background-image:radial-gradient(rgba(175,195,240,.28) 1px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);opacity:.9}
@@ -483,8 +486,13 @@ function menueZiel() {
   const s = (r.width * 1.3) / g, dx = r.left + r.width / 2 - innerWidth / 2, dy = r.top + r.height / 2 - innerHeight * .47;
   return `translate(${dx}px, ${dy}px) scale(${s})`;
 }
-function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.style.filter = 'none'; Z.dataset.ort = 'menue'; }
-addEventListener('resize', () => { if (Z.dataset.ort === 'menue') insMenue(true); });
+/* Im Menü: das Zeichen in Menügröße neu zeichnen (nicht groß rendern und verkleinern), beim Scrollen ausblenden und den Shader anhalten */
+let ruhe = null;
+function klein() { const r = platz.getBoundingClientRect(); Z.classList.add('sofort'); Z.style.setProperty('--g', Math.round(Math.max(r.width, 44) * 1.3) + 'px'); Z.style.transform = menueZiel(); void Z.offsetWidth; Z.classList.add('im-menue'); oben(); }
+function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.style.filter = 'none'; Z.dataset.ort = 'menue'; if (sofort) klein(); }
+function oben() { if (!Z.classList.contains('im-menue')) return; const da = scrollY < 40; Z.classList.toggle('versteckt', !da); if (ruhe) ruhe(da); }
+addEventListener('scroll', oben, { passive: true });
+addEventListener('resize', () => { if (Z.dataset.ort === 'menue') { Z.style.removeProperty('--g'); insMenue(true); } });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
 
 const T = [0, 1, 2].map(k => { const a = (-90 + k * 120) * Math.PI / 180; return [30 * Math.cos(a), 30 * Math.sin(a)]; });
@@ -505,8 +513,8 @@ function introSpielen() {
   const id = ++lauf; let aus = false;
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
-  Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
-  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) intro.style.display = 'none'; }, 1300); };
+  Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
+  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort', 'im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) { intro.style.display = 'none'; klein(); } }, 1500); };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { ...GLANZ, u_scale: .8 }); Z.style.opacity = 1; Z.style.filter = 'none'; fertig(); };
   intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen; document.getElementById('intro-weg').onclick = ueberspringen;
   const t0 = performance.now();
@@ -530,6 +538,7 @@ try {
   const fl = document.getElementById('fluss-sh');
   const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_isImage: false, u_shape: METABALLS(), u_scale: 1.1, u_softness: .06 }, undefined, .6);
   mitPause(fl, fluss, .6);
+  ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
   if (html.classList.contains('ohne-intro')) { insMenue(true); seiteZeigen(); } else introSpielen();
 } catch (e) {
