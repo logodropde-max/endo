@@ -127,7 +127,12 @@ html:not(.vor) .held::before{opacity:1}
 .rad-zu{position:absolute;top:14px;right:14px;z-index:2;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:var(--text);font-size:18px;cursor:pointer}
 .rad-karte .ber-ablauf{margin-top:20px}
 .knoten{cursor:pointer}
-.knoten span.k{transition:transform .3s var(--kurve),background .3s,box-shadow .3s}
+.knoten span.k{position:relative;transition:transform .5s var(--kurve),box-shadow 1.1s cubic-bezier(.4,0,.2,1),color 1.1s cubic-bezier(.4,0,.2,1)}
+.knoten span.k::before{content:"";position:absolute;inset:-1.2px;border-radius:50%;border:1.2px solid transparent;background:radial-gradient(circle at 35% 30%,#2a2e38,#0c0e14) padding-box,linear-gradient(140deg,#fff,#BFC3CB 40%,#fff 70%,#9A9FA9) border-box;opacity:0;transition:opacity 1.1s cubic-bezier(.4,0,.2,1)}
+.knoten.an span.k::before{opacity:1}
+.knoten span.k svg{position:relative;z-index:1}
+.knoten{transition:color 1.1s cubic-bezier(.4,0,.2,1)}
+#rad [data-sp],#rad [data-lg]{transition:stroke 1.1s cubic-bezier(.4,0,.2,1),stroke-width 1.1s cubic-bezier(.4,0,.2,1)}
 .knoten:hover span.k{transform:scale(1.08)}
 @media (max-width:900px){.rad-karte{position:fixed;inset:auto 10px 10px 10px;max-height:78vh;z-index:120;transform:translateY(30px)}.rad-karte>div{padding:24px 20px 20px}}
 .rad{position:relative;aspect-ratio:1;width:100%;max-width:600px;margin:0 auto}
@@ -135,10 +140,10 @@ html:not(.vor) .held::before{opacity:1}
 .rad__mitte{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
 .rad__mitte canvas{position:absolute;inset:-6%;width:112%;height:112%}
 .knoten{position:absolute;display:grid;justify-items:center;gap:8px;width:110px;border:0;background:none;color:var(--grau);font:500 13px/1.2 Geist,sans-serif;cursor:pointer;transform:translate(-50%,-50%);padding:0}
-.knoten span.k{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(var(--flaeche),var(--flaeche)) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:#B9C4DA;transition:all .4s var(--kurve)}
+.knoten span.k{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(var(--flaeche),var(--flaeche)) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:#B9C4DA;transition:transform .5s var(--kurve),box-shadow 1.1s cubic-bezier(.4,0,.2,1),color 1.1s cubic-bezier(.4,0,.2,1)}
 .knoten svg{width:22px;height:22px}
 .knoten.an{color:var(--text)}
-.knoten.an span.k{background:radial-gradient(circle at 35% 30%,#2a3550,#0b1020) padding-box,linear-gradient(140deg,#fff,#BFC3CB 40%,#fff 70%,#9A9FA9) border-box;box-shadow:0 0 22px -6px rgba(160,185,240,.5);color:#fff}
+.knoten.an span.k{box-shadow:0 0 22px -6px rgba(220,225,235,.45);color:#fff}
 /* Bereiche interaktiv: Leiste + Tafel mit drei Punkten und Live-Ablauf */
 .bereiche{display:grid;gap:16px;align-content:start}
 .ber-leiste{display:flex;flex-wrap:wrap;gap:8px}
@@ -479,8 +484,8 @@ rad.innerHTML = '<div class="rad-karte" id="rad-karte" role="dialog" aria-modal=
 var aktiv = 0, radUhr = 0, radPause = false;
 function waehle(i){ aktiv = i;
   rad.querySelectorAll('[data-k]').forEach(function(k, n){ k.classList.toggle('an', n === i); });
-  rad.querySelectorAll('[data-sp]').forEach(function(s){ var an = +s.dataset.sp === i; s.setAttribute('stroke', an ? 'rgba(240,245,255,.8)' : 'rgba(230,238,255,.5)'); s.setAttribute('stroke-width', an ? '.26' : '.2'); });
-  rad.querySelectorAll('[data-lg]').forEach(function(s){ s.setAttribute('stroke', +s.dataset.lg === i ? 'rgba(150,180,245,.4)' : 'rgba(140,170,240,.22)'); });
+  rad.querySelectorAll('[data-sp]').forEach(function(s){ var an = +s.dataset.sp === i; s.style.stroke = an ? 'rgba(240,245,255,.8)' : 'rgba(230,238,255,.5)'; s.style.strokeWidth = an ? '.26' : '.2'; });
+  rad.querySelectorAll('[data-lg]').forEach(function(s){ s.style.stroke = +s.dataset.lg === i ? 'rgba(220,225,235,.38)' : 'rgba(200,205,215,.18)'; });
 }
 tafel = document.getElementById('ber-tafel');
 var karte = document.getElementById('rad-karte'), kartAuf = false;
