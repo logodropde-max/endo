@@ -171,12 +171,12 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .zeichen-fix.im-menue.versteckt{opacity:0!important;pointer-events:none}
 /* High-Tech-Hintergrund: Punktraster, perspektivischer Boden, Lichtkegel, Lichtstreifen */
 .tech{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.tech__punkte{position:absolute;inset:0;background-image:radial-gradient(rgba(175,195,240,.28) 1px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);opacity:.9}
+.tech__punkte{position:absolute;inset:0;background-image:radial-gradient(rgba(175,195,240,.28) 1px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 42%,#000 15%,transparent 78%);opacity:.38}
 .tech__boden{position:absolute;left:-50%;right:-50%;bottom:-4%;height:58%;background-image:linear-gradient(rgba(140,170,240,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(140,170,240,.22) 1px,transparent 1px);background-size:64px 64px;transform:perspective(700px) rotateX(64deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(transparent,#000 35%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 35%,#000 70%,transparent);animation:boden 9s linear infinite}
 @keyframes boden{to{background-position:0 64px,0 0}}
-.tech__licht{position:absolute;left:50%;top:44%;width:1100px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(70,110,230,.28),rgba(40,70,170,.1) 45%,transparent 75%);filter:blur(20px)}
+.tech__licht{position:absolute;left:50%;top:44%;width:1100px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(70,110,230,.16),rgba(40,70,170,.05) 45%,transparent 75%);filter:blur(24px)}
 .tech__kegel{position:absolute;left:50%;top:-20%;width:900px;height:120%;transform:translateX(-50%);background:conic-gradient(from 180deg at 50% 0%,transparent 160deg,rgba(150,180,255,.09) 175deg,rgba(200,215,255,.14) 180deg,rgba(150,180,255,.09) 185deg,transparent 200deg);filter:blur(6px)}
-.tech__streif{position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(190,210,255,.08) 50%,transparent 60%);background-size:250% 100%;animation:streif 7s ease-in-out infinite;-webkit-mask-image:radial-gradient(rgba(0,0,0,1) 1px,transparent 1.6px);mask-image:radial-gradient(#000 1px,transparent 1.6px);-webkit-mask-size:26px 26px;mask-size:26px 26px}
+.tech__streif{position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(190,210,255,.05) 50%,transparent 60%);background-size:250% 100%;animation:streif 7s ease-in-out infinite;-webkit-mask-image:radial-gradient(rgba(0,0,0,1) 1px,transparent 1.6px);mask-image:radial-gradient(#000 1px,transparent 1.6px);-webkit-mask-size:26px 26px;mask-size:26px 26px}
 @keyframes streif{0%{background-position:120% 0}60%,100%{background-position:-20% 0}}
 main,.fuss{position:relative;z-index:1}
 .abschnitt,.fuss{background:linear-gradient(rgba(4,6,12,.86),rgba(4,6,12,.86))}
@@ -214,7 +214,7 @@ td:first-child{color:var(--grau)}
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
-<div class="tech" aria-hidden="true"><div class="tech__licht"></div><div class="tech__kegel"></div><div class="tech__punkte"></div><div class="tech__streif"></div><div class="tech__boden"></div></div>
+<div class="tech" aria-hidden="true"><div class="tech__licht"></div><div class="tech__punkte"></div><div class="tech__streif"></div></div>
 
 <div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
 <a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
@@ -472,40 +472,73 @@ window.ENDO_HELD_RESET = function(){ document.getElementById('held-text').classL
 })();
 </script>
 <script type="module">
-/* endo-Zeichen (drei verbundene Punkte) im Original-Liquid-Metal-Shader (Paper Shaders, paper.design). Das Intro verändert nur
-   Shader-Werte (Verzerrung, Kontur, Weichheit, Größe) und schiebt das Zeichen per GPU ins Menü – kein Bildtausch, kein Ruckeln.
-   Ohne WebGL oder bei Fehlern: festes Silber-Zeichen im Menü. */
+/* endo-Zeichen im Original-Liquid-Metal-Shader (Paper Shaders, paper.design – Copyright Lost Coast Labs, Inc.), um eine Form
+   „Verwandlung“ erweitert: am Anfang exakt die Metaballs der Vorlage, mit u_morph 0 → 1 ziehen sie sich stufenlos zum endo-Dreieck
+   zusammen. Alles in einem Shader, nur Zahlen ändern sich – kein Bildtausch, kein Ruckeln. Ohne WebGL: festes Silber-Zeichen. */
 const html = document.documentElement, intro = document.getElementById('intro'), Z = document.getElementById('zeichen');
 const zsh = document.getElementById('z-sh'), platz = document.getElementById('marke-platz');
-const handy = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const ez = x => x <= 0 ? 0 : x >= 1 ? 1 : (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-const eo = x => x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 4);
 const lerp = (a, b, k) => a + (b - a) * k;
 function menueZiel() {
   const r = platz.getBoundingClientRect(), g = Z.offsetWidth;
-  const s = (r.width * 1.3) / g, dx = r.left + r.width / 2 - innerWidth / 2, dy = r.top + r.height / 2 - innerHeight * .47;
+  const s = (Math.max(r.width, 44) * 1.3) / g, dx = r.left + r.width / 2 - innerWidth / 2, dy = r.top + r.height / 2 - innerHeight * .47;
   return `translate(${dx}px, ${dy}px) scale(${s})`;
 }
-/* Im Menü: das Zeichen in Menügröße neu zeichnen (nicht groß rendern und verkleinern), beim Scrollen ausblenden und den Shader anhalten */
 let ruhe = null;
 function klein() { const r = platz.getBoundingClientRect(); Z.classList.add('sofort'); Z.style.setProperty('--g', Math.round(Math.max(r.width, 44) * 1.3) + 'px'); Z.style.transform = menueZiel(); void Z.offsetWidth; Z.classList.add('im-menue'); oben(); }
-function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.style.filter = 'none'; Z.dataset.ort = 'menue'; if (sofort) klein(); }
+function insMenue(sofort) { Z.classList.toggle('sofort', !!sofort); Z.style.transform = menueZiel(); Z.style.opacity = 1; Z.dataset.ort = 'menue'; if (sofort) klein(); }
 function oben() { if (!Z.classList.contains('im-menue')) return; const da = scrollY < 40; Z.classList.toggle('versteckt', !da); if (ruhe) ruhe(da); }
 addEventListener('scroll', oben, { passive: true });
 addEventListener('resize', () => { if (Z.dataset.ort === 'menue') { Z.style.removeProperty('--g'); insMenue(true); } });
 function seiteZeigen() { html.classList.remove('vor'); document.body.classList.remove('intro-an'); window.ENDO_HELD && window.ENDO_HELD(); }
 
-const T = [0, 1, 2].map(k => { const a = (-90 + k * 120) * Math.PI / 180; return [30 * Math.cos(a), 30 * Math.sin(a)]; });
-const FORM = `<path d="M${T[0]} L${T[1]} L${T[2]} Z" fill="none" stroke="black" stroke-width="9" stroke-linejoin="round"/>` + T.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="14"/>`).join('');
-const SVG = 'data:image/svg+xml;base64,' + btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56 -56 112 112" width="${handy ? 640 : 1000}" height="${handy ? 640 : 1000}"><g fill="black">${FORM}</g></svg>`);
-let P = null;
-async function zeichenBild() { const r = await P.toProcessedLiquidMetal(SVG); const img = new Image(); img.src = URL.createObjectURL(r.pngBlob); await img.decode(); return img; }
+const FORM_GLSL = `
+uniform float u_morph;
+float endoCap(vec2 p, vec2 a, vec2 b, float r) { vec2 pa = p - a, ba = b - a; float h = clamp(dot(pa, ba) / dot(ba, ba), 0., 1.); return length(pa - ba * h) - r; }
+float endoZeichen(vec2 p) {
+  vec2 a = vec2(0., -.2), b = vec2(.1732, .1), c = vec2(-.1732, .1);
+  float d = min(min(length(p - a), length(p - b)), length(p - c)) - .093;
+  d = min(d, endoCap(p, a, b, .03)); d = min(d, endoCap(p, b, c, .03)); return min(d, endoCap(p, c, a, .03));
+}
+`;
+const FORM_ZWEIG = `
+    } else {
+      // Verwandlung: Metaballs der Vorlage -> endo-Dreieck
+      vec2 sUV = uv - .5;
+      vec2 mUV = sUV * 1.3;
+      vec2 ziel[5] = vec2[5](vec2(0., -.2), vec2(.1732, .1), vec2(-.1732, .1), vec2(0., .1), vec2(0., -.03));
+      float zug = smoothstep(0., .75, u_morph);
+      float feld = 0.;
+      for (int i = 0; i < 5; i++) {
+        float fi = float(i);
+        float speed = 1.5 + 2./3. * sin(fi * 12.345);
+        float angle = -fi * 1.5;
+        vec2 dir1 = vec2(cos(angle), sin(angle));
+        vec2 dir2 = vec2(cos(angle + 1.57), sin(angle + 1.));
+        vec2 traj = .4 * (dir1 * sin(t * speed + fi * 1.23) + dir2 * cos(t * (speed * 0.7) + fi * 2.17));
+        vec2 mitte = mix(-traj, ziel[i] * 1.3, zug);
+        feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., 1.35, zug), 0.0, 1.0), 4.0);
+      }
+      float eA = pow(1. - smoothstep(.65, .9, feld), 4.);
+      float dz = endoZeichen(sUV);
+      float eB = dz > 0. ? .9 + .1 * clamp(dz * 60., 0., 1.) + .001 : .9 * pow(clamp(1. + dz / .075, 0., 1.), 2.5);
+      edge = mix(eA, eB, smoothstep(.4, 1., u_morph));
+    }
+
+    edge = mix(`;
+function shaderMitForm(fs) {
+  let s = fs.replace('void main() {', FORM_GLSL + '\nvoid main() {');
+  s = s.replace('      edge = pow(edge, 4.);\n    }\n\n    edge = mix(', '      edge = pow(edge, 4.);\n' + FORM_ZWEIG);
+  s = s.replace('    } else if (u_shape < 5.) {\n      edge = 1.8 * pow(edge, 1.5);', '    } else {\n      edge = 1.8 * pow(edge, 1.5);');
+  if (s.indexOf('endoZeichen(sUV)') < 0 || s.indexOf('} else {\n      edge = 1.8') < 0) throw new Error('Shader-Erweiterung passt nicht');
+  return s;
+}
 const GLANZ = { u_repetition: 2.6, u_softness: .04, u_shiftRed: .35, u_shiftBlue: .35, u_distortion: .07, u_contour: .45, u_angle: 70 };
+let P = null, FS = null;
 function basis() {
   const fit = (P.ShaderFitOptions && P.ShaderFitOptions.contain != null) ? P.ShaderFitOptions.contain : 1;
-  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), ...GLANZ, u_fit: fit, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_imageAspectRatio: 1 };
+  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), ...GLANZ, u_fit: fit, u_scale: .62, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_isImage: false, u_shape: 5, u_morph: 1 };
 }
-const METABALLS = () => (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs != null) ? P.LiquidMetalShapes.metaballs : 4;
 const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
 const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? v : 0)), { rootMargin: '100px' }).observe(el); };
 let zeichen = null, lauf = 0;
@@ -514,29 +547,31 @@ function introSpielen() {
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
-  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort', 'im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) { intro.style.display = 'none'; klein(); } }, 1500); };
-  const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { ...GLANZ, u_scale: .8 }); Z.style.opacity = 1; Z.style.filter = 'none'; fertig(); };
+  if (ruhe) ruhe(true);
+  setz(zeichen, { u_morph: 0 });
+  const fertig = () => { if (aus) return; aus = true; Z.classList.remove('sofort'); Z.style.transform = menueZiel(); Z.dataset.ort = 'menue'; Z.style.setProperty('--glanz', 0); intro.classList.add('raus'); seiteZeigen(); setTimeout(() => { if (id === lauf) { intro.style.display = 'none'; klein(); } }, 1550); };
+  const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = ueberspringen; intro.onwheel = ueberspringen; intro.ontouchstart = ueberspringen; document.getElementById('intro-weg').onclick = ueberspringen;
   const t0 = performance.now();
   const tick = () => {
     if (id !== lauf) return;
-    const e = (performance.now() - t0) / 1000, k = eo((e - .5) / 2.1), a = ez((e - .4) / 1.1);
-    setz(zeichen, { u_distortion: lerp(.85, .07, k), u_contour: lerp(1, .45, k), u_softness: lerp(.45, .04, k), u_repetition: lerp(1.6, 2.6, k), u_scale: lerp(.5, .8, k) });
-    Z.style.opacity = a; Z.style.filter = k < .99 ? `blur(${lerp(14, 0, k).toFixed(2)}px)` : 'none';
-    Z.style.setProperty('--glanz', e > 2.4 ? Math.sin(Math.PI * Math.min(1, (e - 2.4) / .8)) : 0);
-    if (e > 3.3 && !aus) fertig();
-    if (e < 3.4) requestAnimationFrame(tick); else setz(zeichen, { ...GLANZ, u_scale: .8 });
+    const e = (performance.now() - t0) / 1000;
+    setz(zeichen, { u_morph: ez((e - 1.1) / 2.4) });
+    Z.style.opacity = ez(e / 1.1);
+    Z.style.setProperty('--glanz', e > 3.4 ? Math.sin(Math.PI * Math.min(1, (e - 3.4) / .9)) : 0);
+    if (e > 4.3 && !aus) fertig();
+    if (e < 4.4) requestAnimationFrame(tick); else setz(zeichen, { u_morph: 1 });
   };
   requestAnimationFrame(tick);
 }
 try {
   P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
-  const bild = await zeichenBild();
-  zeichen = new P.ShaderMount(zsh, P.liquidMetalFragmentShader, { ...basis(), u_image: bild, u_isImage: true, u_shape: 0 }, undefined, .7);
-  const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), P.liquidMetalFragmentShader, { ...basis(), u_image: bild, u_isImage: true, u_shape: 0 }, undefined, .7);
+  FS = shaderMitForm(P.liquidMetalFragmentShader);
+  zeichen = new P.ShaderMount(zsh, FS, basis(), undefined, .7);
+  const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   const fl = document.getElementById('fluss-sh');
-  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_isImage: false, u_shape: METABALLS(), u_scale: 1.1, u_softness: .06 }, undefined, .6);
+  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.1 }, undefined, .6);
   mitPause(fl, fluss, .6);
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
