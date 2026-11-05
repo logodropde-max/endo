@@ -503,11 +503,11 @@ float endoZeichen(vec2 p) {
 `;
 const FORM_ZWEIG = `
     } else {
-      // Verwandlung: Metaballs der Vorlage -> endo-Dreieck
+      // Verwandlung im Metall-Feld der Vorlage: drei Tropfen wandern zu den Ecken, flüssige Verbindungen wachsen dazwischen
       vec2 sUV = uv - .5;
       vec2 mUV = sUV * 1.3;
-      vec2 ziel[5] = vec2[5](vec2(0., -.2), vec2(.1732, .1), vec2(-.1732, .1), vec2(0., .1), vec2(0., -.03));
-      float zug = smoothstep(0., .75, u_morph);
+      vec2 ecke[3] = vec2[3](vec2(0., -.3), vec2(.26, .15), vec2(-.26, .15));
+      float zug = smoothstep(0., .8, u_morph);
       float feld = 0.;
       for (int i = 0; i < 5; i++) {
         float fi = float(i);
@@ -516,13 +516,24 @@ const FORM_ZWEIG = `
         vec2 dir1 = vec2(cos(angle), sin(angle));
         vec2 dir2 = vec2(cos(angle + 1.57), sin(angle + 1.));
         vec2 traj = .4 * (dir1 * sin(t * speed + fi * 1.23) + dir2 * cos(t * (speed * 0.7) + fi * 2.17));
-        vec2 mitte = mix(-traj, ziel[i] * 1.3 * 1.5, zug);
-        feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., .95, zug), 0.0, 1.0), 4.0);
+        if (i < 3) {
+          vec2 ziel = ecke[i] * 1.3 - .025 * traj;
+          vec2 mitte = mix(-traj, ziel, zug);
+          feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., .6, zug), 0.0, 1.0), 4.0);
+        } else {
+          vec2 mitte = mix(-traj, vec2(0.), zug);
+          feld += (1. - zug) * pow(1.0 - clamp(length(mUV - mitte), 0.0, 1.0), 4.0);
+        }
       }
-      float eA = pow(1. - smoothstep(.65, .9, feld), 4.);
-      float dz = endoZeichen(sUV / 1.5) * 1.5;
-      float eB = dz > 0. ? .9 + .1 * clamp(dz * 60., 0., 1.) + .001 : .9 * pow(clamp(1. + dz / .11, 0., 1.), 2.5);
-      edge = mix(eA, eB, smoothstep(.4, 1., u_morph));
+      float steg = smoothstep(.35, 1., u_morph);
+      for (int i = 0; i < 3; i++) {
+        vec2 a = ecke[i] * 1.3, b = ecke[(i + 1) % 3] * 1.3;
+        vec2 pa = mUV - a, ba = b - a;
+        float h = clamp(dot(pa, ba) / dot(ba, ba), 0., 1.);
+        feld += steg * .55 * pow(1.0 - clamp(length(pa - ba * h) * 1.9, 0.0, 1.0), 4.0);
+      }
+      edge = 1. - smoothstep(.65, .9, feld);
+      edge = pow(edge, 4.);
     }
 
     edge = mix(`;
@@ -530,14 +541,14 @@ function shaderMitForm(fs) {
   let s = fs.replace('void main() {', FORM_GLSL + '\nvoid main() {');
   s = s.replace('      edge = pow(edge, 4.);\n    }\n\n    edge = mix(', '      edge = pow(edge, 4.);\n' + FORM_ZWEIG);
   s = s.replace('    } else if (u_shape < 5.) {\n      edge = 1.8 * pow(edge, 1.5);', '    } else {\n      edge = 1.8 * pow(edge, 1.5);');
-  if (s.indexOf('endoZeichen(sUV)') < 0 || s.indexOf('} else {\n      edge = 1.8') < 0) throw new Error('Shader-Erweiterung passt nicht');
+  if (s.indexOf('ecke[3]') < 0 || s.indexOf('} else {\n      edge = 1.8') < 0) throw new Error('Shader-Erweiterung passt nicht');
   return s;
 }
-const GLANZ = { u_repetition: 2.6, u_softness: .04, u_shiftRed: .35, u_shiftBlue: .35, u_distortion: .07, u_contour: .45, u_angle: 70 };
+const GLANZ = { u_repetition: 3, u_softness: .06, u_shiftRed: .3, u_shiftBlue: .3, u_distortion: .07, u_contour: .4, u_angle: 70 };
 let P = null, FS = null;
 function basis() {
   const fit = (P.ShaderFitOptions && P.ShaderFitOptions.contain != null) ? P.ShaderFitOptions.contain : 1;
-  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), ...GLANZ, u_fit: fit, u_scale: .62, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_isImage: false, u_shape: 5, u_morph: 1 };
+  return { u_colorBack: [0, 0, 0, 0], u_colorTint: P.getShaderColorFromString('#FFFFFF'), ...GLANZ, u_fit: fit, u_scale: .6, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0, u_isImage: false, u_shape: 5, u_morph: 1 };
 }
 const setz = (sh, u) => (sh.setUniforms || sh.setUniformValues).call(sh, u);
 const mitPause = (el, sh, v) => { if (!('IntersectionObserver' in window) || !sh.setSpeed) return; new IntersectionObserver(l => l.forEach(x => sh.setSpeed(x.isIntersecting ? v : 0)), { rootMargin: '100px' }).observe(el); };
