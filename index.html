@@ -847,10 +847,8 @@ function logoMalen() {
   const W = zW(), H = zH();
   setz(zeichen, { ...massBei(Math.min(340, W * .8), W / 2, H * .27), u_morph: 1, u_rotation: 0 });
 }
-/* Das Zeichen bleibt dieselbe feste Fläche wie im Intro (kein Wechsel der Positionierung = kein Ruck) und läuft beim Scrollen mit */
 function logoLage() {
   html.classList.toggle('kopf-weg', scrollY > innerHeight * .08);
-  if (Z.dataset.ort === 'hg') { Z.style.transform = `translate3d(0, ${-scrollY}px, 0)`; Z.style.visibility = scrollY > zH() ? 'hidden' : ''; }
 }
 addEventListener('scroll', logoLage, { passive: true });
 
@@ -896,7 +894,7 @@ function tiefeInsTitelbild() {
 function wortBleibt(w) { const top = w.getBoundingClientRect().top + scrollY; w.style.transition = 'none'; w.classList.add('bleibt', 'da'); w.style.top = top + 'px'; document.querySelector('.held').appendChild(w); }
 function introSpielen() {
   const id = ++lauf; let aus = false;
-  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
+  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.style.top = ''; Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
   html.classList.remove('linie-auf'); html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo({ top: 0, left: 0, behavior: 'instant' });
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
@@ -905,7 +903,9 @@ function introSpielen() {
   const fertig = () => { if (aus) return; aus = true;
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
-    Z.dataset.ort = 'hg'; intro.style.display = 'none'; logoMalen(); logoLage();
+    Z.dataset.ort = 'hg'; intro.style.display = 'none';
+    /* Fläche bleibt gleich groß; nur die Verankerung wechselt (oben = gleiche Stelle), danach scrollt sie nativ mit der Seite – kein Nachziehen */
+    Z.style.transform = 'none'; Z.style.top = scrollY + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
     const wort = document.getElementById('intro-wort'); wortBleibt(wort); ['--lx', '--ly', '--ls', '--la'].forEach(v => document.querySelector('.held-licht').style.removeProperty(v));
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
@@ -971,7 +971,7 @@ try {
   window.ENDO_REST = restStarten;
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { wortBleibt(document.getElementById('intro-wort')); Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.style.transform = 'none'; logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { wortBleibt(document.getElementById('intro-wort')); Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.style.transform = 'none'; Z.classList.add('liegt'); logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
