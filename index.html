@@ -229,10 +229,12 @@ html:not(.vor) .held::before{opacity:1}
 .haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
 .haken input{margin-top:3px;accent-color:#DCE4F7}
 .fb__schritt{animation:rein .55s var(--kurve)}
-.fb__schritt.geht{transition:opacity .22s,transform .22s;opacity:0;transform:translateY(-6px)}
+.fb__schritt.geht{transition:opacity .2s;opacity:0}
 .fb__mini{margin:8px 0 8px;font-size:14px;color:var(--grau)}
 .kontaktweg{grid-template-columns:1fr!important}
-@keyframes rein{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes rein{from{opacity:0}to{opacity:1}}
+#fb{display:flex;flex-direction:column}
+#fb .fb__fuss{margin-top:auto;padding-top:26px}
 .paket{font-size:48px;font-weight:500;letter-spacing:-.05em;line-height:1;margin:6px 0 10px}
 .preis{display:flex;gap:26px;margin:18px 0;padding:18px 0;border-top:1px solid rgba(200,215,255,.14);border-bottom:1px solid rgba(200,215,255,.14)}
 .preis b{display:block;font-size:30px;font-weight:500;letter-spacing:-.04em}
@@ -335,6 +337,8 @@ td:first-child{color:var(--grau)}
   .knoten{width:80px;font-size:11.5px}.knoten span.k{width:42px;height:42px}
   .fb__wahl,.fb__wahl.zwei,.andere{grid-template-columns:1fr}
   .fb__wahl.zwei .wahl__ck{position:static}
+  .fb__wahl{gap:7px}.wahl{padding:9px 12px;gap:12px}.wahl__sym{width:36px;height:36px}.wahl__chrom{width:38px!important;height:38px!important}.wahl__txt b{font-size:14.5px}.wahl__txt small{font-size:12px}
+  .fb__frage{font-size:23px}.fb__unter{margin-bottom:14px;font-size:14px}.glas{padding:22px 18px}
   .glas{padding:22px}
   .abschnitt{padding:90px 0}
 }
@@ -564,8 +568,18 @@ function empfehlung(){
 }
 function kopf(){ return '<div class="fb__oben"><span>Schritt ' + Math.min(schritt + 1, 5) + ' von 5</span><span>' + (schritt < 5 ? 'etwa ' + (5 - schritt) * 12 + ' Sekunden' : 'Fertig') + '</span></div><div class="fb__balken">' + S.map(function(_, j){ return '<i class="' + (j < schritt || schritt === 5 ? 'an' : '') + '"></i>'; }).join('') + '</div>'; }
 function sichern(){ ['n','b','e','t'].forEach(function(k){ var el = document.getElementById('f-' + k); if (el) A[4][k] = el.value.trim(); }); var d = document.getElementById('f-d'); if (d) A[4].d = d.checked; }
-function weiterSanft(d){ var st = fb.querySelector('.fb__schritt'); if (!st || ruhig) { schritt += d; zeichne(); return; } st.classList.add('geht'); setTimeout(function(){ schritt += d; zeichne(); var n = fb.getBoundingClientRect(); if (n.top < 0) scrollTo({ top: scrollY + n.top - 90, behavior: 'smooth' }); }, 230); }
-function zeichne(){
+function weiterSanft(d){ var st = fb.querySelector('.fb__schritt'); if (!st || ruhig) { schritt += d; zeichne(); return; } st.classList.add('geht'); setTimeout(function(){ schritt += d; zeichne(); }, 230); }
+var fbHoehe = 0;
+function hoeheMessen(){
+  if (schritt === 5) return; if (S[schritt].form) sichern();
+  var alt = schritt, altA = JSON.stringify(A), max = 0, w = fb.offsetWidth; if (!w) return;
+  var probe = fb.cloneNode(false); probe.removeAttribute('id'); probe.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;min-height:0;width:' + w + 'px';
+  fb.parentNode.appendChild(probe);
+  for (var i = 0; i < S.length; i++) { schritt = i; zeichne(true); probe.innerHTML = fb.innerHTML; max = Math.max(max, probe.offsetHeight); }
+  probe.remove(); schritt = alt; A = JSON.parse(altA); fbHoehe = max; zeichne();
+}
+addEventListener('resize', function(){ clearTimeout(window.__fbr); window.__fbr = setTimeout(hoeheMessen, 200); });
+function zeichne(nurMessen){
   if (A[4].g == null) A[4].g = 0;
   if (schritt === 5){ return ergebnis(); }
   var x = S[schritt], inhalt;
@@ -578,6 +592,8 @@ function zeichne(){
   }
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
+  if (nurMessen) return;
+  fb.style.minHeight = fbHoehe ? fbHoehe + 'px' : '';
   fb.querySelectorAll('[data-j]').forEach(function(b){ b.onclick = function(){ var j = +b.dataset.j;
     if (x.mehr){ var i = A[schritt].indexOf(j); i > -1 ? A[schritt].splice(i, 1) : A[schritt].push(j); b.classList.toggle('an'); document.getElementById('fehler').textContent = ''; }
     else { A[schritt] = [j]; fb.querySelectorAll('[data-j]').forEach(function(o){ o.classList.toggle('an', o === b); }); document.getElementById('fehler').textContent = ''; } }; });
@@ -616,6 +632,7 @@ function senden(fe){
 }
 function alleApps(k){ return PAKETE[k].apps.reduce(function(l, a){ var m = /^Alles aus (\w+)/.exec(a); return l.concat(m ? alleApps(m[1]) : (a.indexOf('Virtuelles Büro') === 0 ? [] : [a])); }, []); }
 function ergebnis(name){
+  fb.style.minHeight = '';
   var emp = empfehlung(), p = name || emp, P = PAKETE[p], gross = A[1][0] === 4;
   var buero = A[0] && A[0].length ? A[0].map(function(j){ return S[0].o[j][1]; }).join(', ') : '';
   fb.innerHTML = kopf() + '<div class="fb__schritt erg">' +
@@ -631,6 +648,7 @@ function ergebnis(name){
   document.getElementById('neu').onclick = function(e){ e.preventDefault(); schritt = 0; A = [[], [], [], [], {}]; zeichne(); };
 }
 zeichne();
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ setTimeout(hoeheMessen, 50); });
 
 /* ---------- Scroll-Animationen ---------- */
 var io = new IntersectionObserver(function(l){ l.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add('in'); x.target.querySelectorAll('.reihe').forEach(function(r){ r.classList.add('in'); }); io.unobserve(x.target); } }); }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
@@ -786,10 +804,16 @@ try {
     const q = document.createElement('div'); q.setAttribute('aria-hidden', 'true'); q.style.cssText = 'position:fixed;left:0;top:0;width:120px;height:120px;pointer-events:none;opacity:0;z-index:-1';
     document.body.appendChild(q);
     const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
-    new P.ShaderMount(q, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, { preserveDrawingBuffer: true }, .45);
-    (function kopie() { const c = q.querySelector('canvas'), ziele = document.querySelectorAll('.wahl.an .wahl__chrom');
+    const quelle = new P.ShaderMount(q, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, { preserveDrawingBuffer: true }, .45);
+    let fbSicht = false; new IntersectionObserver(l => { fbSicht = l[0].isIntersecting; }).observe(document.getElementById('fb'));
+    let letzt = 0, lief = true;
+    (function kopie(t) { requestAnimationFrame(kopie);
+      const ziele = fbSicht ? document.querySelectorAll('.wahl.an .wahl__chrom') : [];
+      const an = ziele.length > 0; if (an !== lief) { lief = an; quelle.setSpeed && quelle.setSpeed(an ? .45 : 0); }
+      if (!an || t - letzt < 33) return; letzt = t;
+      const c = q.querySelector('canvas');
       if (c && c.width) ziele.forEach(z => { const g = z.getContext('2d'); g.clearRect(0, 0, z.width, z.height); g.drawImage(c, 0, 0, z.width, z.height); });
-      requestAnimationFrame(kopie); })();
+    })(0);
   } catch (e) { console.warn('Chrom-Quelle:', e); }
   [['kontakt-sh', .5]].forEach(([id, v]) => { try { const el = document.getElementById(id), d = document.createElement('div'); el.appendChild(d); const m = new P.ShaderMount(d, FS, basis(), undefined, v); mitPause(el, m, v); } catch (e) { console.warn(e); } });
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
