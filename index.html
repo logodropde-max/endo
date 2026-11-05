@@ -886,7 +886,7 @@ function wortBleibt(w) { const top = w.getBoundingClientRect().top + scrollY; w.
 function introSpielen() {
   const id = ++lauf; let aus = false;
   const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
-  html.classList.remove('linie-auf'); html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
+  html.classList.remove('linie-auf'); html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo({ top: 0, left: 0, behavior: 'instant' });
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
   if (ruhe) ruhe(true);
@@ -902,7 +902,7 @@ function introSpielen() {
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
   const licht = document.querySelector('.held-licht');
-  const t0 = performance.now(), wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da', 'bleibt'); wort.style.top = ''; if (wort.parentNode !== document.body) document.body.insertBefore(wort, intro.nextSibling);
+  let t0 = performance.now() + 1e9; const wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da', 'bleibt'); wort.style.top = ''; if (wort.parentNode !== document.body) document.body.insertBefore(wort, intro.nextSibling);
   const tick = () => {
     if (id !== lauf) return;
     const e = (performance.now() - t0) / 1000;
@@ -919,7 +919,7 @@ function introSpielen() {
     if (e > 4.0 && !aus) fertig();
     if (e < 4.1) requestAnimationFrame(tick); else setz(zeichen, { ...vollMass(), u_morph: 1 });
   };
-  requestAnimationFrame(tick);
+  requestAnimationFrame(() => requestAnimationFrame(() => { t0 = performance.now(); requestAnimationFrame(tick); }));
 }
 try {
   P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
