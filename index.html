@@ -70,6 +70,8 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .held__knoepfe{display:flex;gap:12px;flex-wrap:wrap}
 .held__logo{position:relative;aspect-ratio:1;width:100%;max-width:620px;justify-self:end}
 .held__logo canvas{position:absolute;inset:-12%;width:124%;height:124%}
+.held .zeile>span,.held .hebt{transform:none!important;opacity:0;filter:blur(14px);transition:opacity 1.3s cubic-bezier(.4,0,.2,1),filter 1.5s cubic-bezier(.4,0,.2,1)!important}
+#held-text.in .zeile>span,.held .hebt.in{opacity:1;filter:blur(0)}
 .hebt{opacity:0;transform:translateY(22px);transition:opacity 1s var(--kurve),transform 1s var(--kurve)}
 .in .hebt,.hebt.in{opacity:1;transform:none}
 .scroll-hinweis{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:1px;height:46px;background:linear-gradient(transparent,rgba(200,215,255,.6));overflow:hidden}
@@ -274,8 +276,10 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .zeichen-fix.ohne-shader>div{display:none}
 /* kein Leuchten hinter dem Zeichen */
 .zeichen-fix::after{display:none;content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
-#marke-platz{display:none;width:44px;height:44px;flex:none;transition:width .45s var(--kurve)}
-.gerollt #marke-platz{width:0}
+#marke-platz{display:inline-block;position:relative;width:30px;height:30px;margin-right:2px;flex:none;transition:width .45s var(--kurve)}
+.gerollt #marke-platz{width:30px}
+.kontakt-z{position:relative;display:inline-block;width:.9em;height:.9em;vertical-align:-.08em;margin-right:.18em}
+.kontakt-z>div,#marke-platz>div{position:absolute;inset:-12%}
 .zeichen-fix.im-menue{transition:opacity .45s var(--kurve)}
 .zeichen-fix.im-menue.versteckt{opacity:0!important;pointer-events:none}
 /* High-Tech-Hintergrund: Punktraster, perspektivischer Boden, Lichtkegel, Lichtstreifen */
@@ -296,7 +300,8 @@ main,.fuss{position:relative;z-index:1}
 .held{transition:opacity 1.3s var(--kurve)}
 .vor .held,.vor .kopf__in>*:not(.marke){opacity:0}
 .ohne-intro .intro{display:none}
-.vor .marke b{opacity:0}
+.vor .marke b,.vor #marke-platz{opacity:0}
+#marke-platz{transition:opacity 1.2s}
 .marke b,.kopf__in>*{transition:opacity 1s var(--kurve)}
 .vorschau{position:fixed;left:14px;bottom:14px;z-index:60;font-size:12px;color:var(--grau);background:rgba(8,12,23,.7);backdrop-filter:blur(10px);padding:6px 12px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(200,215,255,.14)}
 /* Dialog */
@@ -380,7 +385,7 @@ td:first-child{color:var(--grau)}
 <section class="abschnitt" id="kontakt" style="padding-top:60px"><div class="hg-chrom" style="left:50%;transform:translateX(-50%)" aria-hidden="true"><div data-tropfen></div></div>
   <div class="wrap beob">
     <span class="label">Kontakt</span>
-    <h2><span class="zeile"><span>Lieber <span class="chrom">direkt</span>?</span></span></h2>
+    <h2><span class="zeile"><span><span class="kontakt-z" id="kontakt-sh" aria-hidden="true"></span>Lieber <span class="chrom">direkt</span>?</span></span></h2>
     <p class="satz hebt" style="margin-top:16px">Antwort innerhalb von 24 Stunden.</p>
     <div class="wege">
       <a class="kante reihe" href="https://wa.me/4915906344961"><div class="karte"><span class="zeichen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10c.5 2 2.5 4 5 5l1.2-1.4 2 .8"/></svg></span><h3>WhatsApp</h3><small>+49 1590 6344961</small></div></a>
@@ -770,6 +775,7 @@ try {
       if (c && c.width) ziele.forEach(z => { const g = z.getContext('2d'); g.clearRect(0, 0, z.width, z.height); g.drawImage(c, 0, 0, z.width, z.height); });
       requestAnimationFrame(kopie); })();
   } catch (e) { console.warn('Chrom-Quelle:', e); }
+  [['marke-platz', .5], ['kontakt-sh', .5]].forEach(([id, v]) => { try { const el = document.getElementById(id), d = document.createElement('div'); el.appendChild(d); const m = new P.ShaderMount(d, FS, basis(), undefined, v); mitPause(el, m, v); } catch (e) { console.warn(e); } });
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.2 }, undefined, .35); mitPause(el, tr, .35); } catch (e) { console.warn(e); } });
   document.querySelectorAll('[data-fbt]').forEach(el => { try {
