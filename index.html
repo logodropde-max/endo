@@ -222,7 +222,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erst__kopf p{color:rgba(232,236,245,.7);margin:14px 0 0}
 .glas{max-width:620px;margin:0 auto;border-radius:28px;padding:30px;background:rgba(8,12,23,.58);-webkit-backdrop-filter:blur(22px) saturate(1.35);backdrop-filter:blur(22px) saturate(1.35);box-shadow:inset 0 0 0 1px rgba(200,215,255,.22),inset 0 1px 0 rgba(255,255,255,.16),0 40px 90px -30px rgba(0,0,0,.9)}
 .fb__oben{display:flex;justify-content:space-between;font-size:13px;color:var(--grau);margin-bottom:10px}
-.fb__balken{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:28px}
+.fb__balken{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin-bottom:24px}
 .fb__balken i{height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden;position:relative}
 .fb__balken i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#8E939E,#FFFFFF);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--kurve)}
 .fb__balken i.an::after{transform:none}
@@ -249,13 +249,16 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .wahl>svg{width:22px;height:22px;flex:none;opacity:.85}
 .fb__wahl.zwei .wahl{padding:12px}
 .fb__wahl.zwei .wahl__ck{position:absolute;top:10px;right:10px}
-.fb__fuss{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+.fb__fuss{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .zurueck{background:none;border:0;color:var(--grau);font:400 14px Geist,sans-serif;cursor:pointer;padding:8px 4px}
-.fehler{color:#FFB4A8;font-size:14px;min-height:20px;margin-top:12px}
+.fehler{color:#FFB4A8;font-size:14px;margin-top:8px}
+.fehler:empty{display:none}
 .feld{width:100%;background:rgba(255,255,255,.05);border:0;box-shadow:inset 0 0 0 1px rgba(220,230,255,.24);border-radius:14px;color:#fff;padding:14px 15px;font:400 15px Geist,sans-serif;margin-bottom:10px;outline:none;transition:box-shadow .2s}
 .feld:focus{box-shadow:inset 0 0 0 1.5px rgba(235,242,255,.85)}
 .feld::placeholder{color:rgba(232,236,245,.45)}
-.haken{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--grau);margin-top:6px;cursor:pointer}
+.haken{display:flex;gap:12px;align-items:center;font-size:12.5px;line-height:1.45;color:var(--grau);margin-top:10px;cursor:pointer;padding:12px 14px;border-radius:16px;border:1px solid transparent;background:linear-gradient(#0a0b0f,#0a0b0f) padding-box,linear-gradient(140deg,rgba(255,255,255,.28),rgba(255,255,255,.05) 45%,rgba(255,255,255,.18)) border-box;transition:background .5s,color .4s}
+.haken:has(input:checked){color:#D4D7DE;background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),#0a0b0f 60%) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
+.ok-paket{margin:18px 0 0;font-size:15px;opacity:0;animation:rein .8s ease 1.3s forwards}
 .haken input{-webkit-appearance:none;appearance:none;flex:none;width:24px;height:24px;margin:0;border-radius:50%;cursor:pointer;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;transition:transform .3s cubic-bezier(.2,.7,.1,1)}
 .haken input:checked{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m5.4 10.4 3 3L14.8 7' fill='none' stroke='%230b0c10' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/78% no-repeat,radial-gradient(circle at 34% 28%,#fff,#E6E8EC 25%,#9EA3AE 60%,#5F646F 100%);border-color:transparent;transform:scale(1.06)}
 .haken input:focus-visible{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
@@ -267,7 +270,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 @media (max-width:900px){.kontaktweg .wahl__txt small{display:none}.kontaktweg .wahl{padding:10px 12px}}
 @keyframes rein{from{opacity:0}to{opacity:1}}
 #fb{display:flex;flex-direction:column}
-#fb .fb__fuss{padding-top:22px}
+#fb .fb__fuss{padding-top:6px}
 #fb.gleitet{overflow:hidden;transition:height .45s cubic-bezier(.33,0,.2,1)}
 .paket{font-size:48px;font-weight:500;letter-spacing:-.05em;line-height:1;margin:6px 0 10px}
 .preis{display:flex;gap:26px;margin:18px 0;padding:18px 0;border-top:1px solid rgba(200,215,255,.14);border-bottom:1px solid rgba(200,215,255,.14)}
@@ -295,7 +298,7 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erg__weiter{list-style:none;margin:0;padding:0;display:grid;gap:9px;counter-reset:w}
 .erg__weiter li{position:relative;padding-left:34px;font-size:15px;color:#C9CDD6;counter-increment:w}
 .erg__weiter li::before{content:counter(w);position:absolute;left:0;top:-1px;width:22px;height:22px;box-sizing:border-box;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box}
-.ok-panel{display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px 10px;transition:opacity .4s}
+.ok-panel{display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 10px 20px;transition:opacity .4s}
 .ok-panel.geht{opacity:0}
 .ok-ring{width:76px;height:76px;margin-bottom:22px}
 .ok-kreis{stroke-dasharray:170;stroke-dashoffset:170;animation:okZeichnen 1s cubic-bezier(.65,0,.35,1) forwards;transform-origin:center;transform:rotate(-90deg)}
@@ -657,7 +660,7 @@ var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['chat', 'Whats
 var VIEWS = [
   { s: 0, nur: [0, 2, 5, 6], q: 'Was soll endo bei Kunden und Verkauf übernehmen?', u: 'Mehrere möglich. Gleich danach geht es um die Organisation.' },
   { s: 0, nur: [1, 3, 4, 7], q: 'Und bei der Organisation?', u: 'Mehrere möglich. Ihr virtuelles Büro zeigt später genau diese Bereiche live.', pruef: true },
-  { s: 1 }, { s: 2 }, { s: 3 }, { s: 4 }
+  { s: 1 }, { s: 2 }, { s: 3 }, { paket: true }, { s: 4 }
 ], ENDE = VIEWS.length;
 var fb = document.getElementById('fb'), schritt = 0, A = [[], [], [], [], {}];
 function empfehlung(){
@@ -684,8 +687,9 @@ function hoeheMessen(){
 }
 function zeichne(nurMessen){
   if (A[4].g == null) A[4].g = 0;
-  if (schritt === ENDE){ return ergebnis(); }
-  var V = VIEWS[schritt], ai = V.s, B = S[ai], x = { q: V.q || B.q, u: V.u || B.u, mehr: B.mehr, form: B.form, o: B.o }, liste = V.nur || (B.o || []).map(function(_, j){ return j; }), inhalt;
+  if (schritt === ENDE){ return; }
+  if (VIEWS[schritt].paket){ if (!nurMessen) ergebnis(A[4].paket); return; }
+  var V = VIEWS[schritt], ai = V.s, B = S[ai], x = { q: V.q || B.q, u: B.form ? 'Ihr Paket: endo ' + (A[4].paket || empfehlung()) + '. Wir melden uns innerhalb von 24 Stunden.' : (V.u || B.u), mehr: B.mehr, form: B.form, o: B.o }, liste = V.nur || (B.o || []).map(function(_, j){ return j; }), inhalt;
   if (x.form){
     inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '">' +
       '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg zwei-weg" style="margin:0 0 10px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
@@ -719,10 +723,10 @@ function zeichne(nurMessen){
 }
 var API = /endo-ergun\.vercel\.app$/.test(location.host) ? '/api/support' : 'https://endo-ergun.vercel.app/api/support';
 function gesendetZeigen(){
-  fb.style.minHeight = fb.offsetHeight + 'px';
+  fb.style.minHeight = '';
   fb.innerHTML = '<div class="fb__schritt ok-panel"><svg class="ok-ring" viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="okh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9BEC8"/><stop offset=".7" stop-color="#6F7480"/><stop offset="1" stop-color="#F1F2F5"/></linearGradient><linearGradient id="okg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#7E8491"/><stop offset=".55" stop-color="#24272E"/><stop offset=".8" stop-color="#C8CCD4"/><stop offset="1" stop-color="#E6E8EC"/></linearGradient></defs><circle cx="30" cy="30" r="27" fill="none" stroke="url(#okg)" stroke-width="1.6" class="ok-kreis"/><path d="m19 30.5 7.5 7.5L42 22.5" fill="none" stroke="url(#okh)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ok-haken"/></svg>' +
-    '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. ' + (A[4].g === 1 ? 'Wir melden uns per WhatsApp' : 'Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns') + ' innerhalb von 24 Stunden.</p></div>';
-  setTimeout(function(){ var p = fb.querySelector('.ok-panel'); if (p) p.classList.add('geht'); setTimeout(function(){ fb.style.minHeight = ''; schritt = ENDE; zeichne(); }, 450); }, 2600);
+    '<p class="ok-titel">Ihre Anfrage ist <span class="chrom">angekommen</span></p><p class="ok-text">Danke, ' + (A[4].n || '').split(' ')[0] + '. ' + (A[4].g === 1 ? 'Wir melden uns per WhatsApp' : 'Eine Bestätigung geht an ' + (A[4].e || 'Ihre E-Mail') + '. Wir melden uns') + ' innerhalb von 24 Stunden.</p><p class="ok-paket">Ihr Paket: endo <span class="chrom">' + (A[4].paket || empfehlung()) + '</span></p></div>';
+  schritt = ENDE;
 }
 function fehlerZeigen(fe, text){
   var knopf = document.getElementById('weiter'); knopf.disabled = false; knopf.firstChild.textContent = 'Erneut senden ';
@@ -731,8 +735,8 @@ function fehlerZeigen(fe, text){
 function senden(fe){
   var knopf = document.getElementById('weiter'); knopf.disabled = true; knopf.firstChild.textContent = 'Wird gesendet … ';
   var w = function(i, liste){ return (liste || []).map(function(j){ return S[i].o[j][1]; }).join(', '); };
-  var emp = empfehlung();
-  var text = '[endo Erstgespräch] · Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nEmpfohlen: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
+  var emp = A[4].paket || empfehlung();
+  var text = '[endo Erstgespräch] · Fragebogen\nBereiche: ' + w(0, A[0]) + '\nPersonen: ' + w(1, A[1]) + '\nHeute: ' + w(2, A[2]) + '\nStart: ' + w(3, A[3]) + '\nMelden per: ' + KONTAKT[A[4].g][1] + '\nGewähltes Paket: endo ' + emp + ' (' + PAKETE[emp].e + ' + ' + PAKETE[emp].m + ' im Monat, netto)';
   var wa = A[4].g === 1; var daten = { name: A[4].n, weg: wa ? 'whatsapp' : 'mail', email: wa ? '' : (A[4].e || '').toLowerCase(), tel: wa ? (A[4].t || '') : '', firma: A[4].b, quelle: 'fragebogen', bereich: w(0, A[0]), branchen: w(2, A[2]), nachricht: text, datenschutz: true, webseite: '' };
   fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
@@ -742,7 +746,7 @@ function senden(fe){
 function alleApps(k){ return PAKETE[k].apps.reduce(function(l, a){ var m = /^Alles aus (\w+)/.exec(a); return l.concat(m ? alleApps(m[1]) : (a.indexOf('Virtuelles Büro') === 0 ? [] : [a])); }, []); }
 function ergebnis(name){
   fb.style.minHeight = '';
-  var emp = empfehlung(), p = name || emp, P = PAKETE[p], gross = A[1][0] === 4;
+  var emp = empfehlung(), p = name || emp; A[4].paket = p; var P = PAKETE[p], gross = A[1][0] === 4;
   var buero = A[0] && A[0].length ? A[0].map(function(j){ return S[0].o[j][1]; }).join(', ') : '';
   fb.innerHTML = kopf() + '<div class="fb__schritt erg">' +
     '<div class="erg__wahl" role="tablist" aria-label="Pakete">' + Object.keys(PAKETE).map(function(k){ return '<button type="button" role="tab" aria-selected="' + (k === p) + '" class="' + (k === p ? 'an' : '') + '" data-p="' + k + '">' + k + (k === emp ? '<i>Empfohlen</i>' : '') + '</button>'; }).join('') + '</div>' +
@@ -750,11 +754,12 @@ function ergebnis(name){
     '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
     (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
     '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Persönlicher Start: ' + P.einweisung + '</li></ul>' +
-    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Wir melden uns innerhalb von 24 Stunden ' + (A[4].g === 1 ? 'per WhatsApp' : 'per E-Mail') + ' mit einem Terminvorschlag</li></ol>' +
-    '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a> · <a href="#" id="neu">Neu starten</a></p></div>';
+    '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a></p><div class="fehler" id="fehler" role="alert"></div></div>' +
+    '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck">← Zurück</button><button type="button" class="knopf" id="weiter">Mit endo ' + p + ' weiter <span class="pfeil">→</span></button></div>';
+  document.getElementById('zurueck').onclick = function(){ weiterSanft(-1); };
+  document.getElementById('weiter').onclick = function(){ weiterSanft(1); };
   fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
   document.getElementById('was-drin').onclick = function(e){ e.preventDefault(); dialogAuf(); };
-  document.getElementById('neu').onclick = function(e){ e.preventDefault(); schritt = 0; A = [[], [], [], [], {}]; zeichne(); };
 }
 zeichne();
 document.querySelectorAll('.erp-frage').forEach(function(b){ b.onclick = function(){ var i = document.getElementById(b.getAttribute('aria-controls')), auf = !i.classList.contains('auf'); i.classList.toggle('auf', auf); b.setAttribute('aria-expanded', auf); }; });
