@@ -307,6 +307,17 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .ok-titel{font-size:26px;font-weight:500;letter-spacing:-.03em;margin:0 0 10px;opacity:0;animation:rein .8s ease .9s forwards}
 .ok-text{color:var(--grau);font-size:15px;max-width:34ch;margin:0;opacity:0;animation:rein .8s ease 1.1s forwards}
 .fe-wege{display:block;margin-top:6px;color:var(--grau)}.fe-wege a{color:var(--text)}
+.ck{position:relative;display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.35),0 4px 12px -4px rgba(0,0,0,.8)}
+.ck canvas{position:absolute;inset:-12%;width:124%;height:124%}
+.ck svg{position:absolute;inset:0;width:100%;height:100%}.ck path{fill:none;stroke:#0b0c10;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.ck svg{filter:drop-shadow(0 0 1.2px rgba(255,255,255,.95)) drop-shadow(0 0 2.5px rgba(255,255,255,.6))}.ck canvas{filter:saturate(.75) brightness(1.08)}
+.wahl__ck .ck,.haken__box .ck{opacity:0;transform:scale(.4);transition:opacity .35s,transform .5s cubic-bezier(.2,1.4,.4,1)}
+.wahl.an .wahl__ck .ck,.haken input:checked+.haken__box .ck{opacity:1;transform:none}
+.wahl.an .wahl__ck{background:none!important;box-shadow:none!important}
+.haken__box{position:relative;flex:none;width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.35)}
+.haken input{position:absolute!important;opacity:0;width:1px;height:1px;pointer-events:none}
+.haken input:focus-visible+.haken__box{outline:2px solid rgba(255,255,255,.5);outline-offset:2px}
+.erg__liste li{display:flex;align-items:center;gap:12px;padding-left:0!important}.erg__liste li::before{display:none!important}
+.erg__liste li .ck{flex:none;width:22px;height:22px}
 .andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .andere button{text-align:left;padding:14px;border-radius:14px;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,230,255,.18);color:var(--text);font:400 14px Geist,sans-serif;cursor:pointer}
 .andere button b{display:block;font-weight:500;font-size:16px}
@@ -657,6 +668,7 @@ var S = [
 I.chat = '<path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/>';
 var KONTAKT = [['news', 'E-Mail', 'Terminvorschlag per E-Mail'], ['chat', 'WhatsApp', 'Kurz per Nachricht']];
 /* Ansichten: Frage 1 (Bereiche) ist auf zwei kurze Schritte verteilt, die Antworten landen weiter in A[0] */
+var CK = '<span class="ck" aria-hidden="true"><canvas width="96" height="96"></canvas><svg viewBox="0 0 20 20"><path d="m5.6 10.3 2.9 2.9L14.6 7"/></svg></span>';
 var VIEWS = [
   { s: 0, nur: [0, 2, 5, 6], q: 'Was soll endo bei Kunden und Verkauf übernehmen?', u: 'Mehrere möglich. Gleich danach geht es um die Organisation.' },
   { s: 0, nur: [1, 3, 4, 7], q: 'Und bei der Organisation?', u: 'Mehrere möglich. Ihr virtuelles Büro zeigt später genau diese Bereiche live.', pruef: true },
@@ -694,9 +706,9 @@ function zeichne(nurMessen){
     inhalt = '<input class="feld" id="f-n" placeholder="Ihr Name" autocomplete="name" value="' + (A[4].n || '') + '"><input class="feld" id="f-b" placeholder="Firma" autocomplete="organization" value="' + (A[4].b || '') + '">' +
       '<p class="fb__mini">Wie sollen wir uns melden?</p><div class="fb__wahl kontaktweg zwei-weg" style="margin:0 0 10px">' + KONTAKT.map(function(o, j){ return '<button type="button" class="wahl' + (A[4].g === j ? ' an' : '') + '" data-g="' + j + '">' + '<span class="wahl__sym">' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b><small>' + o[2] + '</small></span></button>'; }).join('') + '</div>' +
       '<input class="feld" id="f-e" type="email" placeholder="name@firma.de" autocomplete="email" value="' + (A[4].e || '') + '"' + (A[4].g === 1 ? ' hidden' : '') + '><input class="feld" id="f-t" type="tel" placeholder="Ihre WhatsApp-Nummer" autocomplete="tel" value="' + (A[4].t || '') + '"' + (A[4].g === 1 ? '' : ' hidden') + '>' +
-      '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
+      '<label class="haken"><input type="checkbox" id="f-d"' + (A[4].d ? ' checked' : '') + '><i class="haken__box">' + CK + '</i> Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben für die Rückmeldung gespeichert werden.</label>';
   } else {
-    inhalt = '<div class="fb__wahl' + (liste.length > 5 ? ' zwei' : '') + '">' + liste.map(function(j){ var o = x.o[j]; return '<button type="button" class="wahl' + (A[ai].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck"></i>' : '') + '</button>'; }).join('') + '</div>';
+    inhalt = '<div class="fb__wahl' + (liste.length > 5 ? ' zwei' : '') + '">' + liste.map(function(j){ var o = x.o[j]; return '<button type="button" class="wahl' + (A[ai].indexOf(j) > -1 ? ' an' : '') + '" data-j="' + j + '"><span class="wahl__sym"><canvas class="wahl__chrom" width="120" height="120" aria-hidden="true"></canvas>' + svg(I[o[0]]) + '</span><span class="wahl__txt"><b>' + o[1] + '</b>' + (o[2] ? '<small>' + o[2] + '</small>' : '') + '</span>' + (x.mehr ? '<i class="wahl__ck">' + CK + '</i>' : '') + '</button>'; }).join('') + '</div>';
   }
   fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__frage">' + x.q + '</p><p class="fb__unter">' + x.u + '</p>' + inhalt + '<div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck" style="visibility:' + (schritt ? 'visible' : 'hidden') + '">← Zurück</button><button type="button" class="knopf" id="weiter">' + (x.form ? 'Erstgespräch anfragen' : 'Weiter') + ' <span class="pfeil">→</span></button></div>';
@@ -753,7 +765,7 @@ function ergebnis(name){
     '<p class="erg__label">' + (p === emp ? 'Unsere Empfehlung für Sie' : 'Paket') + '</p><p class="paket">endo <span class="chrom">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
     '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
     (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
-    '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Persönlicher Start: ' + P.einweisung + '</li></ul>' +
+    '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).concat(['Eingerichtet für ' + P.nutzer + ' Nutzer', 'Datenumzug: ' + P.umzug, 'Persönlicher Start: ' + P.einweisung]).map(function(a){ return '<li>' + CK + a + '</li>'; }).join('') + '</ul>' +
     '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a></p><div class="fehler" id="fehler" role="alert"></div></div>' +
     '<div class="fb__fuss"><button type="button" class="zurueck" id="zurueck">← Zurück</button><button type="button" class="knopf" id="weiter">Mit endo ' + p + ' weiter <span class="pfeil">→</span></button></div>';
   document.getElementById('zurueck').onclick = function(){ weiterSanft(-1); };
@@ -1000,7 +1012,7 @@ try {
     quelle = new P.ShaderMount(qEl, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, { preserveDrawingBuffer: true }, .45);
     return { dispose: () => { quelle.dispose(); qEl.remove(); quelle = null; } }; });
   (function kopie(t) { requestAnimationFrame(kopie); if (!quelle || t - letzt < 33) return;
-    const ziele = document.querySelectorAll('.wahl.an .wahl__chrom'); if (!ziele.length) return; letzt = t;
+    const ziele = document.querySelectorAll('.wahl.an .wahl__chrom, .wahl.an .ck canvas, .haken input:checked + .haken__box canvas, .erg__liste .ck canvas'); if (!ziele.length) return; letzt = t;
     const c = qEl.querySelector('canvas'); if (c && c.width) ziele.forEach(z => { const g = z.getContext('2d'); g.clearRect(0, 0, z.width, z.height); g.drawImage(c, 0, 0, z.width, z.height); });
   })(0);
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
