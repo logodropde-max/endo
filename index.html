@@ -100,7 +100,7 @@ html:not(.vor) .held::before{opacity:1}
 .kante>*{position:relative}
 .fuss-z{position:relative;display:inline-block;width:38px;height:38px;vertical-align:-13px;margin-right:4px}
 .fuss-z.an>svg{display:none}
-.held-zeichen{position:absolute;left:50%;top:27vh;top:27svh;width:min(210px,50vw);aspect-ratio:1;transform:translate(-50%,-50%);opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.held-zeichen{position:absolute;left:50%;top:27vh;top:27svh;width:min(340px,80vw);aspect-ratio:1;transform:translate(-50%,-50%);opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);pointer-events:none}
 .held h1,.held .satz,.held .pille{filter:drop-shadow(0 0 14px rgba(0,0,0,.65)) drop-shadow(0 0 2px rgba(0,0,0,.5))}
 .held-zeichen.da{opacity:1}
 .held-zeichen>div{position:absolute;inset:0}
@@ -278,7 +278,7 @@ html:not(.vor) .held::before{opacity:1}
 .intro.raus{opacity:0;pointer-events:none}
 .intro__weg{position:absolute;right:22px;bottom:20px;background:rgba(255,255,255,.06);border:0;box-shadow:inset 0 0 0 1px rgba(200,215,255,.2);color:var(--grau);border-radius:999px;padding:8px 14px;font:400 13px Geist,sans-serif;cursor:pointer;opacity:0;transition:opacity .6s .8s}
 .intro.laeuft .intro__weg{opacity:1}
-.zeichen-fix{--g:min(210px,50vw);position:fixed;z-index:110;left:50%;top:27%;width:var(--g);height:var(--g);margin:calc(var(--g) / -2) 0 0 calc(var(--g) / -2);display:block;will-change:transform,opacity,filter;transform-origin:50% 50%;transition:transform 1.9s cubic-bezier(.45,0,.12,1)}
+.zeichen-fix{--g:min(340px,80vw);position:fixed;z-index:110;left:50%;top:27%;width:var(--g);height:var(--g);margin:calc(var(--g) / -2) 0 0 calc(var(--g) / -2);display:block;will-change:transform,opacity,filter;transform-origin:50% 50%;transition:transform 1.9s cubic-bezier(.45,0,.12,1)}
 .zeichen-fix.sofort{transition:none}
 .zeichen-fix>div{position:absolute;inset:0}
 .zeichen-fix .fest{display:none;position:absolute;inset:14%}
@@ -288,6 +288,8 @@ html:not(.vor) .held::before{opacity:1}
 .zeichen-fix::after{display:none;content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.22),transparent 55%);mix-blend-mode:screen;pointer-events:none;opacity:var(--glanz,0);transition:opacity .8s}
 #marke-platz{display:inline-block;position:relative;width:30px;height:30px;margin-right:2px;flex:none;transition:width .45s var(--kurve)}
 .gerollt #marke-platz{width:30px}
+.kopf .marke{display:none}
+.kopf__in{justify-content:flex-end}
 .kontakt-z{position:relative;display:inline-block;width:.9em;height:.9em;vertical-align:-.08em;margin-right:.18em}
 .kontakt-z>div,#marke-platz>div{position:absolute;inset:-12%}
 .zeichen-fix.im-menue{transition:opacity .45s var(--kurve)}
@@ -766,12 +768,12 @@ function introSpielen() {
 try {
   P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders/+esm');
   FS = shaderMitForm(P.liquidMetalFragmentShader);
-  zeichen = new P.ShaderMount(zsh, FS, basis(), undefined, .7);
+  zeichen = new P.ShaderMount(zsh, FS, { ...basis(), u_scale: .372 }, undefined, .7);
   mitPause(document.getElementById('held-sh'), zeichen, .7);
   const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   try { const fz = document.getElementById('fuss-sh'), fuss = new P.ShaderMount(fz, FS, basis(), undefined, .7); fz.classList.add('an'); mitPause(fz, fuss, .7); } catch (e) { console.warn(e); }
-  if (html.classList.contains('ohne-intro')) try { const hz = document.getElementById('held-sh'), held = new P.ShaderMount(hz, FS, basis(), undefined, .4); mitPause(hz, held, .4); } catch (e) { console.warn(e); }
+  if (html.classList.contains('ohne-intro')) try { const hz = document.getElementById('held-sh'), held = new P.ShaderMount(hz, FS, { ...basis(), u_scale: .372 }, undefined, .4); mitPause(hz, held, .4); } catch (e) { console.warn(e); }
   document.querySelectorAll('[data-sym]').forEach(el => { try {
     const kugel = (P.LiquidMetalShapes && P.LiquidMetalShapes.circle != null) ? P.LiquidMetalShapes.circle : 1;
     const t = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_shape: kugel, u_scale: 1 }, undefined, .4); mitPause(el, t, .4); el.parentNode.classList.add('an');
@@ -785,7 +787,7 @@ try {
       if (c && c.width) ziele.forEach(z => { const g = z.getContext('2d'); g.clearRect(0, 0, z.width, z.height); g.drawImage(c, 0, 0, z.width, z.height); });
       requestAnimationFrame(kopie); })();
   } catch (e) { console.warn('Chrom-Quelle:', e); }
-  [['marke-platz', .5], ['kontakt-sh', .5]].forEach(([id, v]) => { try { const el = document.getElementById(id), d = document.createElement('div'); el.appendChild(d); const m = new P.ShaderMount(d, FS, basis(), undefined, v); mitPause(el, m, v); } catch (e) { console.warn(e); } });
+  [['kontakt-sh', .5]].forEach(([id, v]) => { try { const el = document.getElementById(id), d = document.createElement('div'); el.appendChild(d); const m = new P.ShaderMount(d, FS, basis(), undefined, v); mitPause(el, m, v); } catch (e) { console.warn(e); } });
   window.ENDO_P = P; window.ENDO_FS = FS; window.ENDO_BASIS = basis;
   document.querySelectorAll('[data-tropfen]').forEach(el => { try { const tr = new P.ShaderMount(el, P.liquidMetalFragmentShader, { ...basis(), u_colorTint: P.getShaderColorFromString('#DCE6FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.2 }, undefined, .35); mitPause(el, tr, .35); } catch (e) { console.warn(e); } });
   document.querySelectorAll('[data-fbt]').forEach(el => { try {
