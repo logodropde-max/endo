@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--grund:#04060C;--flaeche:#080C17;--text:#E8ECF5;--grau:#8A93A8;--hell:#F4F7FF;--kurve:cubic-bezier(.2,.7,.1,1);--chrom:linear-gradient(100deg,#8C95A8 0%,#F4F7FF 30%,#9FB3E8 45%,#FFFFFF 52%,#6F7C99 70%,#DCE4F7 100%)}
+:root{--grund:#000;--flaeche:#07090F;--text:#E8ECF5;--grau:#8A93A8;--hell:#F4F7FF;--kurve:cubic-bezier(.2,.7,.1,1);--chrom:linear-gradient(100deg,#8C95A8 0%,#F4F7FF 30%,#9FB3E8 45%,#FFFFFF 52%,#6F7C99 70%,#DCE4F7 100%)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--grund)}
 body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
@@ -200,7 +200,10 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .tech__streif{position:absolute;inset:0;background:linear-gradient(100deg,transparent 40%,rgba(190,210,255,.05) 50%,transparent 60%);background-size:250% 100%;animation:streif 7s ease-in-out infinite;-webkit-mask-image:radial-gradient(rgba(0,0,0,1) 1px,transparent 1.6px);mask-image:radial-gradient(#000 1px,transparent 1.6px);-webkit-mask-size:26px 26px;mask-size:26px 26px}
 @keyframes streif{0%{background-position:120% 0}60%,100%{background-position:-20% 0}}
 main,.fuss{position:relative;z-index:1}
-.abschnitt,.fuss{background:linear-gradient(rgba(4,6,12,.86),rgba(4,6,12,.86))}
+.abschnitt,.fuss{background:transparent}
+.sterne{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .6s linear}
+.horizont{position:absolute;left:0;right:0;bottom:9%;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(200,215,255,.25) 20%,rgba(235,242,255,.85) 50%,rgba(200,215,255,.25) 80%,transparent)}
+.horizont::after{content:"";position:absolute;left:15%;right:15%;top:-60px;height:120px;background:radial-gradient(50% 50% at 50% 50%,rgba(150,175,235,.10),transparent 70%)}
 .held{background:transparent}
 .held{transition:opacity 1.3s var(--kurve)}
 .vor .held,.vor .kopf__in>*:not(.marke){opacity:0}
@@ -235,7 +238,7 @@ td:first-child{color:var(--grau)}
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
-<div class="tech" aria-hidden="true"><div class="tech__punkte"></div><div class="tech__streif"></div></div>
+<canvas class="sterne" id="sterne" aria-hidden="true"></canvas>
 
 <div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
 <a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
@@ -256,7 +259,7 @@ td:first-child{color:var(--grau)}
       <div class="held__knoepfe hebt" style="transition-delay:.7s"><a class="knopf" href="#fragebogen">Erstgespräch vereinbaren <span class="pfeil">→</span></a><a class="knopf knopf--glas" href="#bereiche">Das nimmt endo ab</a></div>
     </div>
   </div>
-  <span class="scroll-hinweis" aria-hidden="true"></span>
+  <span class="horizont" aria-hidden="true"></span><span class="scroll-hinweis" aria-hidden="true"></span>
 </section>
 
 <div class="wrap"><div class="linie beob"></div></div>
@@ -511,6 +514,33 @@ window.ENDO_HELD = function(){ document.getElementById('held-text').classList.ad
 window.ENDO_HELD_RESET = function(){ document.getElementById('held-text').classList.remove('in'); document.querySelectorAll('.held .hebt').forEach(function(e){ e.classList.remove('in'); }); };
 })();
 </script>
+<script>
+/* Sterne wie früher: wenige Punkte fliegen ganz langsam in 3D nach vorne. Nur oben voll, beim Scrollen leiser; pausiert im Hintergrund-Tab. */
+(function(){
+  var c = document.getElementById('sterne'); if (!c || !c.getContext) return;
+  var x = c.getContext('2d'), ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches, handy = matchMedia('(max-width: 900px)').matches;
+  var d = Math.min(devicePixelRatio || 1, 2), W, H, N = handy ? 90 : 170, S = [];
+  function neu(s, z){ s.x = (Math.random() - .5) * 2; s.y = (Math.random() - .5) * 2; s.z = z == null ? Math.random() : z; return s; }
+  function groesse(){ W = c.width = innerWidth * d; H = c.height = innerHeight * d; }
+  groesse(); addEventListener('resize', groesse);
+  for (var i = 0; i < N; i++) S.push(neu({}));
+  var letzt = performance.now();
+  function malen(ts){
+    var dt = Math.min(50, ts - letzt); letzt = ts;
+    x.clearRect(0, 0, W, H);
+    for (var i = 0; i < S.length; i++){ var s = S[i];
+      if (!ruhig) { s.z -= .000055 * dt; if (s.z <= .02) neu(s, 1); }
+      var k = .2 / s.z, px = W / 2 + s.x * k * W * .5, py = H / 2 + s.y * k * H * .5;
+      if (px < -10 || px > W + 10 || py < -10 || py > H + 10) { if (!ruhig) neu(s, 1); continue; }
+      x.globalAlpha = Math.min(1, (1 - s.z) * 1.25) * .8; x.fillStyle = '#E6ECFF';
+      x.beginPath(); x.arc(px, py, Math.max(.35, (1 - s.z) * 1.5) * d, 0, 6.283); x.fill();
+    }
+    if (!ruhig) requestAnimationFrame(malen);
+  }
+  requestAnimationFrame(malen);
+  addEventListener('scroll', function(){ c.style.opacity = Math.max(.35, 1 - scrollY / innerHeight * .65); }, { passive: true });
+})();
+</script>
 <script type="module">
 /* endo-Zeichen im Original-Liquid-Metal-Shader (Paper Shaders, paper.design – Copyright Lost Coast Labs, Inc.), um eine Form
    „Verwandlung“ erweitert: am Anfang exakt die Metaballs der Vorlage, mit u_morph 0 → 1 ziehen sie sich stufenlos zum endo-Dreieck
@@ -619,7 +649,7 @@ try {
   const mitte = new P.ShaderMount(document.getElementById('mitte-sh'), FS, basis(), undefined, .7);
   mitPause(document.getElementById('mitte-sh'), mitte, .7);
   const fl = document.getElementById('fluss-sh');
-  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#04060C'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.1 }, undefined, .6);
+  const fluss = new P.ShaderMount(fl, P.liquidMetalFragmentShader, { ...basis(), u_colorBack: P.getShaderColorFromString('#000000'), u_colorTint: P.getShaderColorFromString('#C9D8FF'), u_shape: (P.LiquidMetalShapes && P.LiquidMetalShapes.metaballs) || 4, u_scale: 1.1 }, undefined, .6);
   mitPause(fl, fluss, .6);
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
