@@ -785,25 +785,25 @@ const massBei = (gr, cx, cy) => { const W = innerWidth, H = innerHeight, m = Mat
   return r; };
 /* Weg in die Ecke: weich nachgeführt (kein Ruckeln beim Scrollen); unterwegs wird das Zeichen wieder flüssig
    und formt sich in der Ecke erneut zum endo-Dreieck. */
-let logoK = 0, logoZiel = 0, logoLauf = false, logoStart = 0;
+let logoK = 0, logoZiel = 0, logoLauf = false;
 function logoMalen() {
-  const W = innerWidth, H = innerHeight, k = logoK * logoK * (3 - 2 * logoK);
-  const gr0 = Math.min(340, W * .8), gr1 = 84, x0 = W / 2, y0 = H * .27 - (logoK > 0 ? logoStart : Math.min(scrollY, H * .6)), x1 = (W > 900 ? Math.max(28, (W - 1160) / 2 + 14) : 14) + 20, y1 = 36;
-  const fl = Math.sin(Math.PI * Math.min(1, logoK * 1.1));
-  setz(zeichen, { ...massBei(gr0 + (gr1 - gr0) * k, x0 + (x1 - x0) * k, y0 + (y1 - y0) * k), u_morph: 1 - .75 * fl });
+  const W = innerWidth, H = innerHeight, k = logoK * logoK * (3 - 2 * logoK), sy = logoK * H * .5;
+  const gr0 = Math.min(340, W * .8), gr1 = 66, x1 = (W > 900 ? Math.max(24, (W - 1160) / 2) : 4) + 18, y1 = 22;
+  const xa = W / 2, ya = H * .27 - sy;
+  const fl = Math.sin(Math.PI * Math.min(1, logoK * 1.08));
+  setz(zeichen, { ...massBei(gr0 + (gr1 - gr0) * k, xa + (x1 - xa) * k, ya + (y1 - ya) * k), u_morph: 1 - .75 * fl });
 }
 function logoSchritt() {
-  logoK += (logoZiel - logoK) * .085;
-  if (Math.abs(logoZiel - logoK) < .0015) logoK = logoZiel;
+  logoK += (logoZiel - logoK) * .35;
+  if (Math.abs(logoZiel - logoK) < .001) logoK = logoZiel;
   logoMalen();
   if (logoK !== logoZiel) requestAnimationFrame(logoSchritt); else logoLauf = false;
 }
+/* Folgt dem Scrollen direkt: in der ersten halben Bildschirmhöhe wandert das Zeichen ganz nach oben links */
 function logoLage() {
   if (Z.dataset.ort !== 'hg' || !zeichen) return;
-  const neu = scrollY > innerHeight * .08 ? 1 : 0; if (neu === 1 && logoZiel === 0 && logoK === 0) logoStart = Math.min(scrollY, innerHeight * .6); logoZiel = neu;
-  if (!logoLauf && logoK === logoZiel) { logoMalen(); return; }
+  logoZiel = Math.min(1, Math.max(0, scrollY / (innerHeight * .5)));
   if (!logoLauf) { logoLauf = true; requestAnimationFrame(logoSchritt); }
-  else if (logoK === 0) logoMalen();
 }
 addEventListener('scroll', logoLage, { passive: true });
 addEventListener('resize', () => { if (Z.dataset.ort === 'hg' && zeichen) logoMalen(); });
