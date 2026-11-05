@@ -673,8 +673,9 @@ function introSpielen() {
     Z.classList.remove('sofort'); Z.dataset.ort = 'hg';
     Z.style.transition = 'transform 2.4s cubic-bezier(.45,0,.12,1), opacity 2.4s cubic-bezier(.4,0,.2,1)';
     Z.style.transform = `translate(0px, ${dy}px) scale(${zg})`; Z.style.opacity = .13;
-    intro.classList.add('raus'); seiteZeigen();
+    intro.classList.add('raus');
     setTimeout(() => { if (id === lauf) hz.classList.add('da'); }, 1500);
+    setTimeout(() => { if (id === lauf) seiteZeigen(); }, 2300);
     setTimeout(() => { if (id !== lauf) return; intro.style.display = 'none'; Z.style.transition = 'none'; Z.style.opacity = 0; klein(); Z.dataset.ort = 'menue';
       requestAnimationFrame(() => requestAnimationFrame(() => { Z.style.transition = 'opacity 1.1s cubic-bezier(.4,0,.2,1)'; Z.style.opacity = 1; })); }, 2700);
   };
