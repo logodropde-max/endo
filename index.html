@@ -23,6 +23,11 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--grund)}
 html,body{overflow-x:hidden;overscroll-behavior:none;touch-action:pan-y;-webkit-text-size-adjust:100%}
+html,body{max-width:100%}
+.held,.abschnitt,.erst,footer{overflow-x:clip}
+canvas,.intro,.zeichen-fix,.held-zeichen,.hg-chrom,.fb-tropfen,.rad__mitte,.fuss-z{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+body.intro-an{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}
+.intro,.zeichen-fix{pointer-events:none}
 body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 body.intro-an{overflow:hidden}
 a{color:inherit}
@@ -280,6 +285,7 @@ td:first-child{color:var(--grau)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.zeile>span,.hebt,.reihe{transform:none!important;opacity:1!important}.linie{transform:none}}
 </style>
 <script>/* Intro nur beim ersten Besuch */try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r||location.hash)document.documentElement.classList.add('ohne-intro');else document.documentElement.classList.add('vor');}catch(e){document.documentElement.classList.add('vor');}</script>
+<meta http-equiv="Cache-Control" content="no-cache">
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
@@ -716,6 +722,7 @@ try {
 document.getElementById('intro-nochmal').onclick = () => { if (window.ENDO_INTRO) window.ENDO_INTRO(); };
 </script>
 
-<script>['gesturestart','gesturechange'].forEach(function(t){ document.addEventListener(t, function(e){ e.preventDefault(); }, { passive: false }); }); var letzt = 0; document.addEventListener('touchend', function(e){ var n = Date.now(); if (n - letzt < 300 && !e.target.closest('input,textarea,select,button,a')) e.preventDefault(); letzt = n; }, { passive: false });</script>
+<script>document.addEventListener('contextmenu', function(e){ if (document.body.classList.contains('intro-an') || e.target.closest('canvas,.intro')) e.preventDefault(); });
+['gesturestart','gesturechange'].forEach(function(t){ document.addEventListener(t, function(e){ e.preventDefault(); }, { passive: false }); }); var letzt = 0; document.addEventListener('touchend', function(e){ var n = Date.now(); if (n - letzt < 300 && !e.target.closest('input,textarea,select,button,a')) e.preventDefault(); letzt = n; }, { passive: false });</script>
 </body>
 </html>
