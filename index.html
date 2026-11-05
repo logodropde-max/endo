@@ -366,7 +366,10 @@ main,.fuss{position:relative;z-index:1}
 .dlg__kopf{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}.dlg__kopf h2{font-size:clamp(26px,3.4vw,36px);margin-top:8px}
 .dlg__zu{width:40px;height:40px;border-radius:50%;border:1.2px solid transparent;background:linear-gradient(#0c0e13,#0c0e13) padding-box,linear-gradient(140deg,#FFFFFF,#7E8491 30%,#24272E 55%,#C8CCD4 80%,#E6E8EC) border-box;color:var(--text);font-size:20px;cursor:pointer}
 .pk-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
-.pk{padding:26px 4px 6px;border-top:1px solid rgba(255,255,255,.1)}
+.pk{position:relative;padding:30px 4px 6px}
+.pk::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 50%,transparent)}
+.pk::after{content:"";position:absolute;left:15%;right:15%;top:-14px;height:28px;background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.14),transparent 70%);pointer-events:none}
+.pk__fuer{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#C9CDD6}.pk__fuer span{letter-spacing:.02em;text-transform:none;color:var(--grau)}
 .pk__kopf{display:flex;gap:14px;align-items:center}.pk__name{margin:0;font-size:20px;font-weight:500;letter-spacing:-.02em}.pk__satz{margin:4px 0 0;font-size:13px;color:var(--grau);line-height:1.4}
 .pk__preis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 18px;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
 .pk__preis b{display:block;font-size:26px;font-weight:500;letter-spacing:-.04em}.pk__preis span{font-size:12px;color:var(--grau)}
@@ -426,7 +429,7 @@ td:first-child{color:var(--grau)}
   <div class="wrap held__raster">
     <div id="held-text">
       <h1><span class="zeile"><span style="transition-delay:.2s">Ihr Betrieb.</span></span><span class="zeile"><span style="transition-delay:.34s">In <span class="chrom">einem System.</span></span></span></h1>
-      <p class="satz hebt" style="transition-delay:.55s">endo richtet Ihr ERP-System auf Basis von Odoo ein und betreut es danach.</p>
+      <p class="satz hebt" style="transition-delay:.55s">Ein ERP-System für Ihren ganzen Betrieb. Fertig eingerichtet, persönlich betreut.</p>
       <div class="held__knoepfe hebt" style="transition-delay:.7s"><a class="knopf" href="#fragebogen">Erstgespräch vereinbaren <span class="pfeil">→</span></a></div>
       <p class="held__vertrauen">ERP-System  ·  Feste Preise  ·  Persönlich betreut</p>
     </div>
@@ -589,7 +592,8 @@ var PAKETE = {
   Komplett: { e: '5.000 €', m: '249 €', satz: 'Der ganze Betrieb in einem System, mit Kundenservice und Newsletter.', apps: ['Alles aus Business', 'Kundenservice', 'E-Mail-Marketing'], nutzer: 'bis 25', umzug: 'Kontakte, Produkte, offene Aufträge', einweisung: '3 Termine online' }
 };
 document.getElementById('tabelle').innerHTML = ['Start', 'Business', 'Komplett'].map(function(k, i){ var P = PAKETE[k];
-  return '<div class="pk"><div class="pk__kopf"><span class="ring ring--zahl">0' + (i + 1) + '</span><div><p class="pk__name">endo <span class="chrom">' + k + '</span></p><p class="pk__satz">' + P.satz + '</p></div></div>' +
+  var FUER = { Start: 'Für Kleinbetriebe', Business: 'Für den Mittelstand', Komplett: 'Für größere Betriebe' };
+  return '<div class="pk"><p class="pk__fuer">' + FUER[k] + '<span>' + P.nutzer + ' Nutzer</span></p><div class="pk__kopf"><span class="ring ring--zahl">0' + (i + 1) + '</span><div><p class="pk__name">endo <span class="chrom">' + k + '</span></p><p class="pk__satz">' + P.satz + '</p></div></div>' +
     '<div class="pk__preis"><div><b>' + P.m + '</b><span>im Monat</span></div><div><b>' + P.e + '</b><span>einmalig</span></div></div>' +
     '<ul class="pk__liste"><li>Virtuelles Büro – live sehen, was passiert</li>' + alleApps(k).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '</ul>' +
     '<dl class="pk__fakten"><div><dt>Nutzer</dt><dd>' + P.nutzer + '</dd></div><div><dt>Datenumzug</dt><dd>' + P.umzug + '</dd></div><div><dt>Persönlicher Start</dt><dd>' + P.einweisung + '</dd></div></dl></div>'; }).join('');
