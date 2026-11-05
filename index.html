@@ -202,8 +202,8 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 main,.fuss{position:relative;z-index:1}
 .abschnitt,.fuss{background:transparent}
 .sterne{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;transition:opacity .6s linear}
-.horizont{position:absolute;left:0;right:0;bottom:9%;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(200,215,255,.25) 20%,rgba(235,242,255,.85) 50%,rgba(200,215,255,.25) 80%,transparent)}
-.horizont::after{content:"";position:absolute;left:15%;right:15%;top:-60px;height:120px;background:radial-gradient(50% 50% at 50% 50%,rgba(150,175,235,.10),transparent 70%)}
+.horizont{position:absolute;left:0;right:0;bottom:12%;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(200,215,255,.25) 20%,rgba(235,242,255,.85) 50%,rgba(200,215,255,.25) 80%,transparent)}
+.horizont::after{content:"";position:absolute;left:15%;right:15%;top:-60px;height:120px;background:radial-gradient(50% 50% at 50% 50%,rgba(150,175,235,.12),transparent 70%)}
 .held{background:transparent}
 .held{transition:opacity 1.3s var(--kurve)}
 .vor .held,.vor .kopf__in>*:not(.marke){opacity:0}
@@ -238,7 +238,7 @@ td:first-child{color:var(--grau)}
 </head>
 <body>
 <div class="korn" aria-hidden="true"></div>
-<canvas class="sterne" id="sterne" aria-hidden="true"></canvas>
+
 
 <div class="intro" id="intro" aria-hidden="true"><button class="intro__weg" id="intro-weg" type="button">Überspringen</button></div>
 <a class="zeichen-fix sofort" id="zeichen" href="#start" aria-label="endo, zum Anfang" style="opacity:0"><div id="z-sh"></div><svg class="fest" viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zfk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zfl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zfk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zfk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zfk)"/></svg></a>
@@ -512,33 +512,6 @@ addEventListener('scroll', function(){ document.documentElement.classList.toggle
 
 window.ENDO_HELD = function(){ document.getElementById('held-text').classList.add('in'); document.querySelectorAll('.held .hebt').forEach(function(e){ e.classList.add('in'); }); };
 window.ENDO_HELD_RESET = function(){ document.getElementById('held-text').classList.remove('in'); document.querySelectorAll('.held .hebt').forEach(function(e){ e.classList.remove('in'); }); };
-})();
-</script>
-<script>
-/* Sterne wie früher: wenige Punkte fliegen ganz langsam in 3D nach vorne. Nur oben voll, beim Scrollen leiser; pausiert im Hintergrund-Tab. */
-(function(){
-  var c = document.getElementById('sterne'); if (!c || !c.getContext) return;
-  var x = c.getContext('2d'), ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches, handy = matchMedia('(max-width: 900px)').matches;
-  var d = Math.min(devicePixelRatio || 1, 2), W, H, N = handy ? 90 : 170, S = [];
-  function neu(s, z){ s.x = (Math.random() - .5) * 2; s.y = (Math.random() - .5) * 2; s.z = z == null ? Math.random() : z; return s; }
-  function groesse(){ W = c.width = innerWidth * d; H = c.height = innerHeight * d; }
-  groesse(); addEventListener('resize', groesse);
-  for (var i = 0; i < N; i++) S.push(neu({}));
-  var letzt = performance.now();
-  function malen(ts){
-    var dt = Math.min(50, ts - letzt); letzt = ts;
-    x.clearRect(0, 0, W, H);
-    for (var i = 0; i < S.length; i++){ var s = S[i];
-      if (!ruhig) { s.z -= .000055 * dt; if (s.z <= .02) neu(s, 1); }
-      var k = .2 / s.z, px = W / 2 + s.x * k * W * .5, py = H / 2 + s.y * k * H * .5;
-      if (px < -10 || px > W + 10 || py < -10 || py > H + 10) { if (!ruhig) neu(s, 1); continue; }
-      x.globalAlpha = Math.min(1, (1 - s.z) * 1.25) * .8; x.fillStyle = '#E6ECFF';
-      x.beginPath(); x.arc(px, py, Math.max(.35, (1 - s.z) * 1.5) * d, 0, 6.283); x.fill();
-    }
-    if (!ruhig) requestAnimationFrame(malen);
-  }
-  requestAnimationFrame(malen);
-  addEventListener('scroll', function(){ c.style.opacity = Math.max(.35, 1 - scrollY / innerHeight * .65); }, { passive: true });
 })();
 </script>
 <script type="module">
