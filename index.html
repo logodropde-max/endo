@@ -32,7 +32,7 @@ body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.55 Geist
 body.intro-an{overflow:hidden}
 a{color:inherit}
 .korn{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
-.chrom{background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%) no-repeat,linear-gradient(180deg,#FFFFFF 0%,#F1F2F5 30%,#8E939E 50%,#5F646F 56%,#CDD0D7 70%,#FFFFFF 86%,#AEB2BB 100%);background-size:300% 100%,100% 100%;background-position:150% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:glanz 7s cubic-bezier(.4,0,.2,1) infinite}
+.chrom{background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%) no-repeat,linear-gradient(180deg,#FFFFFF 0%,#F1F2F5 30%,#8E939E 50%,#5F646F 56%,#CDD0D7 70%,#FFFFFF 86%,#AEB2BB 100%);background-size:300% 100%,100% 100%;background-position:150% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent}
 @keyframes glanz{0%,55%{background-position:150% 0,0 0}100%{background-position:-50% 0,0 0}}
 .wrap{width:min(1160px,100% - 48px);margin:0 auto}
 /* Kopf */
@@ -89,6 +89,7 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .fuss-z{position:relative;display:inline-block;width:38px;height:38px;vertical-align:-13px;margin-right:4px}
 .fuss-z.an>svg{display:none}
 .held-zeichen{position:absolute;left:50%;top:47vh;top:47svh;width:min(340px,70vw);aspect-ratio:1;transform:translate(-50%,-50%);opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1);pointer-events:none}
+.held h1,.held .satz,.held .pille{filter:drop-shadow(0 0 14px rgba(0,0,0,.65)) drop-shadow(0 0 2px rgba(0,0,0,.5))}
 .held-zeichen.da{opacity:1;filter:blur(3px)}
 .held-zeichen>div{position:absolute;inset:0}
 .held>.wrap{position:relative;z-index:1}
@@ -224,6 +225,25 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .liste{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
 .liste li{display:flex;gap:10px}
 .liste li::before{content:"";flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9aa6be 55%,#3c475e)}
+.erg__wahl{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);margin-bottom:22px}
+.erg__wahl button{flex:1;position:relative;border:0;border-radius:999px;padding:10px 6px;background:none;color:var(--grau);font:500 14px Geist,sans-serif;cursor:pointer;transition:background .3s,color .3s}
+.erg__wahl button.an{background:#F1F2F5;color:#0b0c10}
+.erg__wahl i{position:absolute;left:50%;top:-9px;transform:translateX(-50%);font-style:normal;font-size:10px;letter-spacing:.02em;padding:2px 7px;border-radius:999px;background:#111318;color:#E8EAEE;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);white-space:nowrap}
+.erg__label{margin:0;color:var(--grau);font-size:14px}
+.erg__preise{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0 14px}
+.erg__preise>div{padding:16px;border-radius:16px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.erg__preise b{display:block;font-size:28px;font-weight:500;letter-spacing:-.04em}
+.erg__preise span{font-size:13px;color:var(--grau)}
+.erg__buero{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.07),rgba(255,255,255,.012) 60%);box-shadow:inset 0 0 0 1.2px rgba(255,255,255,.4)}
+.erg__buero b{display:block;font-weight:500;font-size:15px}.erg__buero span{font-size:13px;color:var(--grau)}
+.erg__punkt{width:10px;height:10px;flex:none;border-radius:50%;background:#7CE0A6;box-shadow:0 0 0 4px rgba(124,224,166,.15);animation:puls 2s ease-in-out infinite}
+.erg__titel{margin:22px 0 10px;font-size:13px;color:var(--grau);letter-spacing:.02em}
+.erg__liste{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.erg__liste li{position:relative;padding-left:30px;font-size:15px;line-height:1.4}
+.erg__liste li::before{content:"";position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;background:#111318 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m6 10.2 2.6 2.6L14 7.4' fill='none' stroke='%23F1F2F5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.erg__weiter{list-style:none;margin:0;padding:0;display:grid;gap:9px;counter-reset:w}
+.erg__weiter li{position:relative;padding-left:30px;font-size:15px;color:#C9CDD6;counter-increment:w}
+.erg__weiter li::before{content:counter(w);position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#E8EAEE;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
 .andere{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .andere button{text-align:left;padding:14px;border-radius:14px;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,230,255,.18);color:var(--text);font:400 14px Geist,sans-serif;cursor:pointer}
 .andere button b{display:block;font-weight:500;font-size:16px}
@@ -570,14 +590,18 @@ function senden(fe){
     .then(function(x){ if (x.ok){ schritt = 5; zeichne(); } else { knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = (x.j && (x.j.fehler || x.j.meldung || x.j.error)) || 'Das Senden klappt gerade nicht. Schreiben Sie uns bitte über die Direktwege unten.'; } })
     .catch(function(){ knopf.disabled = false; knopf.firstChild.textContent = 'Erstgespräch anfragen '; fe.textContent = 'Keine Verbindung. Bitte versuchen Sie es gleich noch einmal.'; });
 }
+function alleApps(k){ return PAKETE[k].apps.reduce(function(l, a){ var m = /^Alles aus (\w+)/.exec(a); return l.concat(m ? alleApps(m[1]) : (a.indexOf('Virtuelles Büro') === 0 ? [] : [a])); }, []); }
 function ergebnis(name){
-  var p = name || empfehlung(), P = PAKETE[p], gross = A[1][0] === 4;
-  fb.innerHTML = kopf() + '<div class="fb__schritt"><p class="fb__unter" style="margin:0">' + (name ? 'Paket' : 'Unsere Empfehlung für Sie') + '</p><p class="paket">endo <span class="chrom in">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross && !name ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
-    '<div class="preis"><div><b>' + P.e + '</b><span>Einrichtung einmalig</span></div><div><b>' + P.m + '</b><span>Betreuung im Monat</span></div></div>' +
-    '<ul class="liste">' + P.apps.map(function(a){ return '<li>' + a + '</li>'; }).join('') + (A[0] && A[0].length && !name ? '<li>Ihr virtuelles Büro zeigt live: ' + A[0].map(function(j){ return S[0].o[j][1]; }).join(', ') + '</li>' : '') + '<li>Nutzer ' + P.nutzer + ', Datenumzug: ' + P.umzug + '</li><li>Einweisung ' + P.einweisung + '</li></ul>' +
-    '<div class="andere">' + Object.keys(PAKETE).filter(function(k){ return k !== p; }).map(function(k){ return '<button type="button" data-p="' + k + '"><span style="color:var(--grau);font-size:12px">Zum Vergleich</span><b>endo ' + k + '</b>' + PAKETE[k].e + ' + ' + PAKETE[k].m + ' im Monat</button>'; }).join('') + '</div>' +
-    '<div class="liste" style="margin-top:22px;font-size:14px;color:var(--grau)"><li>Bestätigung ist unterwegs an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Terminvorschlag innerhalb von 24 Stunden</li></div>' +
-    '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Was genau enthalten ist</a> · <a href="#" id="neu">Neu starten</a></p></div>';
+  var emp = empfehlung(), p = name || emp, P = PAKETE[p], gross = A[1][0] === 4;
+  var buero = A[0] && A[0].length ? A[0].map(function(j){ return S[0].o[j][1]; }).join(', ') : '';
+  fb.innerHTML = kopf() + '<div class="fb__schritt erg">' +
+    '<div class="erg__wahl" role="tablist" aria-label="Pakete">' + Object.keys(PAKETE).map(function(k){ return '<button type="button" role="tab" aria-selected="' + (k === p) + '" class="' + (k === p ? 'an' : '') + '" data-p="' + k + '">' + k + (k === emp ? '<i>Empfohlen</i>' : '') + '</button>'; }).join('') + '</div>' +
+    '<p class="erg__label">' + (p === emp ? 'Unsere Empfehlung für Sie' : 'Paket') + '</p><p class="paket">endo <span class="chrom">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
+    '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
+    (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
+    '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Einweisung: ' + P.einweisung + '</li></ul>' +
+    '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Terminvorschlag innerhalb von 24 Stunden</li></ol>' +
+    '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a> · <a href="#" id="neu">Neu starten</a></p></div>';
   fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
   document.getElementById('was-drin').onclick = function(e){ e.preventDefault(); dialogAuf(); };
   document.getElementById('neu').onclick = function(e){ e.preventDefault(); schritt = 0; A = [[], [], [], [], {}]; zeichne(); };
