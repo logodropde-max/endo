@@ -530,7 +530,7 @@ var pk = rad.querySelectorAll('[data-pk]'), fl = rad.querySelectorAll('[data-fl]
 /* ---------- Das machen wir ---------- */
 var SCHRITTE = [
   ['01', 'Einrichten', '<path d="M14.5 6.5a4 4 0 0 0-5 5L4 17l3 3 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z"/>', ['Ihre Abläufe gemeinsam aufnehmen', 'Odoo passend zu Ihrem Betrieb einrichten', 'Kontakte und Daten übernehmen']],
-  ['02', 'Einweisen', '<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6 6 0 0 1 3 5.5"/>', ['Kurze Schulung für Ihr Team', 'Spickzettel zum Nachlesen', 'Fragen direkt klären']],
+  ['02', 'Einweisen', '<circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6 6 0 0 1 3 5.5"/>', ['Persönlicher Start mit Ihrem Team', 'Alles auf Ihre Abläufe zugeschnitten', 'Vom ersten Tag an produktiv']],
   ['03', 'Betreuen', '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="m9 12 2 2 4-4"/>', ['Fester Ansprechpartner', 'Kleine Änderungen inklusive', 'Zum festen Monatspreis']]
 ];
 document.getElementById('machen-karten').innerHTML = SCHRITTE.map(function(m, i){
@@ -538,12 +538,12 @@ document.getElementById('machen-karten').innerHTML = SCHRITTE.map(function(m, i)
 
 /* ---------- Pakete ---------- */
 var PAKETE = {
-  Start: { e: '1.500 €', m: '99 €', satz: 'Der leichte Einstieg für kleine Teams.', apps: ['Virtuelles Büro – live sehen, was passiert', 'Anfragen (CRM)', 'Formular und Live-Chat', 'Termine', 'Rechnungen'], nutzer: 'bis 3', umzug: 'Kontakte aus einer Excel- oder CSV-Datei', einweisung: '1 × 1 Stunde online' },
-  Business: { e: '3.000 €', m: '149 €', satz: 'Die wichtigsten Abläufe verbunden, vom Angebot bis zum Auftrag.', apps: ['Alles aus Start', 'Angebote mit Online-Unterschrift', 'Aufträge und Aufgaben'], nutzer: 'bis 10', umzug: 'Kontakte und Produkte', einweisung: '2 × 1 Stunde online' },
-  Komplett: { e: '5.000 €', m: '249 €', satz: 'Der ganze Betrieb in einem System, mit Kundenservice und Newsletter.', apps: ['Alles aus Business', 'Kundenservice', 'E-Mail-Marketing'], nutzer: 'bis 25', umzug: 'Kontakte, Produkte, offene Aufträge', einweisung: '3 × 1 Stunde online' }
+  Start: { e: '1.500 €', m: '99 €', satz: 'Der leichte Einstieg für kleine Teams.', apps: ['Virtuelles Büro – live sehen, was passiert', 'Anfragen (CRM)', 'Formular und Live-Chat', 'Termine', 'Rechnungen'], nutzer: 'bis 3', umzug: 'Kontakte aus einer Excel- oder CSV-Datei', einweisung: '1 Termin online' },
+  Business: { e: '3.000 €', m: '149 €', satz: 'Die wichtigsten Abläufe verbunden, vom Angebot bis zum Auftrag.', apps: ['Alles aus Start', 'Angebote mit Online-Unterschrift', 'Aufträge und Aufgaben'], nutzer: 'bis 10', umzug: 'Kontakte und Produkte', einweisung: '2 Termine online' },
+  Komplett: { e: '5.000 €', m: '249 €', satz: 'Der ganze Betrieb in einem System, mit Kundenservice und Newsletter.', apps: ['Alles aus Business', 'Kundenservice', 'E-Mail-Marketing'], nutzer: 'bis 25', umzug: 'Kontakte, Produkte, offene Aufträge', einweisung: '3 Termine online' }
 };
 document.getElementById('tabelle').innerHTML = '<table><tr><th></th><th>Start</th><th>Business</th><th>Komplett</th></tr>' +
-  [['Einrichtung einmalig','e'],['Betreuung monatlich','m'],['Eingerichtete Nutzer','nutzer'],['Datenumzug','umzug'],['Einweisung','einweisung']].map(function(r){ return '<tr><td>' + r[0] + '</td>' + ['Start','Business','Komplett'].map(function(p){ return '<td>' + PAKETE[p][r[1]] + '</td>'; }).join('') + '</tr>'; }).join('') +
+  [['Einrichtung einmalig','e'],['Betreuung monatlich','m'],['Eingerichtete Nutzer','nutzer'],['Datenumzug','umzug'],['Persönlicher Start','einweisung']].map(function(r){ return '<tr><td>' + r[0] + '</td>' + ['Start','Business','Komplett'].map(function(p){ return '<td>' + PAKETE[p][r[1]] + '</td>'; }).join('') + '</tr>'; }).join('') +
   '<tr><td>Virtuelles Büro</td><td colspan="3">In jedem Paket – live sehen, was im Betrieb passiert</td></tr><tr><td>Odoo-Apps</td><td>Anfragen (CRM), Formular und Live-Chat, Termine, Rechnungen</td><td>+ Angebote mit Online-Unterschrift, Aufträge und Aufgaben</td><td>+ Kundenservice, E-Mail-Marketing</td></tr><tr><td>Virtuelles Büro</td><td>ja</td><td>ja</td><td>ja</td></tr></table>';
 var dialog = document.getElementById('dialog');
 function dialogAuf(){ dialog.classList.add('auf'); }
@@ -670,7 +670,7 @@ function ergebnis(name){
     '<p class="erg__label">' + (p === emp ? 'Unsere Empfehlung für Sie' : 'Paket') + '</p><p class="paket">endo <span class="chrom">' + p + '</span></p><p class="fb__unter" style="margin:0">' + P.satz + (gross ? ' Für größere Teams machen wir Ihnen ein eigenes Angebot.' : '') + '</p>' +
     '<div class="erg__preise"><div><b>' + P.e + '</b><span>einmalig für die Einrichtung</span></div><div><b>' + P.m + '</b><span>im Monat für die Betreuung</span></div></div>' +
     (buero ? '<div class="erg__buero"><span class="erg__punkt"></span><div><b>Ihr virtuelles Büro</b><span>zeigt live: ' + buero + '</span></div></div>' : '') +
-    '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Einweisung: ' + P.einweisung + '</li></ul>' +
+    '<p class="erg__titel">Das ist enthalten</p><ul class="erg__liste">' + alleApps(p).map(function(a){ return '<li>' + a + '</li>'; }).join('') + '<li>Eingerichtet für ' + P.nutzer + ' Nutzer</li><li>Datenumzug: ' + P.umzug + '</li><li>Persönlicher Start: ' + P.einweisung + '</li></ul>' +
     '<p class="erg__titel">So geht es weiter</p><ol class="erg__weiter"><li>Bestätigung an ' + (A[4].e || 'Ihre E-Mail') + '</li><li>Wir melden uns innerhalb von 24 Stunden ' + (A[4].g === 1 ? 'telefonisch' : A[4].g === 2 ? 'per WhatsApp' : 'per E-Mail') + ' mit einem Terminvorschlag</li></ol>' +
     '<p class="klein">Alle Preise netto zzgl. MwSt. Die Odoo-Lizenz zahlen Sie direkt beim Hersteller. <a href="#" id="was-drin">Alle Pakete im Detail</a> · <a href="#" id="neu">Neu starten</a></p></div>';
   fb.querySelectorAll('[data-p]').forEach(function(b){ b.onclick = function(){ ergebnis(b.dataset.p); }; });
