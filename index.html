@@ -742,7 +742,7 @@ const FORM_ZWEIG = `
         if (i < 3) {
           vec2 ziel = ecke[i] * 1.3 - .025 * traj;
           vec2 mitte = mix(-traj, ziel, zug);
-          feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., 1.25, zug), 0.0, 1.0), 4.0);
+          feld += pow(1.0 - clamp(length(mUV - mitte) * mix(1., 1.08, zug), 0.0, 1.0), 4.0);
         } else {
           vec2 mitte = mix(-traj, vec2(0.), zug);
           feld += (1. - zug) * pow(1.0 - clamp(length(mUV - mitte), 0.0, 1.0), 4.0);
@@ -757,7 +757,8 @@ const FORM_ZWEIG = `
         float db = endoBox(pp, gr * .5 - u_rahmen * gr.x, u_rund * gr.x) / (u_rahmen * gr.x);
         feldZ = clamp(.66 - db * .9, 0., 1.3);
       }
-      feld = mix(feld, feldZ, smoothstep(.12, .95, u_morph));
+      float wz = smoothstep(.05, .9, u_morph);
+      feld = max(feld * (1. - wz * wz), feldZ * smoothstep(.0, .4, wz) * mix(.85, 1., wz));
       edge = 1. - smoothstep(.65, .9, feld);
       edge = pow(edge, 4.);
     }
