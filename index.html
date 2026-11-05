@@ -801,7 +801,7 @@ const vollMass = () => { const W = innerWidth, H = innerHeight, m = Math.min(W, 
   return { u_scale: .372 * klein / m, u_offsetX: 0, u_offsetY: -.23 * (H / m) }; };
 function introSpielen() {
   const id = ++lauf; let aus = false;
-  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll');
+  const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
   html.classList.add('vor'); document.body.classList.add('intro-an'); window.ENDO_HELD_RESET && window.ENDO_HELD_RESET(); scrollTo(0, 0);
   intro.style.display = ''; intro.className = 'intro laeuft'; Z.dataset.ort = 'mitte';
   Z.classList.remove('im-menue', 'versteckt'); Z.style.removeProperty('--g'); Z.classList.add('sofort'); Z.style.transform = 'none'; Z.style.opacity = 0; Z.style.setProperty('--glanz', 0); void Z.offsetWidth;
