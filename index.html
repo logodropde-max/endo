@@ -55,7 +55,7 @@ a{color:inherit}
 .knopf--glas{background:rgba(255,255,255,.06);color:var(--text);box-shadow:inset 0 0 0 1px rgba(200,215,255,.22)}
 .pfeil{display:grid;place-items:center;width:26px;height:26px;margin-right:-10px;border-radius:50%;background:var(--grund);color:var(--hell);font-size:14px}
 /* Hero */
-.held{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:flex-start;padding:calc(27vh + min(105px,25vw) + 44px) 0 80px;padding-top:calc(27svh + min(105px,25vw) + 44px)}
+.held{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:flex-start;padding:calc(27vh + min(105px,25vw) + 100px) 0 80px;padding-top:calc(27svh + min(105px,25vw) + 100px)}
 .held__raster{display:grid;grid-template-columns:1fr;justify-items:center;text-align:center}
 .held .satz{margin-left:auto;margin-right:auto}.held__knoepfe{justify-content:center}
 .pille{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:13px;color:var(--grau);box-shadow:inset 0 0 0 1px rgba(200,215,255,.18);background:rgba(255,255,255,.03)}
@@ -77,12 +77,13 @@ h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02}
 .held h1{font-weight:400;font-size:clamp(38px,6.2vw,84px);letter-spacing:-.045em;line-height:1.04;margin:0 0 18px}
 .held .satz{font-size:16px;max-width:30ch;margin:0 auto 30px;color:#9aa0ab}
 .held__vertrauen{margin:22px 0 0;font-size:12.5px;letter-spacing:.04em;color:#6c717c;white-space:pre}
-.held::before{content:"";position:absolute;left:50%;top:calc(27svh + min(105px,25vw) + 4px);width:min(420px,90vw);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);z-index:0;opacity:0;transition:opacity 1.8s 1.1s}
+.held::before{content:"";position:absolute;left:50%;top:calc(27svh + min(105px,25vw) + 70px);width:min(420px,90vw);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);z-index:0;opacity:0;transition:opacity 1.8s 1.1s}
 .held::before{transform:translateX(-50%) scaleX(0);transition:opacity 1.2s cubic-bezier(.4,0,.2,1),transform 2.2s cubic-bezier(.16,1,.3,1)}
 html:not(.vor) .held::before{opacity:1;transform:translateX(-50%) scaleX(1)}
 #held-sh{-webkit-box-reflect:below -6px linear-gradient(transparent 55%,rgba(255,255,255,.22))}
 .intro-wort{position:fixed;left:0;right:0;top:calc(27% + min(105px,25vw) + 18px);z-index:111;text-align:center;font:500 34px/1 Geist,Inter,sans-serif;letter-spacing:-.04em;opacity:0;transition:opacity 1.1s cubic-bezier(.33,0,.2,1);pointer-events:none}
 .intro-wort.da{opacity:1}
+.intro-wort.bleibt{position:absolute;z-index:1}
 .hebt{opacity:0;transform:translateY(22px);transition:opacity 1s var(--kurve),transform 1s var(--kurve)}
 .in .hebt,.hebt.in{opacity:1;transform:none}
 .scroll-hinweis{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:1px;height:46px;background:linear-gradient(transparent,rgba(200,215,255,.6));overflow:hidden}
@@ -344,7 +345,7 @@ th{font-weight:500;color:var(--grau);font-size:13px}
 td:first-child{color:var(--grau)}
 @media (max-width:900px){
   .nav{display:none}
-  .held{padding-top:calc(27svh + 25vw + 40px)}
+  .held{padding-top:calc(27svh + 25vw + 96px)}
   .held__raster{grid-template-columns:1fr}
   .held__logo{order:-1;max-width:330px;justify-self:center;margin-bottom:-20px}
   .kopfzeile{display:block}
@@ -837,6 +838,8 @@ function tiefeInsTitelbild() {
   tiefe.scroll = () => { const y = scrollY, h = innerHeight; b.style.transform = `translate3d(0, ${-y}px, 0)`; const v = y < h * 1.8; if (v !== tiefe.v) { tiefe.v = v; tiefe.sicht(v); b.style.visibility = v ? '' : 'hidden'; } };
   tiefe.v = true; addEventListener('scroll', tiefe.scroll, { passive: true }); tiefe.scroll();
 }
+/* „endo“ bleibt nach dem Intro unter dem Zeichen stehen und scrollt mit dem Titelbild */
+function wortBleibt(w) { const top = w.getBoundingClientRect().top + scrollY; w.style.transition = 'none'; w.classList.add('bleibt', 'da'); w.style.top = top + 'px'; document.querySelector('.held').appendChild(w); }
 function introSpielen() {
   const id = ++lauf; let aus = false;
   const hzA = document.getElementById('held-sh'); hzA.classList.remove('da'); hzA.style.marginTop = ''; hzA.innerHTML = ''; if (zsh.parentNode !== Z) Z.prepend(zsh); Z.style.transition = ''; Z.style.filter = ''; Z.style.display = ''; Z.classList.remove('liegt'); Z.classList.add('voll'); Z.style.height = innerHeight + 'px';
@@ -849,13 +852,13 @@ function introSpielen() {
     /* Das fertige Intro-Zeichen bleibt völlig unverändert stehen – gleiche Größe, Schärfe und Farbe – und wird still zum
        Hintergrund des Titelbilds. Danach blendet nur die Schrift ruhig ein, ohne Bewegung. */
     Z.dataset.ort = 'hg'; intro.style.display = 'none'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage();
-    const wort = document.getElementById('intro-wort'); wort.classList.remove('da'); setTimeout(() => { wort.style.display = 'none'; }, 1200);
+    const wort = document.getElementById('intro-wort'); wortBleibt(wort);
     setTimeout(() => { if (id === lauf) seiteZeigen(); }, 900);
     setTimeout(() => { window.ENDO_REST && window.ENDO_REST(); }, 2600);
   };
   const ueberspringen = () => { if (aus) return; lauf++; setz(zeichen, { u_morph: 1 }); Z.style.opacity = 1; fertig(); };
   intro.onpointerdown = intro.onwheel = intro.ontouchstart = null;
-  const t0 = performance.now() + 150, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da');
+  const t0 = performance.now() + 150, wort = document.getElementById('intro-wort'); wort.style.display = ''; wort.classList.remove('da', 'bleibt'); wort.style.top = ''; if (wort.parentNode !== document.body) document.body.insertBefore(wort, intro.nextSibling);
   const tick = () => {
     if (id !== lauf) return;
     const e = (performance.now() - t0) / 1000;
@@ -909,7 +912,7 @@ try {
   window.ENDO_REST = restStarten;
   ruhe = da => { if (zeichen.setSpeed) zeichen.setSpeed(da ? .7 : 0); };
   window.ENDO_INTRO = introSpielen;
-  if (html.classList.contains('ohne-intro')) { Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
+  if (html.classList.contains('ohne-intro')) { wortBleibt(document.getElementById('intro-wort')); Z.classList.remove('sofort'); Z.classList.add('voll'); Z.style.opacity = 1; setz(zeichen, { u_morph: 1 }); Z.dataset.ort = 'hg'; Z.style.height = innerHeight + 'px'; Z.classList.add('liegt'); logoMalen(); logoLage(); restStarten(); seiteZeigen(); } else introSpielen();
 } catch (e) {
   console.warn('endo-Zeichen:', e); Z.classList.add('ohne-shader'); Z.style.display = 'none'; window.ENDO_REST && window.ENDO_REST(); intro.style.display = 'none'; seiteZeigen();
 }
