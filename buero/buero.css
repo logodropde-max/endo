@@ -1,0 +1,142 @@
+/* Live-Büro Makler (07.11.2026) – Rahmen im endo-Stil (dunkel, Chrom), das Büro selbst bleibt warm (Wald am Abend). */
+:root{--grund:#04060C;--glas:rgba(7,9,15,.8);--linie:rgba(200,215,255,.16);--text:#E8ECF5;--grau:#8A93A8;--hell:#F4F7FF;--wald:#1A2215;--kurve:cubic-bezier(.2,.7,.1,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--wald);color:var(--text);font:400 15px/1.45 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.chrom{background:linear-gradient(180deg,#FFFFFF 0%,#F4F2F9 30%,#CFCADB 52%,#A9A3B8 64%,#C9C4D6 78%,#F7F5FB 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ── Bühne ── */
+.buehne{position:fixed;inset:0;overflow:hidden;background:var(--wald);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.buehne:active{cursor:grabbing}
+.welt{position:absolute;left:0;top:0;width:1600px;height:1600px;transform-origin:0 0;will-change:transform}
+.welt__bild{display:block;width:1600px;height:1600px;pointer-events:none;-webkit-user-drag:none}
+.lade{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;color:var(--grau);font-size:14px;z-index:5}
+
+/* Licht: Bildschirme (Ausschnitt der Nacht-Ebene), Kugel, Tor */
+.glanz{position:absolute;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.glanz.an{opacity:1}
+.glanz--tisch{background:url("bilder/nacht-1600.webp") no-repeat;background-size:1600px 1600px;border-radius:6px}
+@media (min-width:900px){.glanz--tisch{background-image:url("bilder/nacht-2400.webp")}}
+.glanz--kugel{border-radius:50%;background:radial-gradient(circle,rgba(206,176,255,.9) 0,rgba(160,118,255,.42) 34%,rgba(140,100,255,0) 70%);transition-duration:.45s}
+.glanz--kugel-ruhe{border-radius:50%;background:radial-gradient(circle,rgba(190,160,255,.35) 0,rgba(150,110,255,0) 60%);opacity:1;animation:atmen 4.5s ease-in-out infinite}
+@keyframes atmen{0%,100%{opacity:.35}50%{opacity:.8}}
+.glanz--tor{border-radius:50%;background:radial-gradient(ellipse,rgba(255,206,130,.6) 0,rgba(255,180,90,.22) 45%,rgba(255,170,80,0) 72%)}
+
+/* Raum abgedunkelt (nicht im Paket) */
+.dunkel{position:absolute;border-radius:10px;background:rgba(6,8,14,.72);opacity:0;pointer-events:none;transition:opacity .7s ease;z-index:2000}
+.dunkel.an{opacity:1}
+
+/* Figuren: Bildstreifen, bewegt nur per transform */
+.fig{position:absolute;left:0;top:0;width:96px;height:128px;padding:0;margin:0;border:0;background:none;cursor:pointer;will-change:transform;transition:opacity .7s ease}
+.fig::before{content:"";position:absolute;left:50%;top:55%;width:70%;height:80%;transform:translate(-50%,-50%)}
+.fig.unterwegs{transition:transform .1s linear,opacity .7s ease}
+.fig:focus-visible{outline:none}
+.fig:focus-visible .fig__bild{outline:3px solid #F3B562;outline-offset:-4px;border-radius:12px}
+.fig__bild{position:relative;display:block;width:96px;height:128px;overflow:hidden;pointer-events:none}
+.fig__streifen{display:block;height:128px;background-size:100% 100%;background-repeat:no-repeat;will-change:transform}
+
+/* Schilder (Teil der Seite, nicht des Bildes) */
+.schilder{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:4}
+.schild{position:absolute;left:0;top:0;pointer-events:auto;display:flex;flex-direction:column;align-items:center;gap:1px;margin:0;padding:5px 11px 6px;border:0;border-radius:12px;background:rgba(10,12,18,.78);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 6px 18px rgba(0,0,0,.35);color:#F5F1EA;cursor:pointer;white-space:nowrap;transition:box-shadow .4s ease,opacity .6s ease}
+.schild b{display:flex;align-items:center;gap:6px;font-weight:500;font-size:13px;line-height:1.2}
+.schild b::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--farbe,#fff);transition:box-shadow .4s ease}
+.schild small{font-size:10.5px;line-height:1.2;color:rgba(232,236,245,.62)}
+.schild.puls{box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 0 0 4px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.35)}
+.schild.puls b::before{box-shadow:0 0 0 4px rgba(255,255,255,.18),0 0 12px var(--farbe,#fff)}
+.schild.zu{background:rgba(10,12,18,.9)}
+.schild.zu b{color:rgba(245,241,234,.55)}
+.schild.zu b::before{background:#555b66}
+.schild .ab{display:none;margin-top:2px;padding:1px 7px;border-radius:999px;background:rgba(244,247,255,.92);color:#04060C;font-size:10px;font-weight:500}
+.schild.zu .ab{display:block}
+.schild.zu small{display:none}
+.zusatz{display:none;align-items:center;gap:4px;margin-top:3px;padding:1px 8px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(200,215,255,.22);color:#DCE4F7;font-size:10px;line-height:1.5;white-space:nowrap}
+.zusatz.an{display:inline-flex;animation:neu .5s var(--kurve)}
+.schild.zu .zusatz{display:none}
+.welt::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 90px 45px var(--wald);pointer-events:none;z-index:2999}
+.zusatz svg{width:11px;height:11px}
+.schild--kugel b::before{background:#B48CFF}
+
+/* ── Rahmen: Kopf, Paket, Ticker, Knopf ── */
+.kopf,.paket,.ticker,.unten,.info{position:fixed;z-index:10}
+.glas{background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.kopf{left:14px;right:14px;top:max(12px,env(safe-area-inset-top));display:flex;align-items:center;gap:14px;padding:8px 18px 8px 10px;border-radius:999px;background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie);width:fit-content;max-width:calc(100% - 28px)}
+.marke{display:flex;align-items:center;gap:5px;text-decoration:none;flex:none}
+.marke svg{width:30px;height:30px;display:block}
+.marke b{font-weight:500;font-size:19px;letter-spacing:-.045em}
+.kopf__titel{min-width:0;padding-left:14px;border-left:1px solid var(--linie)}
+.kopf h1{margin:0;font-weight:500;font-size:15px;line-height:1.25;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kopf p{margin:0;font-size:12px;color:var(--grau);white-space:nowrap}
+
+.paket{left:14px;top:84px;width:300px;display:grid;gap:8px}
+.umschalter{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px;border-radius:999px;background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie)}
+.umschalter button{border:0;border-radius:999px;padding:9px 0;background:none;color:var(--grau);font-weight:500;font-size:14px;cursor:pointer;transition:background .35s var(--kurve),color .35s var(--kurve)}
+.umschalter button:hover{color:var(--text)}
+.umschalter button[aria-checked="true"]{background:var(--hell);color:var(--grund)}
+.karte{padding:14px 16px 12px;border-radius:18px;background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie)}
+.karte__preis{display:grid;gap:2px;font-size:13px;color:var(--grau)}
+.karte__preis b{color:var(--text);font-weight:500;font-size:15px}
+.karte__mehr{display:none}
+.karte__inhalt{list-style:none;margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--linie);display:grid;gap:6px;font-size:13.5px}
+.karte__inhalt li{display:flex;gap:8px;align-items:baseline}
+.karte__inhalt li::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:linear-gradient(140deg,#fff,#8C95A8);transform:translateY(-2px)}
+.karte__inhalt li.neu{animation:neu .6s var(--kurve)}
+@keyframes neu{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.karte__hinweis{margin:10px 0 0;font-size:11.5px;color:var(--grau)}
+
+.ticker{right:14px;top:84px;width:300px;max-height:calc(100% - 180px);display:flex;flex-direction:column;padding:12px 14px;border-radius:18px;background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie);overflow:hidden}
+.ticker__kopf{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:12px;color:var(--grau);letter-spacing:.04em;text-transform:uppercase}
+.punkt{width:7px;height:7px;border-radius:50%;background:#7CE0A3;box-shadow:0 0 0 0 rgba(124,224,163,.6);animation:punkt 2s ease-out infinite}
+@keyframes punkt{0%{box-shadow:0 0 0 0 rgba(124,224,163,.55)}100%{box-shadow:0 0 0 8px rgba(124,224,163,0)}}
+.ticker__liste{list-style:none;margin:0;padding:0;display:grid;gap:8px;overflow:hidden}
+.ticker__liste li{display:grid;gap:1px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.035);animation:rein .5s var(--kurve)}
+.ticker__liste li:first-child{background:rgba(255,255,255,.07)}
+@keyframes rein{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.ticker__meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--grau)}
+.ticker__meta i{width:6px;height:6px;border-radius:50%;background:var(--farbe,#fff);flex:none}
+.ticker__text{font-size:13px;line-height:1.35}
+
+.unten{left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%)}
+.knopf{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 14px 12px 22px;font-weight:500;font-size:15px;line-height:1;text-decoration:none;background:var(--hell);color:var(--grund);box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .35s var(--kurve)}
+.knopf:hover{transform:translateY(-1px)}
+.pfeil{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--grund);color:var(--hell);font-size:14px}
+
+.info{left:50%;bottom:86px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;width:min(380px,calc(100% - 28px));padding:10px 40px 10px 10px;border-radius:18px;background:var(--glas);box-shadow:inset 0 0 0 1px var(--linie);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:rein .35s var(--kurve)}
+.info[hidden]{display:none}
+.info__bild{width:52px;height:65px;object-fit:cover;border-radius:10px;flex:none}
+.info b{font-weight:500;font-size:15px}
+.info p{margin:2px 0 0;font-size:13px;color:var(--grau)}
+.info:not(:has(img:not([hidden]))){padding-left:16px}
+.info__zu{position:absolute;top:8px;right:8px;width:28px;height:28px;border:0;border-radius:50%;background:rgba(255,255,255,.08);cursor:pointer;font-size:16px;line-height:1}
+
+/* ── Handy ── */
+@media (max-width:820px){
+  .kopf{left:10px;right:10px;top:max(10px,env(safe-area-inset-top));padding:6px 14px 6px 8px;gap:10px;width:auto;border-radius:20px}
+  .marke svg{width:26px;height:26px}
+  .marke b{font-size:17px}
+  .kopf__titel{padding-left:10px}
+  .kopf h1{font-size:13.5px;white-space:normal}
+  .kopf p{font-size:11px;white-space:normal}
+  .paket{left:10px;right:10px;top:auto;width:auto;bottom:calc(max(12px,env(safe-area-inset-bottom)) + 58px)}
+  .karte{padding:10px 14px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 10px}
+  .karte__preis{font-size:12px}
+  .karte__preis b{font-size:14px}
+  .karte__mehr{display:block;border:0;border-radius:999px;padding:7px 12px;background:rgba(255,255,255,.07);font-size:12.5px;cursor:pointer}
+  .karte__inhalt,.karte__hinweis{display:none;grid-column:1/-1}
+  .karte.offen .karte__inhalt{display:grid}
+  .karte.offen .karte__hinweis{display:block}
+  .karte__inhalt{margin-top:10px;padding-top:10px}
+  .ticker{left:10px;right:10px;top:auto;width:auto;bottom:auto;padding:8px 10px;border-radius:16px;max-height:none}
+  .ticker__kopf{display:none}
+  .ticker__liste li{padding:2px 2px;background:none!important}
+  .ticker__liste li:nth-child(n+2){display:none}
+  .unten{left:10px;right:10px;transform:none;bottom:max(12px,env(safe-area-inset-bottom))}
+  .knopf{width:100%;justify-content:center}
+  .info{bottom:auto}
+  .schild{padding:3px 8px 4px;border-radius:10px}
+  .schild b{font-size:11px;gap:5px}
+  .schild b::before{width:6px;height:6px}
+  .schild small{font-size:9px}
+  .zusatz{font-size:9.5px;padding:1px 7px}
+}
+@media (prefers-reduced-motion:reduce){.fig.unterwegs,.glanz,.dunkel{transition:none}.glanz--kugel-ruhe,.punkt{animation:none}}

@@ -1,0 +1,90 @@
+{
+  "_hinweis": "Alle Inhalte des Live-Büros. Texte, Preise, Pakete, Räume und Demo-Ereignisse hier ändern – der Code bleibt gleich. Preise in Euro ohne Punkt.",
+  "titel": "Live-Büro – Beispiel Immobilienmakler",
+  "untertitel": "Demo mit Beispieldaten · läuft auf Odoo",
+  "kontaktLink": "../#kontakt",
+  "kontaktText": "Erstgespräch vereinbaren",
+  "lizenzHinweis": "Die Odoo-Lizenz kauft der Betrieb direkt bei Odoo.",
+  "betreuungMonat": 60,
+  "standardPaket": "business",
+  "takt": { "minSekunden": 5, "maxSekunden": 10 },
+
+  "pakete": [
+    {
+      "id": "start", "name": "Start", "einrichtung": 800,
+      "raeume": ["empfang", "exposes", "vertraege", "chef"],
+      "extras": [],
+      "inhalt": ["Anfragen von Website, Portalen und Telefon", "Exposés und Angebote mit Unterschrift", "Provisionsrechnungen und Zahlungseingang", "Wochenüberblick fürs Chefbüro"]
+    },
+    {
+      "id": "business", "name": "Business", "einrichtung": 1200,
+      "raeume": ["empfang", "besichtigungen", "exposes", "vertraege", "chef"],
+      "extras": ["termine-online", "live-chat", "aufgaben"],
+      "inhalt": ["Alles aus Start", "Besichtigungen mit Online-Terminbuchung", "Live-Chat auf der Website", "Aufgaben fürs Team"]
+    },
+    {
+      "id": "komplett", "name": "Komplett", "einrichtung": 3000,
+      "raeume": ["empfang", "besichtigungen", "exposes", "vertraege", "chef"],
+      "extras": ["termine-online", "live-chat", "aufgaben", "buchhaltung", "altdaten", "schulung", "ki"],
+      "inhalt": ["Alles aus Business", "Volle Buchhaltung", "Übernahme der Altdaten", "Schulung fürs Team", "KI-Hilfe im Chefbüro"]
+    }
+  ],
+
+  "raeume": [
+    { "id": "empfang", "name": "Empfang", "odoo": "Odoo CRM", "ort": "empfang", "farbe": "#B58CFF" },
+    { "id": "besichtigungen", "name": "Besichtigungen", "odoo": "Odoo Termine", "ort": "halle", "farbe": "#2E9A9A" },
+    { "id": "exposes", "name": "Exposés & Angebote", "odoo": "Odoo Verkauf / Sign", "ort": "ergun", "farbe": "#5B8DEF" },
+    { "id": "vertraege", "name": "Verträge & Rechnungen", "odoo": "Odoo Rechnungen / Buchhaltung", "ort": "odoo", "farbe": "#4BB37A" },
+    { "id": "chef", "name": "Chefbüro", "odoo": "Odoo Dashboards", "ort": "chefbuero", "farbe": "#E9DCC8" }
+  ],
+
+  "kugel": { "name": "Odoo", "text": "Jede Information läuft hier durch." },
+
+  "extras": {
+    "termine-online": { "name": "Online-Terminbuchung", "raum": "besichtigungen" },
+    "live-chat": { "name": "Live-Chat", "raum": "empfang" },
+    "aufgaben": { "name": "Aufgaben fürs Team", "raum": "besichtigungen" },
+    "buchhaltung": { "name": "volle Buchhaltung", "raum": "vertraege" },
+    "ki": { "name": "KI-Hilfe", "raum": "chef", "symbol": true }
+  },
+
+  "team": [
+    { "id": "makler", "rolle": "Makler", "platz": "exposes", "text": "Erstellt Exposés und Angebote, behält im Chefbüro die Woche im Blick." },
+    { "id": "assistenz", "rolle": "Assistenz", "platz": "empfang", "text": "Nimmt Anfragen an, schreibt Rechnungen, beantwortet den Live-Chat." },
+    { "id": "aussendienst", "rolle": "Außendienst", "platz": "besichtigungen", "text": "Holt sich Termine aus Odoo und fährt zu den Besichtigungen." }
+  ],
+
+  "_ablaeufe": "Zuordnung echter Odoo-Webhooks (model, event, felder) zu Raum, App, Ticker-Text und Weg der Figuren. Der erste passende Eintrag gilt. {feld} wird aus den Feldern ersetzt. art: bringt (arbeitet am Platz, trägt zur Kugel) · holt (holt an der Kugel, arbeitet am Platz) · arbeitet · faehrt (holt an der Kugel, fährt raus) · nur (nur Licht).",
+  "ablaeufe": [
+    { "wenn": { "model": "crm.lead", "event": "create" }, "raum": "empfang", "app": "Odoo CRM", "text": "Neue Anfrage: {name}", "wer": "assistenz", "art": "bringt", "platz": "empfang" },
+    { "wenn": { "model": "discuss.channel", "event": "message_post" }, "raum": "empfang", "app": "Odoo Live-Chat", "text": "Live-Chat: {body}", "wer": "assistenz", "art": "arbeitet", "platz": "empfang" },
+    { "wenn": { "model": "calendar.event", "event": "create", "felder": { "online": true } }, "raum": "besichtigungen", "app": "Odoo Termine", "text": "Online gebucht: {name}", "wer": "aussendienst", "art": "holt", "platz": "besichtigungen" },
+    { "wenn": { "model": "calendar.event", "event": "create" }, "raum": "besichtigungen", "app": "Odoo Termine", "text": "Besichtigung gebucht: {start}", "wer": "aussendienst", "art": "faehrt", "platz": "besichtigungen" },
+    { "wenn": { "model": "project.task", "event": "create" }, "raum": "besichtigungen", "app": "Odoo Projekt", "text": "Aufgabe fürs Team: {name}", "wer": "aussendienst", "art": "holt", "platz": "besichtigungen" },
+    { "wenn": { "model": "sale.order", "event": "sent" }, "raum": "exposes", "app": "Odoo Verkauf", "text": "Exposé versendet: {objekt}", "wer": "makler", "art": "bringt", "platz": "exposes" },
+    { "wenn": { "model": "sign.request", "event": "signed" }, "raum": "exposes", "app": "Odoo Sign", "text": "Angebot digital unterschrieben: {reference}", "wer": "makler", "art": "arbeitet", "platz": "exposes" },
+    { "wenn": { "model": "account.move", "event": "write", "felder": { "payment_state": "paid" } }, "raum": "vertraege", "app": "Odoo Rechnungen", "text": "Zahlung eingegangen: {name}", "art": "nur" },
+    { "wenn": { "model": "account.move", "event": "create" }, "raum": "vertraege", "app": "Odoo Rechnungen", "text": "Provisionsrechnung erstellt: {betrag}", "wer": "assistenz", "art": "arbeitet", "platz": "vertraege" },
+    { "wenn": { "model": "account.bank.statement.line", "event": "reconcile" }, "raum": "vertraege", "app": "Odoo Buchhaltung", "text": "Kontoauszug abgeglichen: {anzahl} Buchungen", "art": "nur" },
+    { "wenn": { "model": "spreadsheet.dashboard", "event": "write" }, "raum": "chef", "app": "Odoo Dashboards", "text": "Wochenübersicht aktualisiert: {kurz}", "wer": "makler", "art": "arbeitet", "platz": "chef" },
+    { "wenn": { "model": "ai.agent", "event": "summary" }, "raum": "chef", "app": "Odoo KI", "text": "KI-Hilfe: {kurz}", "art": "nur" }
+  ],
+
+  "_demo": "Simulierte Webhooks. ab = ab welchem Paket das Ereignis läuft. Später kommt hier die echte Quelle an, alles andere bleibt.",
+  "demo": [
+    { "ab": "start", "model": "crm.lead", "event": "create", "felder": { "name": "3-Zimmer-Wohnung, Elmshorn", "quelle": "Website" } },
+    { "ab": "business", "model": "calendar.event", "event": "create", "felder": { "name": "Besichtigung 3-Zimmer-Wohnung", "start": "Donnerstag, 17:00 Uhr" } },
+    { "ab": "start", "model": "sale.order", "event": "sent", "felder": { "objekt": "3-Zimmer-Wohnung, Elmshorn" } },
+    { "ab": "business", "model": "discuss.channel", "event": "message_post", "felder": { "body": "Ist die Wohnung noch frei?" } },
+    { "ab": "start", "model": "sign.request", "event": "signed", "felder": { "reference": "Reservierung Elmshorn" } },
+    { "ab": "komplett", "model": "ai.agent", "event": "summary", "felder": { "kurz": "Antwortvorschlag für 4 neue Anfragen" } },
+    { "ab": "start", "model": "account.move", "event": "create", "felder": { "name": "RE-2026-118", "betrag": "7.140 €" } },
+    { "ab": "business", "model": "calendar.event", "event": "create", "felder": { "name": "Doppelhaushälfte, Pinneberg", "start": "Samstag, 11:00 Uhr", "online": true } },
+    { "ab": "start", "model": "crm.lead", "event": "create", "felder": { "name": "Einfamilienhaus, Tornesch", "quelle": "ImmoScout24" } },
+    { "ab": "start", "model": "account.move", "event": "write", "felder": { "name": "RE-2026-118", "payment_state": "paid" } },
+    { "ab": "business", "model": "project.task", "event": "create", "felder": { "name": "Fotos für das Exposé Tornesch" } },
+    { "ab": "komplett", "model": "account.bank.statement.line", "event": "reconcile", "felder": { "anzahl": "12" } },
+    { "ab": "start", "model": "spreadsheet.dashboard", "event": "write", "felder": { "kurz": "9 offene Anfragen, 4 Termine" } },
+    { "ab": "start", "model": "crm.lead", "event": "create", "felder": { "name": "2-Zimmer-Wohnung, Uetersen", "quelle": "Telefon" } }
+  ]
+}

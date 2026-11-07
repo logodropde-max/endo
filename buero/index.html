@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live-Büro – Beispiel Immobilienmakler · endo</title>
+<meta name="description" content="Ein Beispiel-Maklerbüro, das mit Odoo arbeitet: Anfragen, Besichtigungen, Exposés, Rechnungen und Überblick, live sichtbar.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#04060C">
+<link rel="icon" href="../favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="bilder/szene-1600.webp" media="(max-width: 899px)">
+<link rel="preload" as="image" href="bilder/szene-2400.webp" media="(min-width: 900px)">
+<link rel="stylesheet" href="buero.css?v=1">
+</head>
+<body>
+
+<!-- Bühne: das Büro (Standbild vom 12.10.2026), darüber Licht, Figuren und Schilder -->
+<main class="buehne" data-buehne aria-label="Das Live-Büro">
+  <div class="welt" data-welt>
+    <picture>
+      <source media="(min-width: 900px)" srcset="bilder/szene-2400.webp">
+      <img class="welt__bild" src="bilder/szene-1600.webp" width="1600" height="1600" alt="Ein Maklerbüro als Miniatur von oben, im Wald am Abend: oben die Kuppel mit der Kugel, darunter die Räume Exposés & Angebote, Verträge & Rechnungen, Chefbüro, rechts Besichtigungen, unten der Empfang" fetchpriority="high" decoding="async" draggable="false">
+    </picture>
+  </div>
+  <div class="schilder" data-schilder></div>
+  <p class="lade" data-lade>Das Büro wird geladen …</p>
+</main>
+
+<!-- Kopfzeile -->
+<header class="kopf">
+  <a class="marke" href="../" aria-label="Zur endo-Seite">
+    <svg viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zk)"/></svg>
+    <b class="chrom">endo</b>
+  </a>
+  <div class="kopf__titel">
+    <h1 data-titel>Live-Büro – Beispiel Immobilienmakler</h1>
+    <p data-untertitel>Demo mit Beispieldaten · läuft auf Odoo</p>
+  </div>
+</header>
+
+<!-- Paket-Umschalter und Paketkarte -->
+<section class="paket" aria-label="Paket wählen">
+  <div class="umschalter" role="radiogroup" aria-label="Paket" data-umschalter></div>
+  <div class="karte" data-karte>
+    <div class="karte__preis" data-preis></div>
+    <button class="karte__mehr" type="button" data-mehr aria-expanded="false">Was drin ist</button>
+    <ul class="karte__inhalt" data-inhalt></ul>
+    <p class="karte__hinweis" data-lizenz></p>
+  </div>
+</section>
+
+<!-- Live-Ticker -->
+<aside class="ticker" aria-label="Live-Ticker">
+  <p class="ticker__kopf"><span class="punkt" aria-hidden="true"></span>Live</p>
+  <ol class="ticker__liste" data-ticker aria-live="polite"></ol>
+</aside>
+
+<!-- Abschluss -->
+<div class="unten">
+  <a class="knopf" href="../#kontakt" data-kontakt>Erstgespräch vereinbaren <span class="pfeil" aria-hidden="true">→</span></a>
+</div>
+
+<!-- Info beim Antippen (Figur oder Raum) -->
+<div class="info" data-info hidden role="dialog" aria-live="polite">
+  <img class="info__bild" data-info-bild alt="" width="64" height="80" hidden>
+  <div><b data-info-name></b><p data-info-text></p></div>
+  <button class="info__zu" type="button" data-info-zu aria-label="Schließen">×</button>
+</div>
+
+<noscript><p class="lade">Diese Seite braucht JavaScript.</p></noscript>
+<script src="buero.js?v=1"></script>
+</body>
+</html>
