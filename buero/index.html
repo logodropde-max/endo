@@ -14,13 +14,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="bilder/szene-1600.webp" media="(max-width: 899px)">
 <link rel="preload" as="image" href="bilder/szene-2400.webp" media="(min-width: 900px)">
-<link rel="stylesheet" href="buero.css?v=3">
+<link rel="stylesheet" href="buero.css?v=4">
 </head>
 <body>
 
 <!-- Bühne: das Büro (Standbild vom 12.10.2026), darüber Licht, Figuren und Schilder -->
 <main class="buehne" data-buehne aria-label="Das Live-Büro">
   <div class="welt" data-welt>
+    <img class="welt__umgebung" src="bilder/szene-umgebung.webp" width="3200" height="3200" alt="" aria-hidden="true" decoding="async" draggable="false">
     <picture>
       <source media="(min-width: 900px)" srcset="bilder/szene-2400.webp">
       <img class="welt__bild" src="bilder/szene-1600.webp" width="1600" height="1600" alt="Ein Maklerbüro im Erdgeschoss an einer Straßenecke am Abend, von oben: vorn das beleuchtete Schaufenster mit Exposés und der Empfang, links Besichtigungen und Verträge & Rechnungen, rechts Exposés & Angebote und das Chefbüro, im Flur die Kugel unter einer Glaskuppel" fetchpriority="high" decoding="async" draggable="false">
@@ -33,7 +34,7 @@
 <!-- Kopfzeile -->
 <header class="kopf">
   <a class="marke" href="../" aria-label="Zur endo-Seite">
-    <svg viewBox="-56 -56 112 112" aria-hidden="true"><defs><radialGradient id="zk" cx=".34" cy=".28" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#fff"/><stop offset=".55" stop-color="#5B667E"/><stop offset=".88" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></radialGradient><linearGradient id="zl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#1A2030"/><stop offset="1" stop-color="#5B667E"/></linearGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zl)" stroke-width="9" stroke-linejoin="round"/><circle cx="0" cy="-30" r="14" fill="url(#zk)"/><circle cx="25.98" cy="15" r="14" fill="url(#zk)"/><circle cx="-25.98" cy="15" r="14" fill="url(#zk)"/></svg>
+    <svg viewBox="-56 -56 112 112" aria-hidden="true"><defs><linearGradient id="zc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#E4E8F0"/><stop offset=".52" stop-color="#9BA3B3"/><stop offset=".7" stop-color="#D9DEE8"/><stop offset="1" stop-color="#F7F9FC"/></linearGradient><radialGradient id="zg" cx=".32" cy=".28" r=".55"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".5" stop-color="#fff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><path d="M0 -30 L25.98 15 L-25.98 15 Z" fill="none" stroke="url(#zc)" stroke-width="9" stroke-linejoin="round"/><g fill="url(#zc)"><circle cx="0" cy="-30" r="14"/><circle cx="25.98" cy="15" r="14"/><circle cx="-25.98" cy="15" r="14"/></g><g fill="url(#zg)"><circle cx="0" cy="-30" r="14"/><circle cx="25.98" cy="15" r="14"/><circle cx="-25.98" cy="15" r="14"/></g></svg>
     <b class="chrom">endo</b>
   </a>
   <div class="kopf__titel">
@@ -72,6 +73,6 @@
 </div>
 
 <noscript><p class="lade">Diese Seite braucht JavaScript.</p></noscript>
-<script src="buero.js?v=3"></script>
+<script src="buero.js?v=4"></script>
 </body>
 </html>

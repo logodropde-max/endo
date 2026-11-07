@@ -6,7 +6,7 @@
    Ruckelfrei: bewegt wird nur per transform, ein Takt alle 100 ms und nur, solange sich etwas bewegt. Versteckter Tab = Pause. */
 (function () {
   'use strict';
-  var WELT = 1600, GESCHW = 120, TAKT = 100, FIG = 48;
+  var WELT = 1600, RAND = [-800, 2400], GESCHW = 120, TAKT = 100, FIG = 48;
   var BLICK = { unten: 0, links: 90, oben: 180, rechts: -90 };
   var ruhig = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var SVGNS = 'http://www.w3.org/2000/svg';
@@ -94,10 +94,11 @@
     return r;
   }
   function grenzen(c) {
-    var m = mass(); c.s = Math.max(fitS * 0.8, Math.min(c.s, Math.max(fitS * 4, 1.6)));
-    var b = WELT * c.s, rand = 80;
-    c.tx = Math.min(Math.max(c.tx, Math.min(m.w - b, 0) - rand), Math.max(m.w - b, 0) + rand);
-    c.ty = Math.min(Math.max(c.ty, Math.min(m.h - b, 0) - rand), Math.max(m.h - b, 0) + rand);
+    var m = mass(), kleinst = Math.max(m.w, m.h) / (RAND[1] - RAND[0]); c.s = Math.max(fitS * 0.75, kleinst, Math.min(c.s, Math.max(fitS * 4, 1.6)));
+    /* Die weiche Umgebung reicht von -800 bis 2400: nie ein leerer Rand */
+    var lo = RAND[0] * c.s, hi = RAND[1] * c.s;
+    c.tx = Math.min(Math.max(c.tx, m.w - hi), -lo);
+    c.ty = Math.min(Math.max(c.ty, m.h - hi), -lo);
     return c;
   }
   function zeigen() {
