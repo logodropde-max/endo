@@ -185,6 +185,14 @@ html:not(.vor) .held::before,.linie-auf .held::before{opacity:1;transform:transl
 .erp-info p{margin:12px 0 6px;font-size:14px;color:#C9CDD6;line-height:1.55}.erp-info p b{font-weight:500;color:var(--text)}
 .erp-info small{display:block;font-size:12.5px;color:var(--grau);padding-bottom:4px}
 .was__raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.buero-vorschau{position:relative;display:block;margin-top:18px;height:150px;border-radius:14px;overflow:hidden;background:#141A24;text-decoration:none;box-shadow:inset 0 0 0 1px rgba(200,215,255,.16)}
+.buero-vorschau img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 42%;transform:scale(1.55);transition:transform 1.2s var(--kurve)}
+.buero-vorschau:hover img,.buero-vorschau:focus-visible img{transform:scale(1.7)}
+.buero-vorschau::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,9,15,0) 45%,rgba(7,9,15,.85))}
+.buero-vorschau__live{position:absolute;z-index:1;top:10px;left:10px;display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(7,9,15,.7);font-size:12px;color:var(--text)}
+.buero-vorschau__live i{width:7px;height:7px;border-radius:50%;background:#7CE0A3;animation:bvPuls 2s ease-out infinite}
+@keyframes bvPuls{0%{box-shadow:0 0 0 0 rgba(124,224,163,.55)}100%{box-shadow:0 0 0 8px rgba(124,224,163,0)}}
+.buero-vorschau__los{position:absolute;z-index:1;left:14px;bottom:12px;font-size:14px;font-weight:500;color:var(--hell)}
 .was__nr{display:block;font-size:34px;font-weight:500;letter-spacing:-.04em;line-height:1;margin-bottom:22px}
 .was-link{font-size:14px;text-decoration:none;color:var(--text);opacity:.8;padding:8px 12px;margin-left:auto}
 @media (min-width:901px){.was-link{display:none}}
@@ -469,7 +477,7 @@ td:first-child{color:var(--grau)}
     <div class="kopfzeile beob"><div><span class="label">Was ist endo?</span><h2><span class="zeile"><span>Ein System. <span class="chrom">Fertig</span> eingerichtet.</span></span></h2></div><p class="satz hebt" style="margin:0;max-width:400px">endo bringt Ihren Betrieb in ein ERP-System: Odoo, eingerichtet, erklärt und betreut. Sie arbeiten damit, wir kümmern uns um den Rest.</p></div>
     <div class="was__raster">
       <div class="kante reihe beob"><div class="karte"><span class="was__nr chrom">1</span><h3>ERP-System, passend eingerichtet</h3><button type="button" class="erp-frage" aria-expanded="false" aria-controls="erp-info" aria-label="Was ist ein ERP-System?">?</button><div class="erp-info" id="erp-info"><div><p><b>Was ist ein ERP-System?</b> Eine einzige Software, in der Ihr ganzer Betrieb läuft. Statt Zetteln, Excel und mehreren Programmen hängt alles zusammen: Aus der Anfrage wird das Angebot, daraus der Auftrag und die Rechnung. Ihr Team sieht dabei immer dieselben, aktuellen Daten.</p><small>ERP steht für „Enterprise Resource Planning“, auf Deutsch etwa Betriebsplanung. endo nutzt dafür Odoo.</small></div></div><p>Anfragen, Angebote, Termine, Rechnungen und Team in einem einzigen System – statt Zetteln, Excel und fünf Programmen.</p></div></div>
-      <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p></div></div>
+      <div class="kante reihe beob" style="transition-delay:.12s"><div class="karte"><span class="was__nr chrom">2</span><h3>Ihr virtuelles Büro</h3><p>Sie sehen live, was im Betrieb passiert: neue Anfragen, offene Aufgaben, heutige Termine – auf einen Blick.</p><a class="buero-vorschau" href="buero/" aria-label="Live-Büro ansehen: Beispiel Immobilienmakler"><img src="buero/bilder/szene-1600.webp" alt="" width="1600" height="1600" loading="lazy" decoding="async"><span class="buero-vorschau__live"><i></i>Live</span><span class="buero-vorschau__los">Live-Büro ansehen <span aria-hidden="true">→</span></span></a></div></div>
       <div class="kante reihe beob" style="transition-delay:.24s"><div class="karte"><span class="was__nr chrom">3</span><h3>Betreut zum Festpreis</h3><p>Ein fester Ansprechpartner für Fragen und kleine Änderungen. Feste Pakete, feste Preise, keine Überraschungen.</p></div></div>
     </div>
   </div>
